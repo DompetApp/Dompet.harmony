@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+  <script src="resource://rawfile/chart/echart.min.js"></script>
+  <title>EChart</title>
+
+  <style type="text/css">
+    html {
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+    }
+
+    body {
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      padding: 0;
+      margin: 0;
+    }
+
+    #canvas {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+<div id="canvas"></div>
+
+<script type="text/javascript">
+  const canvas = document.getElementById('canvas')
+  const chart = echarts.init(canvas)
+
+  window.addEventListener('resize', () => {
+    chart.resize()
+  });
+
+  const render = options => {
+    const grid = options.grid
+    const years = options.years
+    const moneys = options.moneys
+    const animation = options.animation === true
+    const min = options.min - (options.max - options.min) * 1.8
+    const max = options.max + (options.max - options.min) * 1
+
+    chart.setOption({
+      grid: {
+        top: grid.top,
+        left: grid.left,
+        right: grid.right,
+        bottom: grid.bottom,
+        containLabel: false,
+      },
+      xAxis: [
+        {
+          type: 'category',
+          axisTick: { show: false },
+          axisLine: { show: false },
+          axisLabel: {
+            margin: 5,
+            inside: true,
+            fontSize: 14,
+            fontWeight: '500',
+            formatter: function (value, index) {
+              if (index == years.length - 1) {
+                return `${value}`.padEnd(12, ' ');
+              }
+
+              if (index == 0) {
+                return `${value}`.padStart(12, ' ');
+              }
+
+              return value;
+            }
+          },
+          boundaryGap: false,
+          data: years,
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          show: false,
+          min: min,
+          max: max,
+        }
+      ],
+      color: ['#8438ff'],
+      animation: animation,
+      tooltip: {
+        trigger: 'axis',
+        showContent: false,
+        axisPointer: { type: 'none' },
+      },
+      series: [
+       {
+          type: 'line',
+          smooth: true,
+          showSymbol: false,
+          symbolSize: 12,
+          symbol: 'circle',
+          label: {
+            show: true,
+            fontSize: 13.6,
+            position: 'top',
+            borderRadius: 8,
+            color: '#ffffff',
+            fontWeight: '600',
+            padding: [5, 8, 5, 8],
+            backgroundColor: '#8438ff',
+            formatter: function (params) {
+              return params.value < 0
+                ? `-$${params.value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                : `$${params.value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            }
+          },
+          lineStyle: {
+            width: 3,
+            color: '#8438ff',
+            cap: 'round',
+          },
+          itemStyle: {
+            borderWidth: 2,
+            borderColor: '#ffffff',
+          },
+          areaStyle: {
+            opacity: 0.9,
+            origin: 'start',
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: 'rgba(132, 56, 255, 0.38)',
+              },
+              {
+                offset: 0.5,
+                color: 'rgba(132, 56, 255, 0.13)',
+              },
+              {
+                offset: 0.75,
+                color: 'rgba(132, 56, 255, 0)',
+              }
+            ])
+          },
+          data: moneys,
+        }
+      ]
+    })
+  
+    setTimeout(() => {
+      chart.dispatchAction({
+        dataIndex: Math.max(years.length - 2, 0),
+        seriesIndex: 0,
+        type: 'showTip',
+      })
+    }, 800)
+  }
+</script>
+</body>
+</html>

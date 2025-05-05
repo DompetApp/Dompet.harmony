@@ -1,0 +1,460 @@
+{
+  "string": [
+    {
+      "name": "entry_module_description",
+      "value": "Dompet Entry Module"
+    },
+    {
+      "name": "entry_ability_description",
+      "value": "Dompet (HarmonyOS)"
+    },
+    {
+      "name": "entry_ability_label",
+      "value": "Dompet"
+    },
+    {
+      "name": "permission_camera_reason",
+      "value": "Used for taking photos and scanning QRCode"
+    },
+    {
+      "name": "About_App",
+      "value": "About App"
+    },
+    {
+      "name": "Agree_And_SignIn",
+      "value": "Agree and Sign In"
+    },
+    {
+      "name": "Account_Login",
+      "value": "Account Login"
+    },
+    {
+      "name": "Account_Registration",
+      "value": "Account Registration"
+    },
+    {
+      "name": "And",
+      "value": "and"
+    },
+    {
+      "name": "available",
+      "value": "available"
+    },
+    {
+      "name": "Available",
+      "value": "Available"
+    },
+    {
+      "name": "Back_App",
+      "value": "Back Home"
+    },
+    {
+      "name": "Balance",
+      "value": "Balance"
+    },
+    {
+      "name": "Bank",
+      "value": "Bank"
+    },
+    {
+      "name": "Bank_Card",
+      "value": "Bank Card"
+    },
+    {
+      "name": "Bind_HuaweiId_Number",
+      "value": "Mobile number associated with HUAWEI ID"
+    },
+    {
+      "name": "Cancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "CardNo",
+      "value": "CardNo"
+    },
+    {
+      "name": "Change",
+      "value": "Change"
+    },
+    {
+      "name": "Chinese_zh_CN",
+      "value": "Chinese (zh-CN)"
+    },
+    {
+      "name": "Citibank",
+      "value": "Citibank"
+    },
+    {
+      "name": "Clear_Cache",
+      "value": "Clear Cache"
+    },
+    {
+      "name": "Copy_Link",
+      "value": "Copy Link"
+    },
+    {
+      "name": "Copy_Successful",
+      "value": "Copy Successful"
+    },
+    {
+      "name": "David",
+      "value": "David"
+    },
+    {
+      "name": "Date",
+      "value": "Date:"
+    },
+    {
+      "name": "Debit_Card",
+      "value": "Debit Card"
+    },
+    {
+      "name": "Digital_Wallet",
+      "value": "Digital Wallet"
+    },
+    {
+      "name": "Display",
+      "value": "Display"
+    },
+    {
+      "name": "Do_you_want_to_logout",
+      "value": "Do you want to logout?"
+    },
+    {
+      "name": "Dompet_Wallet_Privacy_Policy",
+      "value": "Dompet Wallet Privacy Policy"
+    },
+    {
+      "name": "Don_t_have_an_account_yet",
+      "value": "Don't have an account yet？"
+    },
+    {
+      "name": "Emma",
+      "value": "Emma"
+    },
+    {
+      "name": "English_en_US",
+      "value": "English (en-US)"
+    },
+    {
+      "name": "Failed_to_get_mobile_phone_number",
+      "value": "Failed to get mobile phone number!"
+    },
+    {
+      "name": "Failed_to_login_user",
+      "value": "Failed to login user!"
+    },
+    {
+      "name": "Failed_to_register_user",
+      "value": "Failed to register user!"
+    },
+    {
+      "name": "Follow_System_Language",
+      "value": "Follow System Language"
+    },
+    {
+      "name": "Get_the_local_phone_number",
+      "value": "Get the local phone number"
+    },
+    {
+      "name": "Guest_Mode",
+      "value": "Guest Mode"
+    },
+    {
+      "name": "Go_To_Register",
+      "value": "Go to register"
+    },
+    {
+      "name": "Hide",
+      "value": "Hide"
+    },
+    {
+      "name": "Huawei_Account_Authentication_Agreement",
+      "value": "Huawei Account Authentication Agreement"
+    },
+    {
+      "name": "Huawei_Account_OneTap_Login",
+      "value": "Huawei Account One-Tap Login"
+    },
+    {
+      "name": "I_have_read_and_agree",
+      "value": "I have read and agree"
+    },
+    {
+      "name": "Language",
+      "value": "Language"
+    },
+    {
+      "name": "Last_year",
+      "value": "last year"
+    },
+    {
+      "name": "Loading",
+      "value": "Loading..."
+    },
+    {
+      "name": "Loading_logs_please_wait",
+      "value": "Loading logs, please wait..."
+    },
+    {
+      "name": "Login_request_timed_out",
+      "value": "Login request timed out！"
+    },
+    {
+      "name": "Logging_in",
+      "value": "Logging in..."
+    },
+    {
+      "name": "Logout",
+      "value": "Logout"
+    },
+    {
+      "name": "Me",
+      "value": "Me"
+    },
+    {
+      "name": "Message_Notification",
+      "value": "Message Notification"
+    },
+    {
+      "name": "Money",
+      "value": "Money"
+    },
+    {
+      "name": "My_Bank_Card",
+      "value": "My Bank Card"
+    },
+    {
+      "name": "Netflix",
+      "value": "Netflix"
+    },
+    {
+      "name": "Network_request_failed",
+      "value": "Network request failed"
+    },
+    {
+      "name": "Network_timeout",
+      "value": "Network timeout!"
+    },
+    {
+      "name": "Notification",
+      "value": "Notification"
+    },
+    {
+      "name": "Open_Browser",
+      "value": "Open Browser"
+    },
+    {
+      "name": "Other_Login_Methods",
+      "value": "Other login methods"
+    },
+    {
+      "name": "Payment",
+      "value": "Payment"
+    },
+    {
+      "name": "PayPal",
+      "value": "PayPal"
+    },
+    {
+      "name": "Password",
+      "value": "Password"
+    },
+    {
+      "name": "Person_Profile",
+      "value": "Person Profile"
+    },
+    {
+      "name": "Please_input_confirm_password",
+      "value": "please input confirmation password..."
+    },
+    {
+      "name": "Please_input_password",
+      "value": "please input password..."
+    },
+    {
+      "name": "Please_input_phone_number",
+      "value": "please input phone number..."
+    },
+    {
+      "name": "Refresh_Page",
+      "value": "Refresh Page"
+    },
+    {
+      "name": "Registration_request_timed_out",
+      "value": "Registration request timed out！"
+    },
+    {
+      "name": "Requesting",
+      "value": "Requesting..."
+    },
+    {
+      "name": "Run_Logger",
+      "value": "Run Logger"
+    },
+    {
+      "name": "Self",
+      "value": "Me"
+    },
+    {
+      "name": "Settings",
+      "value": "Settings"
+    },
+    {
+      "name": "Share_Website",
+      "value": "Share Website"
+    },
+    {
+      "name": "State_Colon",
+      "value": "State:"
+    },
+    {
+      "name": "Status",
+      "value": "Status"
+    },
+    {
+      "name": "Switch_Language",
+      "value": "Switch Language"
+    },
+    {
+      "name": "System_abnormality",
+      "value": "System abnormality!"
+    },
+    {
+      "name": "The_amount_entered_cannot_exceed",
+      "value": "The amount entered cannot exceed %1$d"
+    },
+    {
+      "name": "The_confirm_password_is_incorrect",
+      "value": "The confirm password is incorrect!"
+    },
+    {
+      "name": "The_password_is_empty",
+      "value": "The password is empty!"
+    },
+    {
+      "name": "The_password_is_incorrect",
+      "value": "The password is incorrect!"
+    },
+    {
+      "name": "The_password_is_less_characters",
+      "value": "The password is less than %1$d characters long!"
+    },
+    {
+      "name": "The_phone_format_is_incorrect",
+      "value": "The phone format is incorrect!"
+    },
+    {
+      "name": "The_phone_is_empty",
+      "value": "The phone is empty!"
+    },
+    {
+      "name": "This_account_has_already_been_registered",
+      "value": "This account has already been registered!"
+    },
+    {
+      "name": "This_account_has_not_been_registered_yet",
+      "value": "This account has not been registered yet!"
+    },
+    {
+      "name": "This_year",
+      "value": "this year"
+    },
+    {
+      "name": "Top_up",
+      "value": "Top up"
+    },
+    {
+      "name": "Total",
+      "value": "Total"
+    },
+    {
+      "name": "Transactions",
+      "value": "Transactions"
+    },
+    {
+      "name": "Transfer",
+      "value": "Transfer"
+    },
+    {
+      "name": "Turn_Debug",
+      "value": "Turn Debug"
+    },
+    {
+      "name": "Type",
+      "value": "Type"
+    },
+    {
+      "name": "Unknown",
+      "value": "Unknown"
+    },
+    {
+      "name": "Update",
+      "value": "Update"
+    },
+    {
+      "name": "Update_user_successfully",
+      "value": "Update user successfully!"
+    },
+    {
+      "name": "User_Agreement_And_Privacy_Policy",
+      "value": "User Agreement and Privacy Policy"
+    },
+    {
+      "name": "Username",
+      "value": "Username"
+    },
+    {
+      "name": "Unavailable",
+      "value": "Unavailable"
+    },
+    {
+      "name": "Valid",
+      "value": "Valid"
+    },
+    {
+      "name": "View_All",
+      "value": "View All"
+    },
+    {
+      "name": "Welcome_back",
+      "value": "Welcome back"
+    },
+    {
+      "name": "You_have_account",
+      "value": "You have account？"
+    },
+    {
+      "name": "You_switched_to_device_system_language",
+      "value": "You switched to device system language！"
+    },
+    {
+      "name": "You_switched_to_English_en_US",
+      "value": "You switched to English (en-US)！"
+    },
+    {
+      "name": "You_switched_to_Chinese_zh_CN",
+      "value": "You switched to Chinese (zh-CN)！"
+    },
+    {
+      "name": "You_paid_money_to",
+      "value": "You paid money to %1$s"
+    },
+    {
+      "name": "You_received_a_top_up_from",
+      "value": "You received a top-up from %1$s"
+    },
+    {
+      "name": "You_received_a_transfer_from",
+      "value": "You received a transfer from %1$s"
+    },
+    {
+      "name": "You_top_up_some_money",
+      "value": "You top-up some money"
+    },
+    {
+      "name": "You_transferred_money_to",
+      "value": "You transferred money to %1$s"
+    }
+  ]
+}

@@ -1,0 +1,348 @@
+import { webview } from "@kit.ArkWeb"
+import { common } from "@kit.AbilityKit"
+import { HMRouter } from "@hadss/hmrouter"
+import { AppRouter } from "../../router/constants"
+import { AppRouterMgr } from "../../router/manager"
+import { IWebviewMeta } from "../../models/web"
+import { WebviewTool } from "../../pages/Webview/Tool"
+import { HMWBridger } from "../../pages/Webview/bridger"
+import { Loading } from "../../components/Loading/Index"
+import { device } from "../../configure/device"
+import { size } from "../../utils/size"
+import { util } from "@kit.ArkTS"
+
+
+@HMRouter({
+  pageUrl: AppRouter.webview,
+  singleton: false,
+})
+@ComponentV2
+export struct PageWebview {
+  @Local rawScriptAccess: boolean = false
+  @Local domStorageAccess: boolean = true
+  @Local documentEndScripts: Array<ScriptItem> = []
+  @Local documentStartScripts: Array<ScriptItem> = []
+  @Local webviewController: webview.WebviewController = new webview.WebviewController()
+  @Local webviewMeta: IWebviewMeta = AppRouterMgr.getCurrentParam() as Unknown
+  @Local context: common.UIAbilityContext = getContext(this) as Unknown
+
+  @Computed
+  get appBar() {
+    const preset: number = vp2px(size.vp(56))
+    const height: number = device.height - device.top - device.bottom
+    const appBar: Recorder = Object({ height: preset / height * 100 + '%' })
+    return appBar
+  }
+
+  async loadUrl() {
+    const url = this.webviewMeta.url.trim()
+    const html = this.webviewMeta.html.trim()
+    const checkUrl = this.webviewMeta.checkUrl === true
+    const checkHttps = this.webviewMeta.checkHttps === true
+
+    if (this.webviewMeta.fromLocal && checkUrl && !checkHttps) {
+      this.webviewController.loadUrl($rawfile('webview/htmls/errorHttps.html'))
+      return
+    }
+
+    if (this.webviewMeta.fromUrl && checkUrl && checkHttps) {
+      this.webviewController.loadUrl(url)
+      return
+    }
+
+    if (this.webviewMeta.fromLocal && !checkUrl) {
+      this.webviewController.loadUrl($rawfile('webview/htmls/errorUrl.html'))
+      return
+    }
+
+    if (this.webviewMeta.fromHtml) {
+      this.webviewController.loadData(html, 'text/html', 'UTF-8', 'data')
+      return
+    }
+  }
+
+  async loadAgent() {
+    const dompet = ' DompetApp/1.0'
+    const preset = this.webviewController.getUserAgent()
+    this.webviewController.setCustomUserAgent(preset + dompet)
+  }
+
+  async loadScripts() {
+    if (this.webviewMeta.fromLocal) {
+      this.rawScriptAccess = true
+      return
+    }
+
+    const states: Promise<string>[] = []
+
+    const scripts: Array<string> = [
+      'webview/scripts/vconsole.min.js',
+      'webview/scripts/harmony.min.js',
+      'webview/scripts/webview.min.js',
+      'webview/scripts/vdebug.min.js',
+      'webview/scripts/meta.min.js',
+    ]
+
+    for (const file of scripts) {
+      const decoder = new util.TextDecoder()
+      const promise = this.context.resourceManager.getRawFileContent(file)
+      states.push(promise.then(code => decoder.decodeToString(code)).catch(() => ''))
+    }
+
+    const p = Promise.all(states)
+
+    p.then((scripts) => {
+      this.rawScriptAccess = true
+
+      for (const script of scripts) {
+        this.documentEndScripts.push({
+          scriptRules: ['*'],
+          script: script,
+        })
+      }
+    })
+  }
+
+  async parseRequest() {
+    this.loading(true)
+
+    const url = this.webviewMeta.url.trim()
+    const html = this.webviewMeta.html.trim()
+    const fromUrl = this.webviewMeta.fromUrl === true
+    const fromHtml = this.webviewMeta.fromHtml === true
+    const checkUrl = this.webviewMeta.checkUrl === true
+    const checkHttps = this.webviewMeta.checkHttps === true
+
+    if (url && fromUrl && checkUrl && !checkHttps) {
+      this.webviewMeta.fromLocal = true
+      this.webviewMeta.fromHtml = false
+      this.webviewMeta.fromUrl = true
+      return
+    }
+
+    if (url && fromUrl && checkUrl && checkHttps) {
+      this.webviewMeta.fromLocal = false
+      this.webviewMeta.fromHtml = false
+      this.webviewMeta.fromUrl = true
+      return
+    }
+
+    if (url && fromUrl && !checkUrl) {
+      this.webviewMeta.fromLocal = true
+      this.webviewMeta.fromHtml = false
+      this.webviewMeta.fromUrl = true
+      return
+    }
+
+    if (html && fromHtml) {
+      this.webviewMeta.fromLocal = false
+      this.webviewMeta.fromHtml = true
+      this.webviewMeta.fromUrl = false
+      return
+    }
+  }
+
+  async aboutToAppear() {
+    webview.WebviewController.setWebDebuggingAccess(true)
+    this.parseRequest()
+    this.loadScripts()
+  }
+
+  async registerScripts() {
+    this.webviewController.registerJavaScriptProxy(new HMWBridger(), 'harmony_webview', ['caller'])
+  }
+
+  async aboutToDisappear() {
+    this.unregisterScripts()
+  }
+
+  async unregisterScripts() {
+    this.webviewController.deleteJavaScriptRegister('harmony_webview')
+  }
+
+  async titling(title: string) {
+    title = title?.trim() ?? ''
+
+    const isEmpty = title == ''
+    const isBlank = title == 'about:blank'
+    const isHtmlContent = title.startsWith('data:text/html') == true
+    const isFromHttps = title.startsWith('https://') == true
+    const isFromHttp = title.startsWith('http://') == true
+
+    if (!isEmpty && !isBlank && !isHtmlContent && !isFromHttps && !isFromHttp) {
+      this.webviewMeta.title = title === '' ? this.webviewMeta.title : title
+    }
+
+    if (this.webviewMeta.title == '') {
+      this.webviewMeta.title = 'Webview...'
+    }
+  }
+
+  async loading(loading: boolean) {
+    this.webviewMeta.loading = loading === true
+  }
+
+  async popuping(popuping: boolean) {
+    this.webviewMeta.popup = popuping && !device.isLandscape
+  }
+
+  build() {
+    Stack({ alignContent: Alignment.TopStart }) {
+      Flex({ direction: FlexDirection.Column }) {
+        Row() {
+          Row() {
+            Text() {
+              SymbolSpan($r('sys.symbol.chevron_left'))
+                .fontWeight(FontWeight.Medium)
+                .fontSize(32)
+            }
+          }
+          .justifyContent(FlexAlign.Center)
+          .alignItems(VerticalAlign.Center)
+          .height(size.vp(56))
+          .width(size.vp(56))
+          .onClick(() => {
+            this.webviewController.accessBackward()
+              ? this.webviewController.backward()
+              : AppRouterMgr.pop()
+          })
+
+          Row() {
+            Text(this.webviewMeta.title)
+              .textOverflow({ overflow: TextOverflow.Ellipsis })
+              .fontWeight(FontWeight.Bold)
+              .textAlign(TextAlign.Center)
+              .fontSize(size.vp(18))
+              .fontColor(0x303133)
+              .maxLines(1)
+          }
+          .justifyContent(FlexAlign.Center)
+          .alignItems(VerticalAlign.Center)
+          .height(size.vp(56))
+          .layoutWeight(1)
+
+          Row() {
+            Row() {
+              Column()
+                .backgroundColor(0x333333)
+                .borderRadius('50%')
+                .height(size.vp(5))
+                .width(size.vp(5))
+
+              Column()
+                .margin({ left: size.vp(3), right: size.vp(3) })
+                .backgroundColor(0x333333)
+                .borderRadius('50%')
+                .height(size.vp(7))
+                .width(size.vp(7))
+
+              Column()
+                .backgroundColor(0x333333)
+                .borderRadius('50%')
+                .height(size.vp(5))
+                .width(size.vp(5))
+            }
+            .alignItems(VerticalAlign.Center)
+            .justifyContent(FlexAlign.Center)
+            .height(size.vp(26))
+            .width(size.vp(44))
+          }
+          .justifyContent(FlexAlign.Center)
+          .alignItems(VerticalAlign.Center)
+          .height(size.vp(56))
+          .width(size.vp(56))
+          .onClick(() => {
+            if (!this.webviewMeta.loading) {
+              this.popuping(true)
+            }
+          })
+        }
+        .width('100%')
+        .height(this.appBar.height)
+        .backgroundColor(Color.White)
+        .justifyContent(FlexAlign.Center)
+        .alignItems(VerticalAlign.Center)
+        .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP])
+
+        Column() {
+          Stack({ alignContent: Alignment.TopStart }) {
+            if (this.rawScriptAccess) {
+              Web({ src: '', controller: this.webviewController })
+                .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM])
+                .runJavaScriptOnDocumentStart(this.documentStartScripts)
+                .runJavaScriptOnDocumentEnd(this.documentEndScripts)
+                .domStorageAccess(this.domStorageAccess)
+                .onControllerAttached(() => {
+                  this.registerScripts()
+                  this.loadAgent()
+                  this.loadUrl()
+                })
+                .onInterceptRequest((e) => {
+                  if (e.request.getRequestUrl() === 'https://linpengteng.github.io/resource/dompet-app/home.png') {
+                    const response = new WebResourceResponse()
+                    response.setResponseData($rawfile('webview/images/app.png'))
+                    response.setResponseMimeType('image/png')
+                    response.setResponseEncoding('utf-8')
+                    response.setResponseIsReady(true)
+                    response.setReasonMessage('OK')
+                    response.setResponseCode(200)
+                    return response
+                  }
+
+                  return null
+                })
+                .onProgressChange((e) => {
+                  if (e.newProgress === 100) {
+                    this.loading(false)
+                  }
+                })
+                .onTitleReceive((e) => {
+                  this.titling(e.title)
+                })
+                .onErrorReceive(() => {
+                  this.loading(false)
+                })
+                .onPageEnd(() => {
+                  this.loading(false)
+                })
+            }
+
+            Loading({
+              bgColor: 'rgba(255, 255, 255, 0.8)',
+              state: this.webviewMeta.loading,
+              desc: '正在加载中...',
+            })
+          }
+          .height('100%')
+          .width('100%')
+        }
+        .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM])
+        .alignItems(HorizontalAlign.Start)
+        .justifyContent(FlexAlign.Start)
+        .backgroundColor(Color.White)
+        .height('100%')
+        .width('100%')
+        .flexShrink(1)
+        .flexGrow(1)
+      }
+      .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM])
+      .backgroundColor(Color.White)
+      .height('100%')
+      .width('100%')
+
+      if (this.webviewMeta.popup) {
+        WebviewTool({
+          webviewController: this.webviewController,
+          visible: this.webviewMeta.popup,
+          closed: () => {
+            this.popuping(false)
+          }
+        })
+      }
+    }
+    .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM])
+    .backgroundColor(Color.White)
+    .height('100%')
+    .width('100%')
+  }
+}

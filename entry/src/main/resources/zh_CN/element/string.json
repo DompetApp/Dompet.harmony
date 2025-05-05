@@ -1,0 +1,460 @@
+{
+  "string": [
+    {
+      "name": "entry_module_description",
+      "value": "电子钱包 入口模块"
+    },
+    {
+      "name": "entry_ability_description",
+      "value": "电子钱包 (鸿蒙系统)"
+    },
+    {
+      "name": "entry_ability_label",
+      "value": "电子钱包"
+    },
+    {
+      "name": "permission_camera_reason",
+      "value": "用于用户拍照和扫描二维码"
+    },
+    {
+      "name": "About_App",
+      "value": "关于 App"
+    },
+    {
+      "name": "Agree_And_SignIn",
+      "value": "同意并登录"
+    },
+    {
+      "name": "Account_Login",
+      "value": "账号登录"
+    },
+    {
+      "name": "Account_Registration",
+      "value": "账号注册"
+    },
+    {
+      "name": "And",
+      "value": "和"
+    },
+    {
+      "name": "available",
+      "value": "已激活"
+    },
+    {
+      "name": "Available",
+      "value": "已激活"
+    },
+    {
+      "name": "Back_App",
+      "value": "返回应用"
+    },
+    {
+      "name": "Balance",
+      "value": "余额"
+    },
+    {
+      "name": "Bank",
+      "value": "银行"
+    },
+    {
+      "name": "Bank_Card",
+      "value": "银行卡"
+    },
+    {
+      "name": "Bind_HuaweiId_Number",
+      "value": "华为账号绑定号码"
+    },
+    {
+      "name": "Cancel",
+      "value": "取消"
+    },
+    {
+      "name": "CardNo",
+      "value": "卡号"
+    },
+    {
+      "name": "Change",
+      "value": "更改"
+    },
+    {
+      "name": "Chinese_zh_CN",
+      "value": "中文 (zh-CN)"
+    },
+    {
+      "name": "Citibank",
+      "value": "花旗银行"
+    },
+    {
+      "name": "Clear_Cache",
+      "value": "清理缓存"
+    },
+    {
+      "name": "Copy_Link",
+      "value": "复制链接"
+    },
+    {
+      "name": "Copy_Successful",
+      "value": "复制成功"
+    },
+    {
+      "name": "David",
+      "value": "David (朋友)"
+    },
+    {
+      "name": "Debit_Card",
+      "value": "借记卡"
+    },
+    {
+      "name": "Date",
+      "value": "日期:"
+    },
+    {
+      "name": "Digital_Wallet",
+      "value": "数字钱包"
+    },
+    {
+      "name": "Display",
+      "value": "显示"
+    },
+    {
+      "name": "Do_you_want_to_logout",
+      "value": "您要退出当前账号吗？"
+    },
+    {
+      "name": "Dompet_Wallet_Privacy_Policy",
+      "value": "电子钱包隐私政策"
+    },
+    {
+      "name": "Don_t_have_an_account_yet",
+      "value": "还没有账户吗？"
+    },
+    {
+      "name": "Emma",
+      "value": "Emma (朋友)"
+    },
+    {
+      "name": "English_en_US",
+      "value": "英文 (en-US)"
+    },
+    {
+      "name": "Failed_to_get_mobile_phone_number",
+      "value": "获取手机号失败！"
+    },
+    {
+      "name": "Failed_to_login_user",
+      "value": "用户登录失败！"
+    },
+    {
+      "name": "Failed_to_register_user",
+      "value": "用户注册失败！"
+    },
+    {
+      "name": "Follow_System_Language",
+      "value": "跟随系统语言"
+    },
+    {
+      "name": "Get_the_local_phone_number",
+      "value": "获取本机手机号"
+    },
+    {
+      "name": "Guest_Mode",
+      "value": "访客模式"
+    },
+    {
+      "name": "Go_To_Register",
+      "value": "前往注册"
+    },
+    {
+      "name": "Hide",
+      "value": "隐藏"
+    },
+    {
+      "name": "Huawei_Account_Authentication_Agreement",
+      "value": "华为账号用户认证协议"
+    },
+    {
+      "name": "Huawei_Account_OneTap_Login",
+      "value": "华为账号一键登录"
+    },
+    {
+      "name": "I_have_read_and_agree",
+      "value": "我已阅读并同意"
+    },
+    {
+      "name": "Language",
+      "value": "语言"
+    },
+    {
+      "name": "Last_year",
+      "value": "去年"
+    },
+    {
+      "name": "Loading",
+      "value": "加载中..."
+    },
+    {
+      "name": "Loading_logs_please_wait",
+      "value": "日志读取中，请稍后..."
+    },
+    {
+      "name": "Login_request_timed_out",
+      "value": "登录请求超时！"
+    },
+    {
+      "name": "Logging_in",
+      "value": "正在登录中..."
+    },
+    {
+      "name": "Logout",
+      "value": "退出"
+    },
+    {
+      "name": "Me",
+      "value": "我"
+    },
+    {
+      "name": "Message_Notification",
+      "value": "消息通知"
+    },
+    {
+      "name": "Money",
+      "value": "金额"
+    },
+    {
+      "name": "My_Bank_Card",
+      "value": "我的银行卡"
+    },
+    {
+      "name": "Netflix",
+      "value": "Netflix"
+    },
+    {
+      "name": "Network_request_failed",
+      "value": "网络请求失败"
+    },
+    {
+      "name": "Network_timeout",
+      "value": "网络超时！"
+    },
+    {
+      "name": "Notification",
+      "value": "通知"
+    },
+    {
+      "name": "Open_Browser",
+      "value": "打开浏览器"
+    },
+    {
+      "name": "Other_Login_Methods",
+      "value": "其他登录方式"
+    },
+    {
+      "name": "Payment",
+      "value": "支付"
+    },
+    {
+      "name": "PayPal",
+      "value": "PayPal"
+    },
+    {
+      "name": "Password",
+      "value": "密码"
+    },
+    {
+      "name": "Person_Profile",
+      "value": "个人信息"
+    },
+    {
+      "name": "Please_input_confirm_password",
+      "value": "请输入确认密码..."
+    },
+    {
+      "name": "Please_input_password",
+      "value": "请输入密码..."
+    },
+    {
+      "name": "Please_input_phone_number",
+      "value": "请输入手机号..."
+    },
+    {
+      "name": "Refresh_Page",
+      "value": "刷新页面"
+    },
+    {
+      "name": "Registration_request_timed_out",
+      "value": "注册请求超时！"
+    },
+    {
+      "name": "Requesting",
+      "value": "请求中..."
+    },
+    {
+      "name": "Run_Logger",
+      "value": "运行日志"
+    },
+    {
+      "name": "Self",
+      "value": "自己"
+    },
+    {
+      "name": "Settings",
+      "value": "设置"
+    },
+    {
+      "name": "Share_Website",
+      "value": "分享网页"
+    },
+    {
+      "name": "State_Colon",
+      "value": "状态:"
+    },
+    {
+      "name": "Status",
+      "value": "状态"
+    },
+    {
+      "name": "Switch_Language",
+      "value": "切换语言"
+    },
+    {
+      "name": "System_abnormality",
+      "value": "系统异常！"
+    },
+    {
+      "name": "The_amount_entered_cannot_exceed",
+      "value": "输入的金额不能超过 %1$d"
+    },
+    {
+      "name": "The_confirm_password_is_incorrect",
+      "value": "确认密码不正确！"
+    },
+    {
+      "name": "The_password_is_empty",
+      "value": "密码为空!"
+    },
+    {
+      "name": "The_password_is_incorrect",
+      "value": "密码不正确！"
+    },
+    {
+      "name": "The_password_is_less_characters",
+      "value": "密码长度少于 %1$d 个字符！"
+    },
+    {
+      "name": "The_phone_is_empty",
+      "value": "手机号为空！"
+    },
+    {
+      "name": "The_phone_format_is_incorrect",
+      "value": "手机号格式错误！"
+    },
+    {
+      "name": "This_account_has_already_been_registered",
+      "value": "该账号已被注册！"
+    },
+    {
+      "name": "This_account_has_not_been_registered_yet",
+      "value": "该账号尚未注册！"
+    },
+    {
+      "name": "This_year",
+      "value": "今年"
+    },
+    {
+      "name": "Top_up",
+      "value": "充值"
+    },
+    {
+      "name": "Total",
+      "value": "总计"
+    },
+    {
+      "name": "Transactions",
+      "value": "账单"
+    },
+    {
+      "name": "Transfer",
+      "value": "转账"
+    },
+    {
+      "name": "Turn_Debug",
+      "value": "开启调试"
+    },
+    {
+      "name": "Type",
+      "value": "类型"
+    },
+    {
+      "name": "Unknown",
+      "value": "未知"
+    },
+    {
+      "name": "Update",
+      "value": "更新"
+    },
+    {
+      "name": "Update_user_successfully",
+      "value": "更新用户成功！"
+    },
+    {
+      "name": "User_Agreement_And_Privacy_Policy",
+      "value": "用户协议和隐私政策"
+    },
+    {
+      "name": "Username",
+      "value": "用户名"
+    },
+    {
+      "name": "Unavailable",
+      "value": "不可用"
+    },
+    {
+      "name": "Valid",
+      "value": "有效期"
+    },
+    {
+      "name": "View_All",
+      "value": "详情"
+    },
+    {
+      "name": "Welcome_back",
+      "value": "欢迎回来"
+    },
+    {
+      "name": "You_have_account",
+      "value": "您已有帐号？"
+    },
+    {
+      "name": "You_switched_to_device_system_language",
+      "value": "您已切换为设备系统语言！"
+    },
+    {
+      "name": "You_switched_to_English_en_US",
+      "value": "您已切换为 英文 (en-US)！"
+    },
+    {
+      "name": "You_switched_to_Chinese_zh_CN",
+      "value": "您已切换为 中文 (zh-CN)！"
+    },
+    {
+      "name": "You_paid_money_to",
+      "value": "您给 %1$s 付了一笔钱"
+    },
+    {
+      "name": "You_received_a_top_up_from",
+      "value": "您收到了来自 %1$s 的充值"
+    },
+    {
+      "name": "You_received_a_transfer_from",
+      "value": "您收到了来自 %1$s 的转账"
+    },
+    {
+      "name": "You_top_up_some_money",
+      "value": "您给 \"自己\" 充值了一笔钱"
+    },
+    {
+      "name": "You_transferred_money_to",
+      "value": "您给 %1$s 转了一笔钱"
+    }
+  ]
+}

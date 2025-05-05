@@ -1,0 +1,101 @@
+{
+  "module": {
+    "name": "entry",
+    "type": "entry",
+    "description": "$string:entry_module_description",
+    "deviceTypes": [
+      "phone"
+    ],
+    "querySchemes": [
+      "https",
+      "http",
+    ],
+    "installationFree": false,
+    "deliveryWithInstall": true,
+    "mainElement": "EntryAbility",
+    "srcEntry": "./ets/application/AbilityStage.ets",
+    "appStartup": "$profile:startup_config",
+    "pages": "$profile:main_pages",
+    "requestPermissions": [
+      {
+        "name": "ohos.permission.GET_NETWORK_INFO",
+        "usedScene": {
+          "abilities": [
+            "EntryAbility"
+          ],
+          "when":"always"
+        }
+      },
+      {
+        "name" : "ohos.permission.INTERNET",
+        "usedScene": {
+          "abilities": [
+            "EntryAbility"
+          ],
+          "when":"always"
+        }
+      },
+      {
+        "name": "ohos.permission.VIBRATE",
+        "usedScene": {
+          "abilities": [
+            "EntryAbility"
+          ],
+          "when":"always"
+        }
+      },
+      {
+        "name": "ohos.permission.CAMERA",
+        "reason": "$string:permission_camera_reason",
+        "usedScene": {
+          "abilities": [
+            "EntryAbility"
+          ],
+          "when": "always"
+        }
+      }
+    ],
+    "extensionAbilities": [
+      {
+        "type": "backup",
+        "name": "EntryBackupAbility",
+        "srcEntry": "./ets/application/EntryBackupAbility.ets",
+        "exported": false,
+        "metadata": [
+          {
+            "name": "ohos.extension.backup",
+            "resource": "$profile:configuration"
+          }
+        ]
+      }
+    ],
+    "abilities": [
+      {
+        "name": "EntryAbility",
+        "icon": "$media:layered_image",
+        "label": "$string:entry_ability_label",
+        "description": "$string:entry_ability_description",
+        "srcEntry": "./ets/application/EntryAbility.ets",
+        "startWindowBackground": "$color:start_window_background",
+        "startWindowIcon": "$media:startIcon",
+        "exported": true,
+        "skills": [
+          {
+            "entities": [
+              "entity.system.home"
+            ],
+            "actions": [
+              "action.system.home"
+            ]
+          }
+        ]
+      }
+    ],
+    "metadata": [
+      {
+        "name": "client_id",
+        "value": "6917563109823638768"
+      }
+    ]
+  }
+}

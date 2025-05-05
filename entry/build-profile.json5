@@ -1,0 +1,38 @@
+{
+  "apiType": "stageMode",
+  "buildOptionSet": [
+    {
+      "name": "release",
+      "arkOptions": {
+        "obfuscation": {
+          "ruleOptions": {
+            "enable": false,
+            "files": [
+              "./obfuscation-rules.txt"
+            ]
+          }
+        },
+        "types": [
+          "./src/main/ets/types/global",
+          "./src/main/ets/types/axios"
+        ]
+      }
+    },
+  ],
+  "buildOption": {
+    "arkOptions": {
+      "types": [
+        "./src/main/ets/types/axios",
+        "./src/main/ets/types/global"
+      ]
+    }
+  },
+  "targets": [
+    {
+      "name": "default"
+    },
+    {
+      "name": "ohosTest",
+    }
+  ]
+}

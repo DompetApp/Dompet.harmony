@@ -1,0 +1,17 @@
+{
+  "startupTasks": [
+    {
+      "name": "HMRouterInitStartupTask",
+      "srcEntry": "./ets/application/StartupAppRouter.ets",
+      "runOnThread": "mainThread",
+      "waitOnMainThread": true
+    },
+    {
+      "name": "ImageKnifeInitStartupTask",
+      "srcEntry": "./ets/application/StartupAppImager.ets",
+      "runOnThread": "mainThread",
+      "waitOnMainThread": true
+    }
+  ],
+  "configEntry": "./ets/application/StartupConfig.ets"
+}
