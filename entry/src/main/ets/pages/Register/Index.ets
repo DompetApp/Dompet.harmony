@@ -13,6 +13,7 @@ import { event } from "../../globals/event"
 import { Empty } from "../../utils/empty"
 import { User } from "../../models/user"
 import { size } from "../../utils/size"
+import Axios from "@ohos/axios"
 
 
 @HMRouter({
@@ -26,6 +27,7 @@ export struct PageRegister {
   @Local email: string = ''
   @Local phone: string = ''
   @Local password: string = ''
+  @Local avatarUri: string = ''
   @Local confirmPwd: string = ''
   @Local context: common.UIAbilityContext = getContext(this) as Unknown
   @Local focusMgr: FocusMgr = new FocusMgr(this.getUIContext())
@@ -457,6 +459,16 @@ export struct PageRegister {
     .width('100%')
   }
 
+  async getAccountAvatar(avatar: string) {
+    if (!avatar) {
+      return null
+    }
+
+    return Axios.get(avatar).then((response: Unknown) => {
+      return new Uint8Array(response.data)
+    })
+  }
+
   async aboutToDisappear() {
     this.focusMgr.blur()
   }
@@ -534,10 +546,11 @@ export struct PageRegister {
 
   async loginUser() {
     const user = await event.createUser(User.from({
-      uid: this.uid,
-      name: this.name,
-      phone: this.phone,
+      avatar: await this.getAccountAvatar(this.avatarUri).catch(() => null),
       email: this.email,
+      phone: this.phone,
+      name: this.name,
+      uid: this.uid,
     }))
 
     if (!user) {

@@ -32,14 +32,18 @@ export class Servicer {
       scope: '',
     }
 
-    const params: Recorder = Object({
-      grant_type: 'authorization_code',
-      client_secret: '',
-      client_id: '',
-      code: code,
-    })
+    const headers: Recorder = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
 
-    return Axios.post('https://oauth-login.cloud.huawei.com/oauth2/v3/token', params).then((response: Unknown) => {
+    const params: Recorder = {
+      'grant_type': 'authorization_code',
+      'client_secret': '',
+      'client_id': '',
+      'code': code,
+    }
+
+    return Axios.post('https://oauth-login.cloud.huawei.com/oauth2/v3/token', params, { headers }).then((response: Unknown) => {
       credential.refresh_token = response.data.refresh_token
       credential.access_token = response.data.access_token
       credential.token_type = response.data.token_type
@@ -63,22 +67,26 @@ export class Servicer {
       email: '',
     }
 
-    const params: Recorder = Object({
-      access_token: token,
-      getNickName: 1,
-    })
+    const headers: Recorder = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
 
-    return Axios.post('https://account.cloud.huawei.com/rest.php?nsp_svc=GOpen.User.getInfo', params)
+    const params: Recorder = {
+      'access_token': token,
+      'getNickName': 1,
+    }
+
+    return Axios.post('https://account.cloud.huawei.com/rest.php?nsp_svc=GOpen.User.getInfo', params, { headers })
       .then((response: Unknown) => {
-        profile.phoneCountryCode = response.data.phoneCountryCode
-        profile.purePhoneNumber = response.data.purePhoneNumber
-        profile.displayNameFlag = response.data.displayNameFlag
-        profile.headPictureURL = response.data.headPictureURL
-        profile.mobileNumber = response.data.mobileNumber
-        profile.displayName = response.data.displayName
-        profile.unionID = response.data.unionID
-        profile.openID = response.data.openID
-        profile.email = response.data.email
+        profile.phoneCountryCode = response.data.phoneCountryCode ?? ''
+        profile.purePhoneNumber = response.data.purePhoneNumber ?? ''
+        profile.displayNameFlag = response.data.displayNameFlag ?? 1
+        profile.headPictureURL = response.data.headPictureURL ?? ''
+        profile.mobileNumber = response.data.mobileNumber ?? ''
+        profile.displayName = response.data.displayName ?? ''
+        profile.unionID = response.data.unionID ?? ''
+        profile.openID = response.data.openID ?? ''
+        profile.email = response.data.email ?? ''
         return profile
       })
   }

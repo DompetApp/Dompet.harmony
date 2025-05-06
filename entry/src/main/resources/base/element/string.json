@@ -157,6 +157,10 @@
       "value": "Get the local phone number"
     },
     {
+      "name": "Getting_phone_number",
+      "value": "Getting phone number..."
+    },
+    {
       "name": "Guest_Mode",
       "value": "Guest Mode"
     },

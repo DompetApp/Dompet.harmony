@@ -14,6 +14,7 @@ import { event } from "../../globals/event"
 import { Empty } from "../../utils/empty"
 import { User } from "../../models/user"
 import { size } from "../../utils/size"
+import Axios from "@ohos/axios"
 
 
 @ComponentV2
@@ -22,12 +23,17 @@ export struct LoginByPassword {
   @Local name: string = ''
   @Local email: string = ''
   @Local phone: string = ''
+  @Local openID: string = ''
+  @Local unionID: string = ''
+  @Local nickName: string = ''
   @Local password: string = ''
+  @Local avatarUri: string = ''
   @Local authorizationCode: string = ''
   @Event visitRegister: () => void = Empty.fn
   @Local context: common.UIAbilityContext = getContext(this) as Unknown
   @Local focusMgr: FocusMgr = new FocusMgr(this.getUIContext())
   @Local selected: boolean = false
+  @Local phoneing: boolean = false
   @Local guesting: boolean = false
   @Local loading: boolean = false
 
@@ -139,29 +145,55 @@ export struct LoginByPassword {
     .width('100%')
   }
 
+  async getAccountAvatar(avatar: string) {
+    if (!avatar) {
+      return null
+    }
+
+    return Axios.get(avatar).then((response: Unknown) => {
+      return new Uint8Array(response.data)
+    })
+  }
+
   async getAccountPhone() {
-    const authRequest = new authentication.HuaweiIDProvider().createAuthorizationWithHuaweiIDRequest()
-    const controller = new authentication.AuthenticationController()
-
-    authRequest.scopes = ['phone']
-    authRequest.permissions = ['serviceauthcode']
-    authRequest.forceAuthorization = true
-
     try {
+      this.phoneing = true
+
+      const authRequest = new authentication.HuaweiIDProvider().createAuthorizationWithHuaweiIDRequest()
+      const controller = new authentication.AuthenticationController(this.context)
+
+      authRequest.scopes = ['profile']
+      authRequest.permissions = ['serviceauthcode']
+      authRequest.forceAuthorization = true
+
       this.authorizationCode = await controller.executeRequest(authRequest)
         .then((response: authentication.AuthorizationWithHuaweiIDResponse) => {
+          this.email = response.data?.email ?? ''
+          this.openID = response.data?.openID ?? ''
+          this.unionID = response.data?.unionID ?? ''
+          this.nickName = response.data?.nickName ?? ''
+          this.avatarUri = response.data?.avatarUri ?? ''
           return response.data?.authorizationCode ?? ''
         })
 
       const credential = await Servicer.getUserCredential(this.authorizationCode)
       const profile = await Servicer.getUserProfile(credential.access_token)
 
-      this.uid = crypto.md5(this.phone)
-      this.name = profile.displayName
+      if (!profile.purePhoneNumber) {
+        throw new Error('profile.purePhoneNumber is empty')
+      }
+
+      this.avatarUri = profile.headPictureURL ?? this.avatarUri
+      this.name = profile.displayName ?? this.nickName ?? this.phone
+      this.phone = profile.purePhoneNumber
       this.email = profile.email
     } catch {
       Toast.show({ message: $r('app.string.Failed_to_get_mobile_phone_number') })
     }
+
+    this.phoneing = false
+    this.guesting = false
+    this.loading = false
   }
 
   async checkAgreements() {
@@ -211,6 +243,7 @@ export struct LoginByPassword {
 
       if (!appAccounts.some(account => account.owner === bundleName && account.name === this.phone)) {
         Toast.show({ message: $r('app.string.This_account_has_not_been_registered_yet') })
+        this.phoneing = false
         this.guesting = false
         this.loading = false
         return
@@ -218,17 +251,19 @@ export struct LoginByPassword {
 
       if (crypto.md5(this.password) !== await appAccountMgr.getCredential(this.phone, 'password')) {
         Toast.show({ message: $r('app.string.The_password_is_incorrect') })
+        this.phoneing = false
         this.guesting = false
         this.loading = false
         return
       }
 
       this.uid = crypto.md5(this.phone)
-      this.name = this.phone
+      this.name ??= this.phone
 
       this.loginUser()
     } catch {
       Toast.show({ message: $r('app.string.Failed_to_login_user') })
+      this.phoneing = false
       this.guesting = false
       this.loading = false
     }
@@ -250,6 +285,7 @@ export struct LoginByPassword {
 
   async loginUser() {
     const user = await event.createUser(User.from({
+      avatar: await this.getAccountAvatar(this.avatarUri).catch(() => null),
       phone: this.phone,
       email: this.email,
       name: this.name,
@@ -258,12 +294,14 @@ export struct LoginByPassword {
 
     if (!user) {
       Toast.show({ message: $r('app.string.Failed_to_login_user') })
+      this.phoneing = false
       this.guesting = false
       this.loading = false
       return
     }
 
     await event.login().catch(Empty.fn)
+    this.phoneing = false
     this.guesting = false
     this.loading = false
   }
@@ -420,8 +458,16 @@ export struct LoginByPassword {
                   .fontSize(14)
               }
 
-              if (!this.loading && !this.guesting) {
+              if (!this.loading && !this.guesting && !this.phoneing) {
                 Text(this.checkPhone() ? $r('app.string.Account_Login') : $r('app.string.Get_the_local_phone_number'))
+                  .fontWeight(FontWeight.Medium)
+                  .letterSpacing(size.vp(0.5))
+                  .fontColor(0xffffff)
+                  .fontSize(14)
+              }
+
+              if (!this.loading && !this.guesting && this.phoneing) {
+                Text($r('app.string.Getting_phone_number'))
                   .fontWeight(FontWeight.Medium)
                   .letterSpacing(size.vp(0.5))
                   .fontColor(0xffffff)
@@ -430,7 +476,7 @@ export struct LoginByPassword {
             }
           }
           .onClick(() => this.checkPhone() ? this.loginByPassword() : this.getAccountPhone())
-          .backgroundColor(this.loading || this.guesting ? 0xeb9fab : 0xce0e2d)
+          .backgroundColor(this.loading || this.guesting || this.phoneing ? 0xeb9fab : 0xce0e2d)
           .enabled(!this.loading && !this.guesting)
           .margin({ bottom: size.vp(18) })
           .borderRadius(size.vp(20))
@@ -446,7 +492,7 @@ export struct LoginByPassword {
                 .fontSize(14)
             }
           }
-          .enabled(!this.loading && !this.guesting)
+          .enabled(!this.loading && !this.guesting || this.phoneing)
           .onClick(() => this.visitRegister())
           .margin({ bottom: size.vp(18) })
           .backgroundColor(0xe6e7e9)
@@ -464,7 +510,7 @@ export struct LoginByPassword {
 
         Column() {
           Text($r('app.string.Guest_Mode'))
-            .enabled(!this.loading && !this.guesting)
+            .enabled(!this.loading && !this.guesting || this.phoneing)
             .onClick(() => this.loginByGuest())
             .fontWeight(FontWeight.Medium)
             .letterSpacing(size.vp(0.5))

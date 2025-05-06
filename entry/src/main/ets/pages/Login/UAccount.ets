@@ -4,11 +4,14 @@ import { AppRouterMgr } from "../../router/manager"
 import authentication from "@hms.core.authentication"
 import { Dialog } from "../../components/Dialog/Index"
 import { Toast } from "../../components/Toast/Index"
+import { Servicer } from "../../configure/service"
 import { WebviewMeta } from "../../models/web"
+import { crypto } from "../../utils/crypto"
 import { event } from "../../globals/event"
 import { Empty } from "../../utils/empty"
 import { User } from "../../models/user"
 import { size } from "../../utils/size"
+import { util } from "@kit.ArkTS"
 import Axios from "@ohos/axios"
 
 
@@ -23,6 +26,7 @@ export struct LoginByAccount {
   @Local nickName: string = ''
   @Local avatarUri: string = ''
   @Local anonymousPhone: string = ''
+  @Local authorizationCode: string = ''
   @Event switchMode: () => void = Empty.fn
   @Local context: Context = getContext(this) as Unknown
   @Local selected: boolean = false
@@ -149,7 +153,7 @@ export struct LoginByAccount {
 
   async getAnonymousPhone() {
     const authRequest = new authentication.HuaweiIDProvider().createAuthorizationWithHuaweiIDRequest()
-    const controller = new authentication.AuthenticationController()
+    const controller = new authentication.AuthenticationController(this.context)
 
     authRequest.scopes = ['quickLoginAnonymousPhone']
     authRequest.forceAuthorization = false
@@ -157,11 +161,6 @@ export struct LoginByAccount {
     return controller.executeRequest(authRequest)
       .then((response: authentication.AuthorizationWithHuaweiIDResponse) => {
         this.anonymousPhone = (response.data?.extraInfo?.quickLoginAnonymousPhone ?? '') as string
-        this.avatarUri = response.data?.avatarUri ?? ''
-        this.nickName = response.data?.nickName ?? ''
-        this.unionID = response.data?.unionID ?? ''
-        this.openID = response.data?.openID ?? ''
-        this.email = response.data?.email ?? ''
       })
   }
 
@@ -185,7 +184,45 @@ export struct LoginByAccount {
       return
     }
 
-    this.loading = true
+    try {
+      this.loading = true
+
+      const authRequest = new authentication.HuaweiIDProvider().createAuthorizationWithHuaweiIDRequest()
+      const controller = new authentication.AuthenticationController(this.context)
+
+      authRequest.scopes = ['profile']
+      authRequest.permissions = ['serviceauthcode']
+      authRequest.forceAuthorization = true
+
+      this.authorizationCode = await controller.executeRequest(authRequest)
+        .then((response: authentication.AuthorizationWithHuaweiIDResponse) => {
+          this.email = response.data?.email ?? ''
+          this.openID = response.data?.openID ?? ''
+          this.unionID = response.data?.unionID ?? ''
+          this.nickName = response.data?.nickName ?? ''
+          this.avatarUri = response.data?.avatarUri ?? ''
+          return response.data?.authorizationCode ?? ''
+        })
+
+      const credential = await Servicer.getUserCredential(this.authorizationCode)
+      const profile = await Servicer.getUserProfile(credential.access_token)
+
+      if (!profile.purePhoneNumber) {
+        throw new Error('profile.purePhoneNumber is empty')
+      }
+
+      this.phone = profile.purePhoneNumber
+      this.uid = crypto.md5(profile.purePhoneNumber)
+      this.avatarUri = profile.headPictureURL ?? this.avatarUri
+      this.name = profile.displayName ?? this.nickName ?? this.phone
+      this.email = profile.email
+
+      this.loginUser()
+    } catch {
+      Toast.show({ message: $r('app.string.Failed_to_login_user') })
+      this.guesting = false
+      this.loading = false
+    }
   }
 
   async loginByGuest() {
@@ -318,6 +355,7 @@ export struct LoginByAccount {
           }
           .backgroundColor(this.loading || this.guesting ? 0xeb9fab : 0xce0e2d)
           .enabled(!this.loading && !this.guesting)
+          .onClick(() => this.loginByAccount())
           .margin({ bottom: size.vp(18) })
           .borderRadius(size.vp(20))
           .height(size.vp(40))

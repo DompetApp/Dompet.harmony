@@ -6,10 +6,9 @@
     "@hadss/hmrouter": "^1.1.0-beta.0",
     "@ohos/imageknife": "^3.2.5",
     "@ohos/crypto-js": "^2.0.4",
-    "@mcui/mccharts": "^2.8.9",
     "@ohos/axios": "^2.2.6",
     "@hitro/ark": "^1.1.1",
-    "logger": "^1.2.6",
+    "logger": "^1.2.6"
   },
   "devDependencies": {
     "@ohos/hypium": "1.0.19",

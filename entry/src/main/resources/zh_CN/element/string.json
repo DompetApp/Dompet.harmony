@@ -157,6 +157,10 @@
       "value": "获取本机手机号"
     },
     {
+      "name": "Getting_phone_number",
+      "value": "正在获取手机中..."
+    },
+    {
       "name": "Guest_Mode",
       "value": "访客模式"
     },

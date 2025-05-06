@@ -12,6 +12,7 @@ import { ICard } from "../../models/card"
 import { IUser } from "../../models/user"
 import { Empty } from "../../utils/empty"
 import { size } from "../../utils/size"
+import { UIUtils } from "@kit.ArkUI"
 
 
 @HMRouter({
@@ -45,10 +46,9 @@ export struct PageHome {
   @Computed
   get loginAvatar() {
     if (this.loginUser.avatar) {
-      const width = vp2px(size.vp(44))
-      const height = vp2px(size.vp(44))
-      const imgSize: image.Size = { width: width, height: height }
-      return image.createPixelMapSync(this.loginUser.avatar.buffer, { size: imgSize })
+      const avatar = UIUtils.getTarget(this.loginUser.avatar)
+      const imgSource = image.createImageSource(avatar.buffer)
+      return imgSource.createPixelMapSync()
     }
 
     return $rawfile('images/home/avatar.png')
@@ -615,10 +615,6 @@ export struct PageHome {
     .backgroundColor('rgba(255, 255, 255, 0.88)')
     .height(size.hp(this.footHeight))
     .width('100%')
-  }
-
-  aboutToAppear() {
-    store.visited()
   }
 
   build() {

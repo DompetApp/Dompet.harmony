@@ -1,11 +1,11 @@
-import { device } from '../../configure/device'
-import { IYearOrder } from '../../models/order'
-import { YearOrder } from '../../models/order'
-import { store } from '../../globals/store'
-import { IOrder } from '../../models/order'
-import { IOrders } from '../../models/order'
-import { webview } from '@kit.ArkWeb'
-import { display } from '@kit.ArkUI'
+import { device } from "../../configure/device"
+import { IYearOrder } from "../../models/order"
+import { YearOrder } from "../../models/order"
+import { IOrders } from "../../models/order"
+import { IOrder } from "../../models/order"
+import { store } from "../../globals/store"
+import { webview } from "@kit.ArkWeb"
+import { display } from "@kit.ArkUI"
 
 
 @ComponentV2
@@ -31,10 +31,10 @@ export struct YearBalanceChart {
   }
 
   aboutToAppear() {
-    this.transfer()
+    this.converter()
   }
 
-  transfer() {
+  converter() {
     let number = 0
     const groups: IYearOrder[] = []
     const reverses: IOrder[] = [...this.bankOrders.list].reverse()
