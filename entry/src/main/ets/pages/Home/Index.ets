@@ -221,16 +221,16 @@ export struct PageHome {
       .height('100%')
       .width('100%')
     }
-    .padding({
-      top: this.headHeight - size.vp(56),
-      left: size.vp(32),
-      right: size.vp(32),
-    })
     .shadow({
       color: this.showShadow ? 'rgba(0, 0, 0, 0.038)' : Color.Transparent,
       radius: this.showShadow ? vp2px(10) : 0,
       offsetY: vp2px(1.2),
       offsetX: vp2px(0),
+    })
+    .padding({
+      top: this.headHeight - size.vp(56),
+      left: size.vp(32),
+      right: size.vp(32),
     })
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP])
     .height(size.hp(this.headHeight))

@@ -42,6 +42,7 @@ export struct PageLogin {
     Column() {
       Column() {
         Image($rawfile('images/auth/back.png'))
+          .onClick(() => this.switchMode())
           .margin({ left: size.vp(20) })
           .objectFit(ImageFit.Fill)
           .height(size.vp(36))
@@ -56,7 +57,6 @@ export struct PageLogin {
     .height(size.vp(56))
     .justifyContent(FlexAlign.Start)
     .alignItems(HorizontalAlign.Center)
-    .onClick(() => this.switchMode())
   }
 
   build() {

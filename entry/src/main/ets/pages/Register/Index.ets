@@ -39,6 +39,7 @@ export struct PageRegister {
     Column() {
       Column() {
         Image($rawfile('images/auth/back.png'))
+          .onClick(() => AppRouterMgr.pop())
           .margin({ left: size.vp(20) })
           .objectFit(ImageFit.Fill)
           .height(size.vp(36))
@@ -53,7 +54,6 @@ export struct PageRegister {
     .height(size.vp(56))
     .justifyContent(FlexAlign.Start)
     .alignItems(HorizontalAlign.Center)
-    .onClick(() => AppRouterMgr.pop())
   }
 
   @Builder
