@@ -512,10 +512,23 @@ export struct LoginByPassword {
           Text($r('app.string.Guest_Mode'))
             .enabled(!this.loading && !this.guesting || this.phoneing)
             .onClick(() => this.loginByGuest())
+            .backgroundColor(Color.Transparent)
             .fontWeight(FontWeight.Medium)
             .letterSpacing(size.vp(0.5))
+            .borderRadius(size.vp(20))
+            .fontSize(size.vp(14))
             .fontColor(0x909399)
-            .fontSize(14)
+            .stateStyles({
+              pressed: {
+                .backgroundColor(0xe6e7e9)
+              }
+            })
+            .padding({
+              top: size.vp(10),
+              left: size.vp(22),
+              right: size.vp(22),
+              bottom: size.vp(10),
+            })
         }
         .justifyContent(FlexAlign.Center)
         .alignItems(HorizontalAlign.Center)

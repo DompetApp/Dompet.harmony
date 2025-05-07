@@ -23,6 +23,7 @@ export struct PageWebview {
   @Local documentEndScripts: Array<ScriptItem> = []
   @Local documentStartScripts: Array<ScriptItem> = []
   @Local webviewController: webview.WebviewController = new webview.WebviewController()
+  @Local webviewBridger: HMWBridger = new HMWBridger(this.webviewController) as Unknown
   @Local webviewMeta: IWebviewMeta = AppRouterMgr.getCurrentParam() as Unknown
   @Local context: common.UIAbilityContext = getContext(this) as Unknown
 
@@ -149,7 +150,7 @@ export struct PageWebview {
   }
 
   async registerScripts() {
-    this.webviewController.registerJavaScriptProxy(new HMWBridger(), 'harmony_webview', ['caller'])
+    this.webviewController.registerJavaScriptProxy(this.webviewBridger, 'harmony_webview', ['caller'])
   }
 
   async aboutToDisappear() {
@@ -158,6 +159,7 @@ export struct PageWebview {
 
   async unregisterScripts() {
     this.webviewController.deleteJavaScriptRegister('harmony_webview')
+    this.webviewBridger.webviewController = null
   }
 
   async titling(title: string) {

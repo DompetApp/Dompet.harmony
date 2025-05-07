@@ -1,3 +1,4 @@
+import { webview } from "@kit.ArkWeb"
 import { AppNav } from "../../router/constants"
 import { AppRouter } from "../../router/constants"
 import { AppRouterMgr } from "../../router/manager"
@@ -5,76 +6,31 @@ import { BridgeResult } from "../../models/bridger"
 
 
 export class HMWBridger {
-  async caller(type: string, ...rest: Unknown[]) {
-    if (type === 'CallRelaunch') {
-      return this.relaunch(...rest)
-    }
+  public webviewController: webview.WebviewController | null = null
 
-    if (type === 'CallRedirectTo') {
-      return this.redirectTo(...rest)
+  constructor(webviewController?: webview.WebviewController | null) {
+    this.webviewController = webviewController || null
+  }
+
+  async caller(type: string, ...rest: Unknown[]): Promise<BridgeResult> {
+    if (type === 'CallNavigateBack') {
+      return this.navigateBack(...rest)
     }
 
     if (type === 'CallNavigateTo') {
       return this.navigateTo(...rest)
     }
 
-    if (type === 'CallNavigateBack') {
-      return this.navigateBack(...rest)
+    if (type === 'CallRedirectTo') {
+      return this.redirectTo(...rest)
     }
 
     if (type === 'CallScanQRCode') {
       return this.scanQRCode(...rest)
     }
 
-    return Promise.resolve(BridgeResult.failure())
-  }
-
-  async relaunch(options: Recorder = {}): Promise<BridgeResult> {
-    const page: string | null = options.page
-
-    if (typeof page !== 'string') {
-      return BridgeResult.failure({ message: '[page] was not provided or invalid' })
-    }
-
-    try {
-      await AppRouterMgr.reset({ pageUrl: page })
-      return BridgeResult.success()
-    } catch {
-      /* e */
-    }
-
-    return BridgeResult.failure()
-  }
-
-  async redirectTo(options: Recorder = {}): Promise<BridgeResult> {
-    const page: string | null = options.page
-
-    if (typeof page !== 'string') {
-      return BridgeResult.failure({ message: '[page] was not provided or invalid' })
-    }
-
-    try {
-      await AppRouterMgr.replace({ pageUrl: page })
-      return BridgeResult.success()
-    } catch {
-      /* e */
-    }
-
-    return BridgeResult.failure()
-  }
-
-  async navigateTo(options: Recorder = {}): Promise<BridgeResult> {
-    const page: string | null = options.page
-
-    if (typeof page !== 'string') {
-      return BridgeResult.failure({ message: '[page] was not provided or invalid' })
-    }
-
-    try {
-      await AppRouterMgr.push({ pageUrl: page })
-      return BridgeResult.success()
-    } catch {
-      /* e */
+    if (type === 'CallRelaunch') {
+      return this.relaunch(...rest)
     }
 
     return BridgeResult.failure()
@@ -110,6 +66,40 @@ export class HMWBridger {
     return BridgeResult.failure()
   }
 
+  async navigateTo(options: Recorder = {}): Promise<BridgeResult> {
+    const page: string | null = options.page
+
+    if (typeof page !== 'string') {
+      return BridgeResult.failure({ message: '[page] was not provided or invalid' })
+    }
+
+    try {
+      await AppRouterMgr.push({ pageUrl: page })
+      return BridgeResult.success()
+    } catch {
+      /* e */
+    }
+
+    return BridgeResult.failure()
+  }
+
+  async redirectTo(options: Recorder = {}): Promise<BridgeResult> {
+    const page: string | null = options.page
+
+    if (typeof page !== 'string') {
+      return BridgeResult.failure({ message: '[page] was not provided or invalid' })
+    }
+
+    try {
+      await AppRouterMgr.replace({ pageUrl: page })
+      return BridgeResult.success()
+    } catch {
+      /* e */
+    }
+
+    return BridgeResult.failure()
+  }
+
   async scanQRCode(options: Recorder = {}): Promise<BridgeResult> {
     return new Promise<BridgeResult>(resolve => {
       AppRouterMgr.push({
@@ -123,5 +113,22 @@ export class HMWBridger {
         }
       })
     })
+  }
+
+  async relaunch(options: Recorder = {}): Promise<BridgeResult> {
+    const page: string | null = options.page
+
+    if (typeof page !== 'string') {
+      return BridgeResult.failure({ message: '[page] was not provided or invalid' })
+    }
+
+    try {
+      await AppRouterMgr.reset({ pageUrl: page })
+      return BridgeResult.success()
+    } catch {
+      /* e */
+    }
+
+    return BridgeResult.failure()
   }
 }
