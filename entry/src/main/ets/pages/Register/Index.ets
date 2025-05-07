@@ -35,7 +35,7 @@ export struct PageRegister {
   @Local loading: boolean = false
 
   @Builder
-  backBuilder() {
+  backRouteBuilder() {
     Column() {
       Column() {
         Image($rawfile('images/auth/back.png'))
@@ -57,7 +57,7 @@ export struct PageRegister {
   }
 
   @Builder
-  scrollBuilder() {
+  scrollAreaBuilder() {
     Scroll() {
       Column() {
         Column() {
@@ -582,8 +582,8 @@ export struct PageRegister {
 
   build() {
     Stack({ alignContent: Alignment.TopStart }) {
-      this.scrollBuilder()
-      this.backBuilder()
+      this.scrollAreaBuilder()
+      this.backRouteBuilder()
     }
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
     .onClick(() => this.focusMgr.blur())

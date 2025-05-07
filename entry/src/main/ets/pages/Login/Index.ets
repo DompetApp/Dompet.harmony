@@ -38,7 +38,7 @@ export struct PageLogin {
   }
 
   @Builder
-  backBuilder() {
+  backRouteBuilder() {
     Column() {
       Column() {
         Image($rawfile('images/auth/back.png'))
@@ -81,7 +81,7 @@ export struct PageLogin {
               })
 
             if (!this.isAnimating && !this.isQuickMode) {
-              this.backBuilder()
+              this.backRouteBuilder()
             }
           }
           .width(size.wmax(640))

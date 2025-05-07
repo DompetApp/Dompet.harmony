@@ -27,14 +27,6 @@ export struct PageWebview {
   @Local webviewMeta: IWebviewMeta = AppRouterMgr.getCurrentParam() as Unknown
   @Local context: common.UIAbilityContext = getContext(this) as Unknown
 
-  @Computed
-  get appBar() {
-    const preset: number = vp2px(size.vp(56))
-    const height: number = device.height - device.top - device.bottom
-    const appBar: Recorder = Object({ height: preset / height * 100 + '%' })
-    return appBar
-  }
-
   async loadUrl() {
     const url = this.webviewMeta.url.trim()
     const html = this.webviewMeta.html.trim()
@@ -260,7 +252,7 @@ export struct PageWebview {
           })
         }
         .width('100%')
-        .height(this.appBar.height)
+        .height(size.hp(size.vp(56)))
         .backgroundColor(Color.White)
         .justifyContent(FlexAlign.Center)
         .alignItems(VerticalAlign.Center)

@@ -1,25 +1,14 @@
 import { AppRouterMgr } from "../../router/manager"
 import { ScanResult } from "../Scanner/-service"
-import { device } from "../../configure/device"
 import { size } from "../../utils/size"
 
 
 @ComponentV2
 export struct ScannerInfo {
-  context: UIContext = this.getUIContext()
   @Require @Param scanResult: ScanResult
+  @Local context: UIContext = this.getUIContext()
   @Local translateX: string | number = '100%'
   @Local running: boolean = false
-
-  @Computed
-  get viewHeight() {
-    return device.height - device.top - device.bottom
-  }
-
-  @Computed
-  get headHeight() {
-    return vp2px(size.vp(56)) / this.viewHeight * 100 + '%'
-  }
 
   aboutToAppear() {
     this.running = true
@@ -73,7 +62,7 @@ export struct ScannerInfo {
           .width(size.vp(56))
       }
       .width('100%')
-      .height(this.headHeight)
+      .height(size.vh(size.vp(56)))
       .backgroundColor(Color.White)
       .justifyContent(FlexAlign.Center)
       .alignItems(VerticalAlign.Center)

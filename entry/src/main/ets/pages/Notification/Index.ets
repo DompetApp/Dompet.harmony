@@ -29,27 +29,23 @@ export struct PageNotification {
     const msgGroups: IGroupMessage[] = []
 
     for (const msg of this.messages.list) {
-      try {
-        const year = new Date(msg.date).getFullYear()
-        const newGroup = GroupMessage.from({ year: year, messages: [] })
+      const year = new Date(msg.date).getFullYear()
+      const newGroup = GroupMessage.from({ year: year, messages: [] })
 
-        const group = msgGroups.find((msg) => msg.year == year) || newGroup
+      const group = msgGroups.find((msg) => msg.year == year) || newGroup
 
-        if (group == newGroup) {
-          msgGroups.push(newGroup)
-        }
-
-        group.messages.push(msg)
-      } catch (e) {
-        /* e */
+      if (group == newGroup) {
+        msgGroups.push(newGroup)
       }
+
+      group.messages.push(msg)
     }
 
     return msgGroups
   }
 
   @Builder
-  backBuilder() {
+  backRouteBuilder() {
     Column() {
       Column() {
         Image($rawfile('images/auth/back.png'))
@@ -280,7 +276,7 @@ export struct PageNotification {
     Stack({ alignContent: Alignment.TopStart }) {
       this.scrollAreaBuilder()
       this.headerAreaBuilder()
-      this.backBuilder()
+      this.backRouteBuilder()
     }
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
     .backgroundColor(0xffffff)
