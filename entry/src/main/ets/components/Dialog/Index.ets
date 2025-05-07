@@ -31,7 +31,7 @@ export class Dialog {
     const isCustomButton = !!options.buttons
 
     if (typeof options.title !== 'string') {
-      options.title = '系统提示'
+      options.title = $r('app.string.System_Prompt')
     }
 
     if (typeof options.message !== 'string' || !options.message.trim()) {
@@ -41,12 +41,12 @@ export class Dialog {
     if (!options.buttons && options.confirmText !== false && options.cancelText !== false) {
       options.buttons = [
         {
-          text: options.cancelText ?? '取消',
+          text: options.cancelText ?? $r('app.string.System_Cancel'),
           color: options.cancelColor ?? '#606266',
           primary: options.cancelPrimary ?? false,
         },
         {
-          text: options.confirmText ?? '确认',
+          text: options.confirmText ?? $r('app.string.System_Confirm'),
           color: options.confirmColor ?? '#000000',
           primary: options.confirmPrimary ?? false,
         }
@@ -56,7 +56,7 @@ export class Dialog {
     if (!options.buttons && options.confirmText !== false && options.cancelText === false) {
       options.buttons = [
         {
-          text: options.confirmText ?? '确认',
+          text: options.confirmText ?? $r('app.string.System_Confirm'),
           color: options.confirmColor ?? '#000000',
           primary: options.confirmPrimary ?? false,
         }
@@ -66,7 +66,7 @@ export class Dialog {
     if (!options.buttons && options.confirmText === false && options.cancelText !== false) {
       options.buttons = [
         {
-          text: options.cancelText ?? '取消',
+          text: options.cancelText ?? $r('app.string.System_Cancel'),
           color: options.cancelColor ?? '#606266',
           primary: options.cancelPrimary ?? false,
         }

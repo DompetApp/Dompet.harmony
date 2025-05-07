@@ -126,7 +126,7 @@ export struct ScannerCodes {
   build() {
     Stack({ alignContent: Alignment.TopStart }) {
       Column() {
-        Text('扫描到多个码，请选择一个打开')
+        Text($r('app.string.Scanner_Multiple_Codes_Tip'))
           .fontColor($r('sys.color.ohos_id_color_primary_contrary'))
           .textOverflow({ overflow: TextOverflow.Ellipsis })
           .constraintSize({ maxWidth: 500 })

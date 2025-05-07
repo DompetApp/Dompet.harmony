@@ -123,11 +123,11 @@ const createAxiosInterceptor = (axios: AxiosInstance) => {
       }
 
       if (error.toString().toLowerCase().indexOf('timeout') > -1) {
-        Toast.show({ message: $r('app.string.Network_timeout') })
+        Toast.show({ message: $r('app.string.System_Network_Timeout') })
         return promise
       }
 
-      Toast.show({ message: message ? message : $r('app.string.System_abnormality') })
+      Toast.show({ message: message ? message : $r('app.string.System_Abnormality') })
       return promise
     }
   )

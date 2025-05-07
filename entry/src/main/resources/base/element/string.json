@@ -17,11 +17,127 @@
       "value": "Used for taking photos and scanning QRCode"
     },
     {
+      "name": "Scanner_Camera_permission_denied",
+      "value": "Camera permission is not enabled"
+    },
+    {
+      "name": "Scanner_Camera_permission_request",
+      "value": "Please enable the \"Camera\" permission in \"Settings\" > \"Apps & services\" > \"Dompet\""
+    },
+    {
+      "name": "Scanner_Exit",
+      "value": "Exit"
+    },
+    {
+      "name": "Scanner_Gallery",
+      "value": "Gallery"
+    },
+    {
+      "name": "Scanner_Go_to_settings",
+      "value": "Go to settings"
+    },
+    {
+      "name": "Scanner_Multiple_Codes_Tip",
+      "value": "Scan multiple codes, please select one to open"
+    },
+    {
+      "name": "Scanner_Rescan",
+      "value": "Rescan"
+    },
+    {
+      "name": "Scanner_Scan_Code",
+      "value": "Scan QRcode/Barcode"
+    },
+    {
+      "name": "Scanner_Scan_Code_Result",
+      "value": "Scan code result"
+    },
+    {
+      "name": "Scanner_Scan_Code_Result_Unknown",
+      "value": "Scan code result unknown"
+    },
+    {
+      "name": "Scanner_Tap_Close",
+      "value": "Tap to close"
+    },
+    {
+      "name": "Scanner_Tap_Open",
+      "value": "Tap to open"
+    },
+    {
+      "name": "Scanner_Unrecognized_Code",
+      "value": "Unrecognized QRcode/Barcode"
+    },
+    {
+      "name": "System_Abnormality",
+      "value": "System Abnormality!"
+    },
+    {
+      "name": "System_Cancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "System_Confirm",
+      "value": "Confirm"
+    },
+    {
+      "name": "System_Loading",
+      "value": "Loading..."
+    },
+    {
+      "name": "System_Network_Timeout",
+      "value": "Network Timeout!"
+    },
+    {
+      "name": "System_Prompt",
+      "value": "System Prompt"
+    },
+    {
+      "name": "Webview_Back_App",
+      "value": "Back Home"
+    },
+    {
+      "name": "Webview_Clear_Cache",
+      "value": "Clear Cache"
+    },
+    {
+      "name": "Webview_Copy_Link",
+      "value": "Copy Link"
+    },
+    {
+      "name": "Webview_Copy_Successful",
+      "value": "Copy Successful"
+    },
+    {
+      "name": "Webview_Loading",
+      "value": "Loading..."
+    },
+    {
+      "name": "Webview_Open_Browser",
+      "value": "Open Browser"
+    },
+    {
+      "name": "Webview_Refresh_Page",
+      "value": "Refresh Page"
+    },
+    {
+      "name": "Webview_Settings",
+      "value": "Settings"
+    },
+    {
+      "name": "Webview_Share_Website",
+      "value": "Share Website"
+    },
+    {
+      "name": "Webview_Turn_Debug",
+      "value": "Turn Debug"
+    },
+    {
       "name": "About_App",
       "value": "About App"
     },
     {
-      "name": "Agree_And_SignIn",
+      "name": "AgreeSignIn",
       "value": "Agree and Sign In"
     },
     {
@@ -45,10 +161,6 @@
       "value": "Available"
     },
     {
-      "name": "Back_App",
-      "value": "Back Home"
-    },
-    {
       "name": "Balance",
       "value": "Balance"
     },
@@ -65,10 +177,6 @@
       "value": "Mobile number associated with HUAWEI ID"
     },
     {
-      "name": "Cancel",
-      "value": "Cancel"
-    },
-    {
       "name": "CardNo",
       "value": "CardNo"
     },
@@ -83,18 +191,6 @@
     {
       "name": "Citibank",
       "value": "Citibank"
-    },
-    {
-      "name": "Clear_Cache",
-      "value": "Clear Cache"
-    },
-    {
-      "name": "Copy_Link",
-      "value": "Copy Link"
-    },
-    {
-      "name": "Copy_Successful",
-      "value": "Copy Successful"
     },
     {
       "name": "David",
@@ -229,6 +325,10 @@
       "value": "My Bank Card"
     },
     {
+      "name": "My_Settings",
+      "value": "Settings"
+    },
+    {
       "name": "Netflix",
       "value": "Netflix"
     },
@@ -237,16 +337,8 @@
       "value": "Network request failed"
     },
     {
-      "name": "Network_timeout",
-      "value": "Network timeout!"
-    },
-    {
       "name": "Notification",
       "value": "Notification"
-    },
-    {
-      "name": "Open_Browser",
-      "value": "Open Browser"
     },
     {
       "name": "Other_Login_Methods",
@@ -281,10 +373,6 @@
       "value": "please input phone number..."
     },
     {
-      "name": "Refresh_Page",
-      "value": "Refresh Page"
-    },
-    {
       "name": "Registration_request_timed_out",
       "value": "Registration request timed out！"
     },
@@ -301,15 +389,7 @@
       "value": "Me"
     },
     {
-      "name": "Settings",
-      "value": "Settings"
-    },
-    {
-      "name": "Share_Website",
-      "value": "Share Website"
-    },
-    {
-      "name": "State_Colon",
+      "name": "State",
       "value": "State:"
     },
     {
@@ -319,10 +399,6 @@
     {
       "name": "Switch_Language",
       "value": "Switch Language"
-    },
-    {
-      "name": "System_abnormality",
-      "value": "System abnormality!"
     },
     {
       "name": "The_amount_entered_cannot_exceed",
@@ -379,10 +455,6 @@
     {
       "name": "Transfer",
       "value": "Transfer"
-    },
-    {
-      "name": "Turn_Debug",
-      "value": "Turn Debug"
     },
     {
       "name": "Type",

@@ -42,8 +42,8 @@ export struct Loading {
   @Param loadingModifier: LoadingModifier = new LoadingModifier()
   @Param fontColor: ResourceColor = 'rgba(67, 108, 255, 1)'
   @Param bgColor: ResourceColor = 'rgba(255, 255, 255, 0.65)'
+  @Param desc: Resource | string = $r('app.string.System_Loading')
   @Param bgBlurScale: number = 0.07
-  @Param desc: string = '进行中...'
   @Param state: boolean = false
 
   @Monitor('state')

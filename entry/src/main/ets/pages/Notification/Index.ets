@@ -142,15 +142,16 @@ export struct PageNotification {
                             }
                             .alignItems(HorizontalAlign.Start)
                             .justifyContent(FlexAlign.Center)
-                            .height(size.vp(21))
+                            .height(size.vp(20))
                             .width('100%')
 
                             Column() {
                               Text($r(`app.string.${msg.desc}`, msg.from || msg.to))
                                 .textOverflow({ overflow: TextOverflow.Ellipsis })
+                                .wordBreak(WordBreak.BREAK_WORD)
                                 .fontWeight(FontWeight.Medium)
-                                .lineHeight(size.vp(24))
-                                .fontSize(size.vp(15))
+                                .lineHeight(size.vp(22))
+                                .fontSize(size.vp(14.5))
                                 .fontColor(0x363853)
                                 .maxLines(2)
                             }
@@ -161,7 +162,7 @@ export struct PageNotification {
                             Column() {
                               Text(money.usd(msg.money))
                                 .fontWeight(FontWeight.Medium)
-                                .fontSize(size.vp(12.4))
+                                .fontSize(size.vp(12))
                                 .fontColor(0x606266)
                               }
                               .alignItems(HorizontalAlign.Start)

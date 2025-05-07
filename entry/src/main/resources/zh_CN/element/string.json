@@ -17,11 +17,127 @@
       "value": "用于用户拍照和扫描二维码"
     },
     {
+      "name": "Scanner_Camera_permission_denied",
+      "value": "未开启相机权限"
+    },
+    {
+      "name": "Scanner_Camera_permission_request",
+      "value": "请在 “设置” > “应用和元服务” > “电子钱包” 中开启相机权限"
+    },
+    {
+      "name": "Scanner_Exit",
+      "value": "退出"
+    },
+    {
+      "name": "Scanner_Gallery",
+      "value": "图库"
+    },
+    {
+      "name": "Scanner_Go_to_settings",
+      "value": "前往设置"
+    },
+    {
+      "name": "Scanner_Multiple_Codes_Tip",
+      "value": "扫描到多个码，请选择一个打开"
+    },
+    {
+      "name": "Scanner_Rescan",
+      "value": "重新扫码"
+    },
+    {
+      "name": "Scanner_Scan_Code",
+      "value": "扫描二维码/条码"
+    },
+    {
+      "name": "Scanner_Scan_Code_Result",
+      "value": "扫描结果"
+    },
+    {
+      "name": "Scanner_Scan_Code_Result_Unknown",
+      "value": "扫描结果未知"
+    },
+    {
+      "name": "Scanner_Tap_Close",
+      "value": "轻触关闭"
+    },
+    {
+      "name": "Scanner_Tap_Open",
+      "value": "轻触打开"
+    },
+    {
+      "name": "Scanner_Unrecognized_Code",
+      "value": "未识别到二维码/条形码'"
+    },
+    {
+      "name": "System_Abnormality",
+      "value": "系统异常！"
+    },
+    {
+      "name": "System_Cancel",
+      "value": "取消"
+    },
+    {
+      "name": "System_Confirm",
+      "value": "确认"
+    },
+    {
+      "name": "System_Loading",
+      "value": "加载中..."
+    },
+    {
+      "name": "System_Network_Timeout",
+      "value": "网络超时！"
+    },
+    {
+      "name": "System_Prompt",
+      "value": "系统提示"
+    },
+    {
+      "name": "Webview_Back_App",
+      "value": "返回应用"
+    },
+    {
+      "name": "Webview_Clear_Cache",
+      "value": "清理缓存"
+    },
+    {
+      "name": "Webview_Copy_Link",
+      "value": "复制链接"
+    },
+    {
+      "name": "Webview_Copy_Successful",
+      "value": "复制成功"
+    },
+    {
+      "name": "Webview_Loading",
+      "value": "正在加载中..."
+    },
+    {
+      "name": "Webview_Open_Browser",
+      "value": "打开浏览器"
+    },
+    {
+      "name": "Webview_Refresh_Page",
+      "value": "刷新页面"
+    },
+    {
+      "name": "Webview_Settings",
+      "value": "设置"
+    },
+    {
+      "name": "Webview_Share_Website",
+      "value": "分享网页"
+    },
+    {
+      "name": "Webview_Turn_Debug",
+      "value": "开启调试"
+    },
+    {
       "name": "About_App",
       "value": "关于 App"
     },
     {
-      "name": "Agree_And_SignIn",
+      "name": "AgreeSignIn",
       "value": "同意并登录"
     },
     {
@@ -45,10 +161,6 @@
       "value": "已激活"
     },
     {
-      "name": "Back_App",
-      "value": "返回应用"
-    },
-    {
       "name": "Balance",
       "value": "余额"
     },
@@ -65,10 +177,6 @@
       "value": "华为账号绑定号码"
     },
     {
-      "name": "Cancel",
-      "value": "取消"
-    },
-    {
       "name": "CardNo",
       "value": "卡号"
     },
@@ -83,18 +191,6 @@
     {
       "name": "Citibank",
       "value": "花旗银行"
-    },
-    {
-      "name": "Clear_Cache",
-      "value": "清理缓存"
-    },
-    {
-      "name": "Copy_Link",
-      "value": "复制链接"
-    },
-    {
-      "name": "Copy_Successful",
-      "value": "复制成功"
     },
     {
       "name": "David",
@@ -229,6 +325,10 @@
       "value": "我的银行卡"
     },
     {
+      "name": "My_Settings",
+      "value": "设置"
+    },
+    {
       "name": "Netflix",
       "value": "Netflix"
     },
@@ -237,16 +337,8 @@
       "value": "网络请求失败"
     },
     {
-      "name": "Network_timeout",
-      "value": "网络超时！"
-    },
-    {
       "name": "Notification",
       "value": "通知"
-    },
-    {
-      "name": "Open_Browser",
-      "value": "打开浏览器"
     },
     {
       "name": "Other_Login_Methods",
@@ -281,10 +373,6 @@
       "value": "请输入手机号..."
     },
     {
-      "name": "Refresh_Page",
-      "value": "刷新页面"
-    },
-    {
       "name": "Registration_request_timed_out",
       "value": "注册请求超时！"
     },
@@ -301,15 +389,7 @@
       "value": "自己"
     },
     {
-      "name": "Settings",
-      "value": "设置"
-    },
-    {
-      "name": "Share_Website",
-      "value": "分享网页"
-    },
-    {
-      "name": "State_Colon",
+      "name": "State",
       "value": "状态:"
     },
     {
@@ -319,10 +399,6 @@
     {
       "name": "Switch_Language",
       "value": "切换语言"
-    },
-    {
-      "name": "System_abnormality",
-      "value": "系统异常！"
     },
     {
       "name": "The_amount_entered_cannot_exceed",
@@ -379,10 +455,6 @@
     {
       "name": "Transfer",
       "value": "转账"
-    },
-    {
-      "name": "Turn_Debug",
-      "value": "开启调试"
     },
     {
       "name": "Type",

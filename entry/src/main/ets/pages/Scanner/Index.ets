@@ -57,9 +57,9 @@ export struct PageScanner {
 
         if (this.scanResults.size < 1) {
           Dialog.show({
-            message: '未识别到二维码/条形码',
-            cancelText: '退出',
-            confirmText: '重新扫码',
+            message: $r('app.string.Scanner_Unrecognized_Code'),
+            cancelText: $r('app.string.Scanner_Exit'),
+            confirmText: $r('app.string.Scanner_Rescan'),
             confirm: (): Unknown => this.retryScanner(),
             cancel: (): Unknown => AppRouterMgr.pop(),
           })
@@ -119,7 +119,7 @@ export struct PageScanner {
         if (!this.showDialog) {
           this.showDialog = true
 
-          grant.requestPermissions('ohos.permission.CAMERA').then(state => {
+          grant.requestPermissions(['ohos.permission.CAMERA']).then(state => {
             if (state === true) {
               this.scanService.isGranted = true
               this.startScanner()
@@ -131,9 +131,9 @@ export struct PageScanner {
 
             setTimeout(() => {
               Dialog.show({
-                title: '未开启相机权限',
-                message: '请在“设置”>“应用和元服务”>“电子钱包”>“权限”中开启“相机”权限',
-                confirmText: '前往设置',
+                title: $r('app.string.Scanner_Camera_permission_denied'),
+                message: $r('app.string.Scanner_Camera_permission_request'),
+                confirmText: $r('app.string.Scanner_Go_to_settings'),
                 confirm: (): Unknown => grant.openSettings(),
                 cancel: (): Unknown => AppRouterMgr.pop(),
                 close: () => {
@@ -220,7 +220,7 @@ export struct PageScanner {
   ScanTitleBuilder() {
     Column() {
       Column() {
-        Text('扫描二维码/条码')
+        Text($r('app.string.Scanner_Scan_Code'))
           .fontColor($r('sys.color.ohos_id_color_primary_contrary'))
           .textOverflow({ overflow: TextOverflow.Ellipsis })
           .constraintSize({ maxWidth: 500 })
@@ -239,7 +239,7 @@ export struct PageScanner {
 
       if (this.scanService.isScanNothing) {
         Row() {
-          Text('未识别到二维码/条形码')
+          Text($r('app.string.Scanner_Unrecognized_Code'))
             .fontColor($r('sys.color.ohos_id_color_text_secondary'))
             .fontFamily('HarmonyHeiTi')
             .fontSize(size.vp(14))
@@ -271,7 +271,7 @@ export struct PageScanner {
               }
             })
 
-          Text(this.scanService.isFlashlight ? '轻触关闭' : '轻触打开')
+          Text(this.scanService.isFlashlight ? $r('app.string.Scanner_Tap_Close') : $r('app.string.Scanner_Tap_Open'))
             .fontColor($r('sys.color.icon_on_primary'))
             .textAlign(TextAlign.Center)
             .fontFamily('HarmonyHeiTi')
@@ -300,7 +300,7 @@ export struct PageScanner {
             .width(size.vp(48))
             .clip(true)
 
-            Text('图库')
+            Text($r('app.string.Scanner_Gallery'))
               .textOverflow({ overflow: TextOverflow.Ellipsis })
               .fontColor($r('sys.color.font_on_primary'))
               .textAlign(TextAlign.Center)

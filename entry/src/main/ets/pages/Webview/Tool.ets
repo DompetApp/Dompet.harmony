@@ -98,25 +98,25 @@ export struct WebviewTool {
   getItemTitle(type: string) {
     switch (type) {
       case 'back': {
-        return $r('app.string.Back_App')
+        return $r('app.string.Webview_Back_App')
       }
       case 'clear': {
-        return $r('app.string.Clear_Cache')
+        return $r('app.string.Webview_Clear_Cache')
       }
       case 'refresh': {
-        return $r('app.string.Refresh_Page')
+        return $r('app.string.Webview_Refresh_Page')
       }
       case 'browser': {
-        return $r('app.string.Open_Browser')
+        return $r('app.string.Webview_Open_Browser')
       }
       case 'debug': {
-        return $r('app.string.Turn_Debug')
+        return $r('app.string.Webview_Turn_Debug')
       }
       case 'share': {
-        return $r('app.string.Share_Website')
+        return $r('app.string.Webview_Share_Website')
       }
       case 'link': {
-        return $r('app.string.Copy_Link')
+        return $r('app.string.Webview_Copy_Link')
       }
       default: {
         return ''
@@ -229,7 +229,7 @@ export struct WebviewTool {
         const systemPasteboard = pasteboard.getSystemPasteboard()
 
         systemPasteboard.setData(pasteboardData).then(() => {
-          Toast.show({ message: $r('app.string.Copy_Successful') })
+          Toast.show({ message: $r('app.string.Webview_Copy_Successful') })
         })
       }
     })
@@ -279,7 +279,7 @@ export struct WebviewTool {
       Stack({ alignContent: Alignment.BottomStart }) {
         Column() {
           Row() {
-            Text($r('app.string.Settings'))
+            Text($r('app.string.Webview_Settings'))
               .letterSpacing(Math.max(size.vp(1.2), 1.2))
               .fontWeight(FontWeight.Bold)
               .fontSize(size.vp(16))
@@ -317,7 +317,7 @@ export struct WebviewTool {
             .color(0xcfcfcf)
 
           Column() {
-            Text($r('app.string.Cancel'))
+            Text($r('app.string.System_Cancel'))
               .letterSpacing(Math.max(size.vp(1.2), 1.2))
               .fontWeight(FontWeight.Bold)
               .fontSize(size.vp(16))

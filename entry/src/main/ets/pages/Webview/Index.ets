@@ -303,8 +303,8 @@ export struct PageWebview {
 
             Loading({
               bgColor: 'rgba(255, 255, 255, 0.8)',
+              desc: $r('app.string.Webview_Loading'),
               state: this.webviewMeta.loading,
-              desc: '正在加载中...',
             })
           }
           .height('100%')

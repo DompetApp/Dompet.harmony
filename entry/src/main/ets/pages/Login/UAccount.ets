@@ -94,7 +94,7 @@ export struct LoginByAccount {
 
       Row() {
         Button({ type: ButtonType.Normal, stateEffect: false }) {
-          Text($r('app.string.Cancel'))
+          Text($r('app.string.System_Cancel'))
             .fontSize(size.vp(15))
             .fontColor(0x1f1f1f)
         }
@@ -108,7 +108,7 @@ export struct LoginByAccount {
         .width('48%')
 
         Button({ type: ButtonType.Normal, stateEffect: false }) {
-          Text($r('app.string.Agree_And_SignIn'))
+          Text($r('app.string.AgreeSignIn'))
             .fontSize(size.vp(15))
             .fontColor(0xffffff)
         }
@@ -264,8 +264,8 @@ export struct LoginByAccount {
   }
 
   isInChinese() {
-    const region = i18n.System.getSystemRegion()
-    return region.startsWith('CN')
+    const region = i18n.System.getSystemLanguage()
+    return /zh|cn/i.test(region)
   }
 
   build() {

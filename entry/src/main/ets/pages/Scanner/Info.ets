@@ -45,7 +45,7 @@ export struct ScannerInfo {
         })
 
         Row() {
-          Text('扫码结果')
+          Text($r('app.string.Scanner_Scan_Code_Result'))
             .fontWeight(FontWeight.Bold)
             .textAlign(TextAlign.Center)
             .fontSize(size.vp(18))
@@ -70,7 +70,7 @@ export struct ScannerInfo {
 
       Scroll() {
         Column() {
-          Text(this.scanResult.originalValue || '扫码结果未知')
+          Text(this.scanResult.originalValue || $r('app.string.Scanner_Scan_Code_Result_Unknown'))
             .wordBreak(WordBreak.BREAK_ALL)
             .fontWeight(FontWeight.Medium)
             .textAlign(TextAlign.Start)
