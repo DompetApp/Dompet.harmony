@@ -40,6 +40,7 @@ const createAxiosInstance = (config: AxiosDefaultConfig) => {
   const proxy = <T>(config: AxiosProxyRequestConfig) => axios(config) as Promise<AxiosResponseResult<T>>
   const axios = createAxiosInterceptor(Axios.create(config))
   proxy.options = axios.options
+  proxy.request = axios.request
   proxy.delete = axios.delete
   proxy.post = axios.post
   proxy.put = axios.put
