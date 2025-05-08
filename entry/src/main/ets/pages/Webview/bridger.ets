@@ -131,4 +131,8 @@ export class HMWBridger {
 
     return BridgeResult.failure()
   }
+
+  async destroy(_: Recorder = {}) {
+    this.webviewController = null
+  }
 }

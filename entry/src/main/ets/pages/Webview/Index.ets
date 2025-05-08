@@ -151,7 +151,7 @@ export struct PageWebview {
 
   async unregisterScripts() {
     this.webviewController.deleteJavaScriptRegister('harmony_webview')
-    this.webviewBridger.webviewController = null
+    this.webviewBridger.destroy()
   }
 
   async titling(title: string) {

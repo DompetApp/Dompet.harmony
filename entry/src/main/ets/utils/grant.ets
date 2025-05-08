@@ -2,6 +2,7 @@ import { common } from "@kit.AbilityKit"
 import { Permissions } from "@kit.AbilityKit"
 import { bundleManager } from "@kit.AbilityKit"
 import { abilityAccessCtrl } from "@kit.AbilityKit"
+import { BusinessError } from "@kit.BasicServicesKit"
 
 export class grant {
   public static CAMERA = abilityAccessCtrl.SwitchType.CAMERA
@@ -11,7 +12,14 @@ export class grant {
   public static context = getContext(this) as common.UIAbilityContext
 
   public static async requestGlobalSwitch(switchType: abilityAccessCtrl.SwitchType) {
-    return abilityAccessCtrl.createAtManager().requestGlobalSwitch(grant.context, switchType)
+    return abilityAccessCtrl.createAtManager()
+      .requestGlobalSwitch(grant.context, switchType)
+      .catch((err: BusinessError) => {
+        if (err.code !== 12100013) {
+          return Promise.reject(err)
+        }
+        return true
+      })
   }
 
   public static async reqPermissionsFromUser(permissions: Permissions[]) {
@@ -24,9 +32,7 @@ export class grant {
   }
 
   public static async requestPermissions(permissions: Permissions[]) {
-    const GRANTED = abilityAccessCtrl.GrantStatus.PERMISSION_GRANTED
-
-    if (await grant.checkAccessToken(permissions) === GRANTED) {
+    if (await grant.checkAccessToken(permissions)) {
       return true
     }
 
@@ -38,28 +44,42 @@ export class grant {
     const bundleInfo = await bundleManager.getBundleInfoForSelf(bundleFlags)
     const appInfo: bundleManager.ApplicationInfo = bundleInfo.appInfo
     const GRANTED = abilityAccessCtrl.GrantStatus.PERMISSION_GRANTED
-    const DENIED = abilityAccessCtrl.GrantStatus.PERMISSION_DENIED
     const atManager = abilityAccessCtrl.createAtManager()
 
     for (const permission of permissions) {
       try {
-        if (atManager.checkAccessTokenSync(appInfo.accessTokenId, permission) === DENIED) {
-          return DENIED
+        if (atManager.checkAccessTokenSync(appInfo.accessTokenId, permission) !== GRANTED) {
+          return false
         }
       } catch {
-        return DENIED
+        return false
       }
     }
 
-    return GRANTED
+    return true
   }
 
-  public static openSettings() {
+  public static async openSettings(permissions?: Permissions[]) {
+    if (permissions && permissions.length > 0) {
+      const atManager = abilityAccessCtrl.createAtManager()
+      const GRANTED = abilityAccessCtrl.GrantStatus.PERMISSION_GRANTED
+      return atManager.requestPermissionOnSetting(grant.context, permissions)
+        .then((results) => results.every(result => result === GRANTED))
+        .catch((err: BusinessError) => {
+          if (err.code !== 12100011) {
+            return Promise.reject(err)
+          }
+          return true
+        })
+    }
+
     grant.context.startAbility({
       uri: 'application_info_entry',
       bundleName: 'com.huawei.hmos.settings',
       abilityName: 'com.huawei.hmos.settings.MainAbility',
       parameters: { settingsParamBundleName: grant.context.abilityInfo.bundleName }
     })
+
+    return false
   }
 }

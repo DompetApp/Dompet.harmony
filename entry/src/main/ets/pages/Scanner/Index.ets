@@ -134,7 +134,7 @@ export struct PageScanner {
                 title: $r('app.string.Scanner_Camera_permission_denied'),
                 message: $r('app.string.Scanner_Camera_permission_request'),
                 confirmText: $r('app.string.Scanner_Go_to_settings'),
-                confirm: (): Unknown => grant.openSettings(),
+                confirm: (): Unknown => grant.openSettings(['ohos.permission.CAMERA']),
                 cancel: (): Unknown => AppRouterMgr.pop(),
                 close: () => {
                   this.showDialog = false
