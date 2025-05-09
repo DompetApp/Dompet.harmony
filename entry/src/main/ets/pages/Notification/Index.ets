@@ -107,10 +107,9 @@ export struct PageNotification {
     Column() {
       Column() {
         Scroll(this.scroller) {
-          Column() {
+          Stack({ alignContent: Alignment.Top }) {
             Column()
-              .position({ top:0, left: 0 })
-              .height(`calc(100% + ${size.vp(156)}vp)`)
+              .height(`calc(100% + ${size.vp(100)}vp)`)
               .width('100%')
 
             Column() {
@@ -238,8 +237,6 @@ export struct PageNotification {
             .backgroundColor(Color.White)
             .width('100%')
           }
-          .alignItems(HorizontalAlign.Center)
-          .justifyContent(FlexAlign.Start)
           .height('auto')
           .width('100%')
         }

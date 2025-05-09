@@ -23,10 +23,8 @@ export class AppDatabaser {
   }
 
   static async close(): Promise<void> {
-    await AppDatabaser.db?.close().catch(() => {
-      logger.error('AppDatabaser close error')
-      AppDatabaser.db = null
-    })
+    await AppDatabaser.db?.close().catch(() => logger.error('AppDatabaser close error'))
+    AppDatabaser.db = null
   }
 
   static async delete(): Promise<void> {
@@ -34,7 +32,6 @@ export class AppDatabaser {
 
     await relationalStore.deleteRdbStore(CtxManager.abilityContext, AppDatabaser.cfg).catch(() => {
       logger.error('AppDatabaser delete error')
-      AppDatabaser.db = null
     })
   }
 

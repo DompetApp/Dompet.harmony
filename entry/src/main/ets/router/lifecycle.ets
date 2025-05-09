@@ -8,14 +8,7 @@ import { AppRouter } from "../router/constants"
 
 @HMLifecycle({ lifecycleName: 'RouteGlobalLifecycle', global: true })
 export class RouteGlobalLifecycle implements IHMLifecycle {
-  onBackPressed(ctx: HMLifecycleContext) {
-    const context = ctx.navContext
-    const pathStack = context?.pathStack
-
-    if (pathStack && pathStack?.size() <= 1) {
-      return true
-    }
-
+  onBackPressed(_: HMLifecycleContext) {
     return false
   }
 
