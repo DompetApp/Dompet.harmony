@@ -117,7 +117,7 @@ export struct PageNotification {
                 Column() {
                   Column() {
                     Text(group.year === new Date().getFullYear() ? $r('app.string.This_year') : `${group.year}`)
-                      .letterSpacing(group.year === new Date().getFullYear() ? 3: 1)
+                      .letterSpacing(group.year === new Date().getFullYear() ? 3 : 1)
                       .fontWeight(FontWeight.Bold)
                       .fontSize(size.vp(14.8))
                       .fontColor(0x363853)
@@ -134,7 +134,11 @@ export struct PageNotification {
                         Row() {
                           Column() {
                             Column() {
-                              Text(dater.format(msg.date, { dateStyle: 'medium', timeStyle: 'short', hourCycle: 'h23' }))
+                              Text(dater.format(msg.date, {
+                                dateStyle: 'medium',
+                                timeStyle: 'short',
+                                hourCycle: 'h23',
+                              }))
                                 .fontWeight(FontWeight.Normal)
                                 .fontSize(size.vp(12))
                                 .fontColor(0xafafaf)
@@ -163,11 +167,11 @@ export struct PageNotification {
                                 .fontWeight(FontWeight.Medium)
                                 .fontSize(size.vp(12))
                                 .fontColor(0x606266)
-                              }
-                              .alignItems(HorizontalAlign.Start)
-                              .justifyContent(FlexAlign.Center)
-                              .height(size.vp(21))
-                              .width('100%')
+                            }
+                            .alignItems(HorizontalAlign.Start)
+                            .justifyContent(FlexAlign.Center)
+                            .height(size.vp(21))
+                            .width('100%')
                           }
                           .alignItems(HorizontalAlign.Start)
                           .justifyContent(FlexAlign.Start)
@@ -210,7 +214,7 @@ export struct PageNotification {
                       .width('100%')
                       .onClick(() => {
                         if (msg.isRead == 'N') {
-                          this.readMessage(msg);
+                          this.readMessage(msg)
                         }
                       })
                     }

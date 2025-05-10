@@ -40,12 +40,15 @@ export class AppDevice {
   }
 
   updateAvoidArea(refer: window.AvoidAreaOptions) {
-    if (refer.type == window.AvoidAreaType.TYPE_NAVIGATION_INDICATOR &&
-      this.orientation == display.Orientation.PORTRAIT) {
+    if (this.orientation !== display.Orientation.PORTRAIT) {
+      return
+    }
+
+    if (refer.type === window.AvoidAreaType.TYPE_NAVIGATION_INDICATOR) {
       this.bottom = refer.area.bottomRect.height
     }
 
-    if (refer.type == window.AvoidAreaType.TYPE_SYSTEM && this.orientation == display.Orientation.PORTRAIT) {
+    if (refer.type === window.AvoidAreaType.TYPE_SYSTEM) {
       this.top = refer.area.topRect.height
     }
   }

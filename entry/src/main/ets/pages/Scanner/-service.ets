@@ -48,8 +48,6 @@ export class ScanService {
 
   public retryOnError(error: BusinessError, options: ScanOptions, viewControl: ViewControl, callback: ScanCallback) {
     if (error) {
-      logger.error(error)
-
       const isMaxRetryScan = this.retryScan >= 3
       const isGalleryDecodeResult = error.name === 'galleryDecodeResult'
       const isScanInternalErrorCode = error.code === scanCore.ScanErrorCode.INTERNAL_ERROR

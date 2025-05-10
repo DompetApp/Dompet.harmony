@@ -3,12 +3,13 @@ import { detectBarcode } from "@kit.ScanKit"
 import { photoAccessHelper } from "@kit.MediaLibraryKit"
 import { ScanCallback, ScanOptions, ScanService, ScanResult } from "./-service"
 
-export class AError {
+export class AError extends Error {
   code: number
   name: string
   message: string
 
   constructor(code?: number, message?: string) {
+    super()
     this.name = 'galleryDecodeResult'
     this.message = message ?? ''
     this.code = code ?? 200

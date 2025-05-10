@@ -30,11 +30,7 @@ export class Dialog {
   static show(options: ShowDialogOptions) {
     const isCustomButton = !!options.buttons
 
-    if (typeof options.title !== 'string') {
-      options.title = $r('app.string.System_Prompt')
-    }
-
-    if (typeof options.message !== 'string' || !options.message.trim()) {
+    if (options.message === undefined || options.message === '') {
       return
     }
 

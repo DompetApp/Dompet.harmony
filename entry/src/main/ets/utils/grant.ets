@@ -8,7 +8,6 @@ export class grant {
   public static CAMERA = abilityAccessCtrl.SwitchType.CAMERA
   public static LOCATION = abilityAccessCtrl.SwitchType.LOCATION
   public static MICROPHONE = abilityAccessCtrl.SwitchType.MICROPHONE
-
   public static context = getContext(this) as common.UIAbilityContext
 
   public static async requestGlobalSwitch(switchType: abilityAccessCtrl.SwitchType) {
@@ -22,24 +21,34 @@ export class grant {
       })
   }
 
-  public static async reqPermissionsFromUser(permissions: Permissions[]) {
+  public static async requestPermissionsFromUser(permissions: Permissions[]) {
+    if (permissions.length === 0) {
+      return false
+    }
+
     const atManager = abilityAccessCtrl.createAtManager()
     const GRANTED = abilityAccessCtrl.GrantStatus.PERMISSION_GRANTED
 
-    return atManager.requestPermissionsFromUser(grant.context, permissions)
-      .then((result) => result.authResults.every((auth) => auth === GRANTED))
-      .catch(() => false)
+    return atManager.requestPermissionsFromUser(grant.context, permissions).then((result) => {
+      return result.authResults.every((auth) => auth === GRANTED)
+    })
   }
 
   public static async requestPermissions(permissions: Permissions[]) {
-    if (await grant.checkAccessToken(permissions)) {
+    if (permissions.length === 0) {
+      return false
+    }
+
+    if (await grant.checkPermissions(permissions)) {
       return true
     }
 
-    return await grant.reqPermissionsFromUser(permissions)
+    return grant.openSettings(permissions).catch(async () => {
+      return await grant.requestPermissionsFromUser(permissions).catch(() => false)
+    })
   }
 
-  public static async checkAccessToken(permissions: Permissions[]) {
+  public static async checkPermissions(permissions: Permissions[]) {
     const bundleFlags: bundleManager.BundleFlag = bundleManager.BundleFlag.GET_BUNDLE_INFO_WITH_APPLICATION
     const bundleInfo = await bundleManager.getBundleInfoForSelf(bundleFlags)
     const appInfo: bundleManager.ApplicationInfo = bundleInfo.appInfo
@@ -54,6 +63,10 @@ export class grant {
       } catch {
         return false
       }
+    }
+
+    if (permissions.length === 0) {
+      return false
     }
 
     return true

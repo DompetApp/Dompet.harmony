@@ -1,14 +1,14 @@
 import { common } from "@kit.AbilityKit"
-import { uiObserver } from "@kit.ArkUI"
 import { scanCore } from "@kit.ScanKit"
+import { uiObserver } from "@kit.ArkUI"
 import { AppRouterMgr } from "../../router/manager"
 import { HMParamType, HMRouter } from "@hadss/hmrouter"
 import { AppNav, AppRouter } from "../../router/constants"
 import { ScanService, ScanOptions, ViewControl, ScannerCodes } from "./-service"
 import { MediaPlayer, ScannerView, ScannerLine, ScannerInfo } from "./-service"
 import { ScanResults, ScanResult, ScanCallback } from "./-service"
-import { AppDevice, device } from "../../configure/device"
 import { Dialog } from "../../components/Dialog/Index"
+import { device } from "../../configure/device"
 import { grant } from "../../utils/grant"
 import { size } from "../../utils/size"
 import { Album } from "./-album"
@@ -20,7 +20,6 @@ import { Album } from "./-album"
 })
 @ComponentV2
 export struct PageScanner {
-  @Local device: AppDevice = device
   @Local timerId: number = -1
   @Local showDialog: boolean = false
   @Local scanResult: ScanResult | null = null
@@ -32,64 +31,8 @@ export struct PageScanner {
   private viewControl: ViewControl = { width: px2vp(device.width), height: px2vp(device.height), surfaceId: '' }
   private uiContext: common.UIAbilityContext = getContext(this) as common.UIAbilityContext
   private mediaPlayer: MediaPlayer = MediaPlayer.getInstance(this.uiContext)
-  private scanCallback: ScanCallback = async (error, result) => {
-    if (this.scanService.retryOnError(error, this.scanOptions, this.viewControl, this.scanCallback)) {
-      return
-    }
-
-    if (!this.scanService.isScanned && !this.scanService.isOpenAlbum && this.scanService.isPageShow) {
-      if (this.scanService.isSelectPicture) {
-        this.scanResults.data = Array.isArray(result) && result.length >= 1 ? [result[0]] : []
-        this.scanResults.code = (error && error.code) ? error.code : 200
-        this.scanResults.size = this.scanResults.data.length
-      }
-
-      if (!this.scanService.isSelectPicture) {
-        this.scanResults.data = Array.isArray(result) ? result : []
-        this.scanResults.code = (error && error.code) ? error.code : 200
-        this.scanResults.size = this.scanResults.data.length
-      }
-
-      if (this.scanService.isSelectPicture || result.length > 0) {
-        this.scanService.releaseCamera()
-
-        this.scanService.isScanned = true
-
-        if (this.scanResults.size < 1) {
-          Dialog.show({
-            message: $r('app.string.Scanner_Unrecognized_Code'),
-            cancelText: $r('app.string.Scanner_Exit'),
-            confirmText: $r('app.string.Scanner_Rescan'),
-            confirm: (): Unknown => this.retryScanner(),
-            cancel: (): Unknown => AppRouterMgr.pop(),
-          })
-        }
-
-        if (this.scanResults.size > 1) {
-          this.scanService.isScanLine = false
-          this.mediaPlayer.play()
-        }
-
-        if (this.scanResults.size === 1) {
-          this.mediaPlayer.play()
-          this.scanService.isScanLine = false
-          this.parseScanResult(this.scanResults.data[0])
-        }
-      }
-
-      if (!this.scanService.isSelectPicture && result.length <= 0) {
-        this.scanService.isOpenAlbum = false
-        this.retryScanner()
-      }
-    }
-  }
-
-  @Monitor('device.width', 'device.height')
-  onDeviceSizeChange() {
-    if (this.scanService.isGranted) {
-      this.retryScanner()
-    }
-  }
+  private scanCallback = this.createScanCallback()
+  private navCallback = this.createNavCallback()
 
   @Computed
   get isSupportFlashlight() {
@@ -107,53 +50,103 @@ export struct PageScanner {
     })
   }
 
+  createScanCallback() {
+    const callback: ScanCallback = async (error, result) => {
+      if (this.scanService.retryOnError(error, this.scanOptions, this.viewControl, this.scanCallback)) {
+        return
+      }
+
+      if (!this.scanService.isScanned && !this.scanService.isOpenAlbum && this.scanService.isPageShow) {
+        if (this.scanService.isSelectPicture) {
+          this.scanResults.data = Array.isArray(result) && result.length >= 1 ? [result[0]] : []
+          this.scanResults.code = (error && error.code) ? error.code : 200
+          this.scanResults.size = this.scanResults.data.length
+        }
+
+        if (!this.scanService.isSelectPicture) {
+          this.scanResults.data = Array.isArray(result) ? result : []
+          this.scanResults.code = (error && error.code) ? error.code : 200
+          this.scanResults.size = this.scanResults.data.length
+        }
+
+        if (this.scanService.isSelectPicture || result.length > 0) {
+          this.scanService.releaseCamera()
+
+          this.scanService.isScanned = true
+
+          if (this.scanResults.size < 1) {
+            this.mediaPlayer.play()
+            Dialog.show({
+              title: $r('app.string.System_Prompt'),
+              message: $r('app.string.Scanner_Unrecognized_Code'),
+              cancelText: $r('app.string.Scanner_Exit'),
+              confirmText: $r('app.string.Scanner_Rescan'),
+              confirm: (): Unknown => this.retryScanner(),
+              cancel: (): Unknown => AppRouterMgr.pop(),
+            })
+          }
+
+          if (this.scanResults.size > 1) {
+            this.scanService.isScanLine = false
+            this.mediaPlayer.play()
+          }
+
+          if (this.scanResults.size === 1) {
+            this.mediaPlayer.play()
+            this.scanService.isScanLine = false
+            this.parseScanResult(this.scanResults.data[0])
+          }
+        }
+
+        if (!this.scanService.isSelectPicture && result.length <= 0) {
+          this.scanService.isOpenAlbum = false
+          this.retryScanner()
+        }
+      }
+    }
+    return callback
+  }
+
+  createNavCallback() {
+    const callback: Callback<NavDestinationInfo> = (info) => {
+      if (info.name === AppRouter.scanner && info.state === uiObserver.NavDestinationState.ON_HIDDEN) {
+        this.scanService.resetTryCount()
+        this.scanService.releaseCamera()
+      }
+
+      if (info.name === AppRouter.scanner && info.state === uiObserver.NavDestinationState.ON_SHOWN) {
+        this.scanService.isPageShow = true
+
+        if (!this.showDialog) {
+          this.showDialog = true
+
+          grant.requestPermissions(['ohos.permission.CAMERA'])
+            .then(state => {
+              if (state === true) {
+                this.scanService.isGranted = true
+                this.startScanner()
+                return
+              }
+
+              this.scanService.isGranted = false
+              this.viewControl.surfaceId = ''
+              this.showDialog = false
+              AppRouterMgr.pop()
+            })
+        }
+      }
+    }
+    return callback
+  }
+
   aboutToDisappear() {
-    uiObserver.off('navDestinationUpdate', { navigationId: AppNav.root })
+    uiObserver.off('navDestinationUpdate', { navigationId: AppNav.root }, this.navCallback)
     this.scanService.destroy()
     this.scanResult = null
   }
 
   listenPageState() {
-    uiObserver.on('navDestinationUpdate', { navigationId: AppNav.root }, (info) => {
-      if (info.name === AppRouter.scanner && info.state === uiObserver.NavDestinationState.ON_SHOWN) {
-        if (!this.showDialog) {
-          this.showDialog = true
-
-          grant.requestPermissions(['ohos.permission.CAMERA']).then(state => {
-            if (state === true) {
-              this.scanService.isGranted = true
-              this.startScanner()
-              return
-            }
-
-            this.viewControl.surfaceId = ''
-            this.scanService.isGranted = false
-
-            setTimeout(() => {
-              Dialog.show({
-                title: $r('app.string.Scanner_Camera_permission_denied'),
-                message: $r('app.string.Scanner_Camera_permission_request'),
-                confirmText: $r('app.string.Scanner_Go_to_settings'),
-                confirm: (): Unknown => grant.openSettings(['ohos.permission.CAMERA']),
-                cancel: (): Unknown => AppRouterMgr.pop(),
-                close: () => {
-                  this.showDialog = false
-                }
-              })
-            }, 300)
-          })
-        }
-
-        this.scanService.isReleaseCamera = false
-        this.scanService.isStopCamera = false
-        this.scanService.isPageShow = true
-      }
-
-      if (info.name === AppRouter.scanner && info.state === uiObserver.NavDestinationState.ON_HIDDEN) {
-        this.scanService.resetTryCount()
-        this.scanService.releaseCamera()
-      }
-    })
+    uiObserver.on('navDestinationUpdate', { navigationId: AppNav.root }, this.navCallback)
   }
 
   aboutToAppear() {

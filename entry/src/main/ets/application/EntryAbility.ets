@@ -1,10 +1,10 @@
 import { AbilityConstant, ConfigurationConstant } from "@kit.AbilityKit"
 import { errorManager, UIAbility, Want } from "@kit.AbilityKit"
 import { CtxManager } from "../configure/context"
-import { Network } from "../configure/network"
-import { schemer } from "../configure/scheme"
 import { Socketor } from "../configure/socket"
 import { Sqliter } from "../configure/sqlite"
+import { Network } from "../configure/network"
+import { schemer } from "../configure/scheme"
 import { device } from "../configure/device"
 import { logger } from "../tracks/logger"
 import { store } from "../globals/store"
@@ -18,14 +18,6 @@ import { font } from "@kit.ArkUI"
 export default class EntryAbility extends UIAbility {
   observerId: number = -1
   windowClass: window.Window | null = null
-
-  onWindowSizeChange(size: window.Size) {
-    device.updateWindowSize(size)
-  }
-
-  onAvoidAreaChange(refer: window.AvoidAreaOptions) {
-    device.updateAvoidArea(refer)
-  }
 
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam) {
     console.log('EntryAbility: --- onCreate ---')
@@ -64,18 +56,26 @@ export default class EntryAbility extends UIAbility {
     })
   }
 
+  onAvoidAreaChange(refer: window.AvoidAreaOptions) {
+    device.updateAvoidArea(refer)
+  }
+
+  onWindowSizeChange(size: window.Size) {
+    device.updateWindowSize(size)
+  }
+
+  onWindowStageWillDestroy() {
+    console.log('EntryAbility: --- onWindowStageWillDestroy ---')
+    this.windowClass?.off('windowSizeChange', this.onWindowSizeChange)
+    this.windowClass?.off("avoidAreaChange", this.onAvoidAreaChange)
+    CtxManager.unregisterUIContext()
+  }
+
   registerCustomizeFonts() {
     font.registerFont({
       familyName: 'PingFang',
       familySrc: $rawfile('fonts/PingFang.ttf')
     })
-  }
-
-  onWindowStageDestroy() {
-    console.log('EntryAbility: --- onWindowStageDestroy ---')
-    this.windowClass?.off('windowSizeChange', this.onWindowSizeChange)
-    this.windowClass?.off("avoidAreaChange", this.onAvoidAreaChange)
-    CtxManager.unregisterUIContext()
   }
 
   onGlobalErrorCatcher() {
