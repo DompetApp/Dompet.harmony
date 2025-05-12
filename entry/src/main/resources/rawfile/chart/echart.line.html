@@ -65,15 +65,15 @@
           axisLabel: {
             margin: 5,
             inside: true,
-            fontSize: 14,
+            fontSize: 13,
             fontWeight: '500',
             formatter: function (value, index) {
               if (index == years.length - 1) {
-                return `${value}`.padEnd(12, ' ');
+                return `${value}`.padEnd(10, ' ');
               }
 
               if (index == 0) {
-                return `${value}`.padStart(12, ' ');
+                return `${value}`.padStart(10, ' ');
               }
 
               return value;

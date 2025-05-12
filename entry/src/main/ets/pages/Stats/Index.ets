@@ -261,7 +261,7 @@ export struct PageStats {
               .width('100%')
             }
             .width('100%')
-          })
+          }, (item: IOrder) => `${item.id}`)
         }
         .scrollBar(BarState.Off)
         .height('auto')

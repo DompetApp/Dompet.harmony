@@ -6,7 +6,6 @@ import { dateFormat } from "@hitro/ark"
 import { HMRouter } from "@hadss/hmrouter"
 import { AppRouter } from "../../router/constants"
 import { AppRouterMgr } from "../../router/manager"
-import { Loading } from "../../components/Loading/Index"
 import { Toast } from "../../components/Toast/Index"
 import { IPayOperate } from "../../models/operate"
 import { PayOperate } from "../../models/operate"
@@ -30,8 +29,6 @@ export struct PageOperater {
   @Local showShadow: boolean = false
   @Local loginUser: IUser = store.user
   @Local options: IPayOperate[] = []
-  @Local loading: boolean = false
-  @Local loadingTip: string = ''
   @Local money: number = 0.0
 
   @Computed
@@ -137,7 +134,12 @@ export struct PageOperater {
               Column() {
                 ForEach(this.options, (operate: IPayOperate) => {
                   Row() {
-                    this.operateBuilder(operate)
+                    this.operateBuilder({
+                      id: operate.id,
+                      type: operate.type,
+                      from: operate.from,
+                      to: operate.to,
+                    })
                   }
                   .onClick(() => {
                     this.change(operate.id)
@@ -259,8 +261,8 @@ export struct PageOperater {
   }
 
   @Builder
-  iconAvatarBuilder(icon: string) {
-    if (this.type !== 'Transfer' && icon.toLowerCase() === 'me') {
+  iconAvatarBuilder(obj: Unknown) {
+    if (this.type !== 'Transfer' && obj.icon?.toLowerCase() === 'me') {
       if (this.loginUser.avatar) {
         Image(this.loginAvatar)
           .margin({ right: size.vp(4) })
@@ -271,8 +273,8 @@ export struct PageOperater {
       }
     }
 
-    if (this.type !== 'Transfer' || icon.toLowerCase() !== 'me') {
-      Image($rawfile(`images/payer/${icon.toLowerCase()}.png`))
+    if (obj.icon && obj.icon.toLowerCase() !== 'me') {
+      Image($rawfile(`images/payer/${obj.icon.toLowerCase()}.png`))
         .margin({ right: size.vp(4) })
         .objectFit(ImageFit.Fill)
         .borderRadius('50%')
@@ -285,7 +287,11 @@ export struct PageOperater {
   operateBuilder(operate: IPayOperate) {
     Row() {
       Column() {
-        this.iconAvatarBuilder(this.type == 'Top_up' ? operate.from : operate.to)
+        this.iconAvatarBuilder({
+          icon: this.type == 'Top_up'
+            ? operate.from
+            : operate.to
+        })
       }
       .alignItems(HorizontalAlign.Start)
       .justifyContent(FlexAlign.Center)
@@ -426,8 +432,6 @@ export struct PageOperater {
 
   initialize() {
     if (this.type === 'Transfer') {
-      this.loadingTip = 'Transfering'
-
       this.operate = new PayOperate('1', 'David', 'Me', 'Payment')
 
       this.options = [
@@ -439,8 +443,6 @@ export struct PageOperater {
     }
 
     if (this.type === 'Payment') {
-      this.loadingTip = 'Paying'
-
       this.operate = new PayOperate('5', 'David', 'Me', 'Payment')
 
       this.options = [
@@ -452,8 +454,6 @@ export struct PageOperater {
     }
 
     if (this.type === 'Top_up') {
-      this.loadingTip = 'Recharging'
-
       this.operate = new PayOperate('9', 'Me', 'David', 'Receipt')
 
       this.options = [
@@ -507,8 +507,6 @@ export struct PageOperater {
         let user = ''
         let receive = true
 
-        this.loading = true
-
         const now = new Date()
         const type = this.type
         const operate = this.operate!
@@ -535,26 +533,25 @@ export struct PageOperater {
           receive = operate.type === 'Receipt'
         }
 
-        await event.createUserOrder([
-          Order.from({
-            icon: user.toLowerCase(),
-            name: user,
-            type: type,
-            date: date,
-            money: receive ? this.money : -this.money,
-          }),
-        ])
+        const order = Order.from({
+          icon: user.toLowerCase(),
+          name: user,
+          type: type,
+          date: date,
+          money: receive ? this.money : -this.money,
+        })
 
-        await event.createUserMessage(
-          Message.from({
-            to: to,
-            from: from,
-            type: type,
-            desc: desc,
-            date: date,
-            money: receive ? this.money : -this.money,
-          }),
-        )
+        const message = Message.from({
+          to: to,
+          from: from,
+          type: type,
+          desc: desc,
+          date: date,
+          money: receive ? this.money : -this.money,
+        })
+
+        await event.createUserMessage(message)
+        await event.createUserOrder([order])
 
         await this.playAudio()
 
@@ -564,8 +561,6 @@ export struct PageOperater {
       } catch (e) {
         Toast.show({ message: e.toString() })
       }
-
-      this.loading = false
     })
   }
 
@@ -573,12 +568,6 @@ export struct PageOperater {
     Stack({ alignContent: Alignment.TopStart }) {
       this.scrollAreaBuilder()
       this.backRouteBuilder()
-
-      Loading({
-        desc: $r(`app.string.${this.loadingTip}`),
-        bgColor: 'rgba(255, 255, 255, 0.75)',
-        state: this.loading,
-      })
     }
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
     .onClick(() => this.showShadow = false)

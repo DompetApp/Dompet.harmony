@@ -222,7 +222,7 @@ export struct PageNotification {
                     .justifyContent(FlexAlign.Start)
                     .margin({ bottom: size.vp(10) })
                     .width('100%')
-                  })
+                  }, (item: IMessage) => `${item.id}`)
                 }
                 .margin({ bottom: size.vp(20) })
                 .padding({ bottom: size.vp(1.2) })
