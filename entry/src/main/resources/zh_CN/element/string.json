@@ -345,6 +345,10 @@
       "value": "其他登录方式"
     },
     {
+      "name": "Paying",
+      "value": "支付中..."
+    },
+    {
       "name": "Payment",
       "value": "支付"
     },
@@ -371,6 +375,10 @@
     {
       "name": "Please_input_phone_number",
       "value": "请输入手机号..."
+    },
+    {
+      "name": "Recharging",
+      "value": "充值中..."
     },
     {
       "name": "Registration_request_timed_out",
@@ -455,6 +463,10 @@
     {
       "name": "Transfer",
       "value": "转账"
+    },
+    {
+      "name": "Transfering",
+      "value": "转账中..."
     },
     {
       "name": "Type",

@@ -18,16 +18,18 @@ interface ShowDialogOptions extends promptAction.ShowDialogOptions {
 }
 
 export class Dialog {
-  static custom(options: CustomDialogOptions) {
+  static async custom(options: CustomDialogOptions) {
     options.onWillDisappear = options.onWillDisappear || options.close || undefined
 
-    return CtxManager.uiContext?.getPromptAction().openCustomDialog(options).then(id => {
+    const promptAction = (await CtxManager.uiContext).getPromptAction()
+
+    return promptAction.openCustomDialog(options).then(id => {
       Dialog.ids.add(id)
       return id
     })
   }
 
-  static show(options: ShowDialogOptions) {
+  static async show(options: ShowDialogOptions) {
     const isCustomButton = !!options.buttons
 
     if (options.message === undefined || options.message === '') {
@@ -69,7 +71,9 @@ export class Dialog {
       ]
     }
 
-    CtxManager.uiContext?.getPromptAction().showDialog(options, (err, data) => {
+    const promptAction = (await CtxManager.uiContext).getPromptAction()
+
+    promptAction.showDialog(options, (err, data) => {
       if (err) {
         if (!isCustomButton) {
           options.cancel?.(data)
@@ -98,14 +102,15 @@ export class Dialog {
     })
   }
 
-  static hide(keys?: number | number[]) {
+  static async hide(keys?: number | number[]) {
+    const promptAction = (await CtxManager.uiContext).getPromptAction()
     const reverseIds = Array.from(Dialog.ids).reverse()
     const isInteger = Number.isInteger(keys)
     const isArray = Array.isArray(keys)
 
     if (!isInteger && !isArray) {
       for (const id of reverseIds) {
-        CtxManager.uiContext?.getPromptAction().closeCustomDialog(id)
+        promptAction.closeCustomDialog(id)
         Dialog.ids.delete(id)
         break
       }
@@ -116,7 +121,7 @@ export class Dialog {
       const id = keys as number
 
       if (Dialog.ids.has(id)) {
-        CtxManager.uiContext?.getPromptAction().closeCustomDialog(id)
+        promptAction.closeCustomDialog(id)
         Dialog.ids.delete(id)
       }
 
@@ -125,7 +130,7 @@ export class Dialog {
 
     if (isArray) {
       for (const id of keys) {
-        CtxManager.uiContext?.getPromptAction().closeCustomDialog(id)
+        promptAction.closeCustomDialog(id)
         Dialog.ids.delete(id)
       }
       return

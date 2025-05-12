@@ -22,7 +22,7 @@ export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam) {
     console.log('EntryAbility: --- onCreate ---')
     this.context.getApplicationContext().setColorMode(ConfigurationConstant.ColorMode.COLOR_MODE_LIGHT)
-    CtxManager.registerAbilityContext(this.context)
+    CtxManager.registerUIAbilityContext(this.context)
     webview.WebviewController.initializeWebEngine()
     Socketor.init()
     Sqliter.init()
@@ -33,7 +33,7 @@ export default class EntryAbility extends UIAbility {
   }
 
   onNewWant(want: Want, launchParam: AbilityConstant.LaunchParam) {
-
+    console.log('EntryAbility: --- onNewWant ---')
   }
 
   onWindowStageCreate(windowStage: window.WindowStage) {
@@ -50,7 +50,6 @@ export default class EntryAbility extends UIAbility {
       }
 
       console.log('EntryAbility: --- onWindowStageCreate: success ---')
-      CtxManager.registerUIContext(this.windowClass?.getUIContext())
       this.registerCustomizeFonts()
       this.onGlobalErrorCatcher()
     })
@@ -68,7 +67,6 @@ export default class EntryAbility extends UIAbility {
     console.log('EntryAbility: --- onWindowStageWillDestroy ---')
     this.windowClass?.off('windowSizeChange', this.onWindowSizeChange)
     this.windowClass?.off("avoidAreaChange", this.onAvoidAreaChange)
-    CtxManager.unregisterUIContext()
   }
 
   registerCustomizeFonts() {
@@ -84,11 +82,13 @@ export default class EntryAbility extends UIAbility {
         return
       }
 
-      logger.error(
-        'App UnhandledRejection...',
-        error.message,
-        error.stack
-      )
+      if (error instanceof Error) {
+        logger.error(
+          'App UnhandledRejection...',
+          error.message,
+          error.stack
+        )
+      }
     })
 
     this.observerId = errorManager.on('error', {
@@ -98,11 +98,13 @@ export default class EntryAbility extends UIAbility {
           return
         }
 
-        logger.error(
-          'App UnhandledException...',
-          error.message,
-          error.stack
-        )
+        if (error instanceof Error) {
+          logger.error(
+            'App UnhandledException...',
+            error.message,
+            error.stack
+          )
+        }
       }
     })
   }
@@ -118,7 +120,7 @@ export default class EntryAbility extends UIAbility {
   onDestroy() {
     console.log('EntryAbility: --- onDestroy ---')
     errorManager.off('error', this.observerId)
-    CtxManager.unregisterAbilityContext()
+    CtxManager.unregisterUIAbilityContext()
     Socketor.close()
     Sqliter.close()
     Network.close()

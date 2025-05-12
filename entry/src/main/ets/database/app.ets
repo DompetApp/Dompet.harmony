@@ -30,7 +30,7 @@ export class AppDatabaser {
   static async delete(): Promise<void> {
     await AppDatabaser.close()
 
-    await relationalStore.deleteRdbStore(CtxManager.abilityContext, AppDatabaser.cfg).catch(() => {
+    await relationalStore.deleteRdbStore(CtxManager.uiAbilityContext, AppDatabaser.cfg).catch(() => {
       logger.error('AppDatabaser delete error')
     })
   }
@@ -38,7 +38,7 @@ export class AppDatabaser {
   static async create(): Promise<void> {
     await AppDatabaser.close()
 
-    const promise = relationalStore.getRdbStore(CtxManager.abilityContext, AppDatabaser.cfg)
+    const promise = relationalStore.getRdbStore(CtxManager.uiAbilityContext, AppDatabaser.cfg)
 
     promise.catch((): Promise<void> => logger.error('AppDatabaser create error'))
 
@@ -63,6 +63,16 @@ export class AppDatabaser {
     })
   }
 
+  static async connect(): Promise<void> {
+    if (!AppDatabaser.db) {
+      try {
+        AppDatabaser.db ??= await relationalStore.getRdbStore(CtxManager.uiAbilityContext, AppDatabaser.cfg).then()
+      } catch (e) {
+        /* e */
+      }
+    }
+  }
+
   static async closeUser(uid?: string | null): Promise<void> {
     if (!AppDatabaser.db) {
       return
@@ -80,6 +90,10 @@ export class AppDatabaser {
 
   static async deleteUser(uid?: string | null): Promise<void> {
     if (!AppDatabaser.db) {
+      await AppDatabaser.connect()
+    }
+
+    if (!AppDatabaser.db) {
       return
     }
 
@@ -95,6 +109,10 @@ export class AppDatabaser {
   }
 
   static async createUser(user?: IUser | null): Promise<IUser | null> {
+    if (!AppDatabaser.db) {
+      await AppDatabaser.connect()
+    }
+
     if (!AppDatabaser.db) {
       return null
     }
@@ -125,7 +143,7 @@ export class AppDatabaser {
           [
             isChangeName ? user.name : name,
             isChangeEmail ? user.email : email,
-            isChangeAvatar ? user.avatar : avatar,
+            (isChangeAvatar ? user.avatar : avatar) as Unknown as Uint8Array,
             dateFormat(new Date(), 'yyyy-MM-dd HH:mm:ss'),
             'Y',
             uid,
@@ -141,7 +159,7 @@ export class AppDatabaser {
             user.name,
             user.phone,
             user.email,
-            user.avatar,
+            user.avatar as Unknown as Uint8Array,
             dateFormat(new Date(), 'yyyy-MM-dd HH:mm:ss'),
             'Y',
           ]
@@ -157,6 +175,10 @@ export class AppDatabaser {
   }
 
   static async updateUser(user?: IUser | null): Promise<IUser | null> {
+    if (!AppDatabaser.db) {
+      await AppDatabaser.connect()
+    }
+
     if (!AppDatabaser.db) {
       return null
     }
@@ -179,7 +201,7 @@ export class AppDatabaser {
             user.name,
             user.phone,
             user.email,
-            user.avatar,
+            user.avatar as Unknown as Uint8Array,
             dateFormat(new Date(), 'yyyy-MM-dd HH:mm:ss'),
             user.activate,
             user.uid,
@@ -196,6 +218,10 @@ export class AppDatabaser {
   }
 
   static async recentUser(user?: IUser | null): Promise<IUser | null> {
+    if (!AppDatabaser.db) {
+      await AppDatabaser.connect()
+    }
+
     if (!AppDatabaser.db) {
       return null
     }

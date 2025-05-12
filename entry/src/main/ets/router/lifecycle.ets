@@ -13,7 +13,7 @@ export class RouteGlobalLifecycle implements IHMLifecycle {
   }
 
   onShown(ctx: HMLifecycleContext) {
-    window.getLastWindow(CtxManager.abilityContext).then(windowClass => {
+    window.getLastWindow(CtxManager.uiAbilityContext).then(windowClass => {
       const context = ctx.navContext
       const pathName = context?.pathInfo.name!
       const flipping = AppRouter.flippings.includes(pathName)

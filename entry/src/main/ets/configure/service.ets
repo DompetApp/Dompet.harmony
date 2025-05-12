@@ -43,15 +43,16 @@ export class Servicer {
       'code': code,
     }
 
-    return Axios.post('https://oauth-login.cloud.huawei.com/oauth2/v3/token', params, { headers }).then((response: Unknown) => {
-      credential.refresh_token = response.data.refresh_token
-      credential.access_token = response.data.access_token
-      credential.token_type = response.data.token_type
-      credential.expires_in = response.data.expires_in
-      credential.id_token = response.data.id_token
-      credential.scope = response.data.scope
-      return credential
-    })
+    return Axios.post('https://oauth-login.cloud.huawei.com/oauth2/v3/token', params, { headers })
+      .then((response: Unknown) => {
+        credential.refresh_token = response.data.refresh_token
+        credential.access_token = response.data.access_token
+        credential.token_type = response.data.token_type
+        credential.expires_in = response.data.expires_in
+        credential.id_token = response.data.id_token
+        credential.scope = response.data.scope
+        return credential
+      })
   }
 
   static async getUserProfile(token: string) {

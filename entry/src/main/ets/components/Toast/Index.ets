@@ -1,10 +1,11 @@
-import { CtxManager } from "../../configure/context"
 import { promptAction } from "@kit.ArkUI"
+import { CtxManager } from "../../configure/context"
 
 export class Toast {
-  static show(options: promptAction.ShowToastOptions) {
-    options.offset = options.offset ?? { dx: 0, dy: 64 }
+  static async show(options: promptAction.ShowToastOptions) {
+    const prompter = (await CtxManager.uiContext).getPromptAction()
     options.alignment = options.alignment ?? Alignment.Top
-    CtxManager.uiContext?.getPromptAction().showToast(options)
+    options.offset = options.offset ?? { dx: 0, dy: 64 }
+    prompter.showToast(options)
   }
 }

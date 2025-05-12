@@ -30,7 +30,7 @@ export class UserDatabaser {
   static async delete(): Promise<void> {
     await UserDatabaser.close()
 
-    await relationalStore.deleteRdbStore(CtxManager.abilityContext, UserDatabaser.cfg).catch(() => {
+    await relationalStore.deleteRdbStore(CtxManager.uiAbilityContext, UserDatabaser.cfg).catch(() => {
       logger.error('UserDatabaser delete error')
     })
   }
@@ -38,7 +38,7 @@ export class UserDatabaser {
   static async create(): Promise<void> {
     await UserDatabaser.close()
 
-    const promise = relationalStore.getRdbStore(CtxManager.abilityContext, UserDatabaser.cfg)
+    const promise = relationalStore.getRdbStore(CtxManager.uiAbilityContext, UserDatabaser.cfg)
 
     promise.catch((): Promise<void> => logger.error('UserDatabaser create error'))
 
@@ -447,8 +447,22 @@ export class UserDatabaser {
     })
   }
 
+  static async connect(): Promise<void> {
+    if (!UserDatabaser.db) {
+      try {
+        UserDatabaser.db ??= await relationalStore.getRdbStore(CtxManager.uiAbilityContext, UserDatabaser.cfg).then()
+      } catch (e) {
+        /* e */
+      }
+    }
+  }
+
   // UserCard
   static async createUserCard(card: ICard): Promise<ICard | null> {
+    if (!UserDatabaser.db) {
+      await UserDatabaser.connect()
+    }
+
     if (!UserDatabaser.db) {
       return null
     }
@@ -477,6 +491,10 @@ export class UserDatabaser {
   }
 
   static async updateUserCard(card: ICard): Promise<ICard | null> {
+    if (!UserDatabaser.db) {
+      await UserDatabaser.connect()
+    }
+
     if (!UserDatabaser.db) {
       return null
     }
@@ -515,6 +533,10 @@ export class UserDatabaser {
 
   static async queryUserCard(card?: ICard): Promise<ICard | null> {
     if (!UserDatabaser.db) {
+      await UserDatabaser.connect()
+    }
+
+    if (!UserDatabaser.db) {
       return null
     }
 
@@ -547,6 +569,10 @@ export class UserDatabaser {
 
   // UserOrder
   static async createUserOrder(orders: IOrder | IOrder[]): Promise<IOrder[]> {
+    if (!UserDatabaser.db) {
+      await UserDatabaser.connect()
+    }
+
     if (!UserDatabaser.db) {
       return []
     }
@@ -631,6 +657,10 @@ export class UserDatabaser {
 
   static async queryUserOrders(order?: IOrder): Promise<IOrder[]> {
     if (!UserDatabaser.db) {
+      await UserDatabaser.connect()
+    }
+
+    if (!UserDatabaser.db) {
       return []
     }
 
@@ -664,6 +694,10 @@ export class UserDatabaser {
 
   // UserMessage
   static async createUserMessage(message: IMessage | IMessage[]): Promise<IMessage[]> {
+    if (!UserDatabaser.db) {
+      await UserDatabaser.connect()
+    }
+
     if (!UserDatabaser.db) {
       return []
     }
@@ -725,6 +759,10 @@ export class UserDatabaser {
 
   static async queryUserMessages(message?: IMessage): Promise<IMessage[]> {
     if (!UserDatabaser.db) {
+      await UserDatabaser.connect()
+    }
+
+    if (!UserDatabaser.db) {
       return []
     }
 
@@ -759,6 +797,10 @@ export class UserDatabaser {
   }
 
   static async readUserMessage(message: IMessage): Promise<IMessage[]> {
+    if (!UserDatabaser.db) {
+      await UserDatabaser.connect()
+    }
+
     if (!UserDatabaser.db) {
       return []
     }

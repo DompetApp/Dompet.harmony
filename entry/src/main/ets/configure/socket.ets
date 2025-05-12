@@ -100,8 +100,8 @@ export class Socketor {
   }
 
   static async StageWatcher() {
-    if (CtxManager.abilityContext) {
-      CtxManager.abilityContext.getApplicationContext().on('abilityLifecycle', {
+    if (CtxManager.uiAbilityContext) {
+      CtxManager.uiAbilityContext.getApplicationContext().on('abilityLifecycle', {
         onAbilityBackground: () => Socketor.showed = false,
         onAbilityForeground: () => {
           Socketor.showed = true
@@ -225,7 +225,7 @@ export class Socketor {
       }
     })
 
-    const header: Object = Object({ token: persistent.read<string>(AppConnect.ApiToken) })
+    const header: Object = Object({ token: persistent.read<string>(AppConnect.ApiToken, '') })
 
     const promise = Socketor.web.connect(`${AppConnect.WssBaseUrl}`, { header: header })
 

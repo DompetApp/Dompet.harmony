@@ -345,6 +345,10 @@
       "value": "Other login methods"
     },
     {
+      "name": "Paying",
+      "value": "Paying..."
+    },
+    {
       "name": "Payment",
       "value": "Payment"
     },
@@ -371,6 +375,10 @@
     {
       "name": "Please_input_phone_number",
       "value": "please input phone number..."
+    },
+    {
+      "name": "Recharging",
+      "value": "Recharging..."
     },
     {
       "name": "Registration_request_timed_out",
@@ -455,6 +463,10 @@
     {
       "name": "Transfer",
       "value": "Transfer"
+    },
+    {
+      "name": "Transfering",
+      "value": "Transfering..."
     },
     {
       "name": "Type",

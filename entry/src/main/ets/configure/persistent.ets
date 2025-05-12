@@ -1,12 +1,14 @@
-import { preferences } from "@kit.ArkData"
-import { ValueType } from "@kit.ArkData"
+import { sendablePreferences } from "@kit.ArkData"
 import { CtxManager } from "./context"
+import { lang } from "@kit.ArkTS"
 
+'use shared'
+
+@Sendable
 class AppPersistent {
-  private instance: preferences.Preferences | null = null
-  private options: preferences.Options = { name: 'harmony.app.zgb' }
+  private instance: sendablePreferences.Preferences | null = null
 
-  public write<T extends ValueType = ValueType>(key: string, value?: T) {
+  public write<T extends lang.ISendable = lang.ISendable>(key: string, value: T) {
     if (!this.instance) {
       this.init()
     }
@@ -17,7 +19,7 @@ class AppPersistent {
     }
   }
 
-  public read<T extends ValueType = ValueType>(key: string, value?: T) {
+  public read<T extends lang.ISendable = lang.ISendable>(key: string, value: T) {
     if (!this.instance) {
       this.init()
     }
@@ -30,9 +32,11 @@ class AppPersistent {
     return value
   }
 
-  public init(opt?: preferences.Options) {
-    if (CtxManager.abilityContext) {
-      this.instance = preferences.getPreferencesSync(CtxManager.abilityContext, opt ?? this.options)
+  public init(opt?: sendablePreferences.Options) {
+    if (CtxManager.uiAbilityContext) {
+      const context = CtxManager.uiAbilityContext
+      const options = opt ?? { name: 'harmony.app.zgb' }
+      this.instance = sendablePreferences.getPreferencesSync(context, options)
     }
   }
 
