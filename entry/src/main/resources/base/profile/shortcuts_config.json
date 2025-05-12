@@ -1,0 +1,19 @@
+{
+  "shortcuts": [
+    {
+      "shortcutId": "Bill",
+      "label": "$string:Bill",
+      "icon": "$media:shortcut_bill",
+      "wants": [
+        {
+          "bundleName": "com.example.dompet",
+          "moduleName": "entry",
+          "abilityName": "EntryAbility",
+          "parameters": {
+            "url": "/PageStats"
+          }
+        }
+      ]
+    }
+  ]
+}

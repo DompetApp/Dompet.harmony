@@ -263,14 +263,12 @@ export struct PageOperater {
   @Builder
   iconAvatarBuilder(obj: Unknown) {
     if (this.type !== 'Transfer' && obj.icon?.toLowerCase() === 'me') {
-      if (this.loginUser.avatar) {
-        Image(this.loginAvatar)
-          .margin({ right: size.vp(4) })
-          .objectFit(ImageFit.Fill)
-          .borderRadius('50%')
-          .height(size.vp(20))
-          .width(size.vp(20))
-      }
+      Image(!this.loginUser.avatar ? $rawfile(`images/payer/${obj.icon.toLowerCase()}.png`) : this.loginAvatar )
+        .margin({ right: size.vp(4) })
+        .objectFit(ImageFit.Fill)
+        .borderRadius('50%')
+        .height(size.vp(20))
+        .width(size.vp(20))
     }
 
     if (obj.icon && obj.icon.toLowerCase() !== 'me') {
@@ -321,7 +319,7 @@ export struct PageOperater {
           .height('100%')
 
           Column() {
-            this.iconAvatarBuilder(operate.from)
+            this.iconAvatarBuilder({ icon: operate.from })
           }
           .alignItems(HorizontalAlign.Start)
           .justifyContent(FlexAlign.Center)

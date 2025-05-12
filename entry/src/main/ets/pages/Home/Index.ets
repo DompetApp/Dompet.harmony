@@ -617,6 +617,10 @@ export struct PageHome {
     .width('100%')
   }
 
+  aboutToAppear() {
+    store.visited()
+  }
+
   build() {
     Column() {
       RelativeContainer() {

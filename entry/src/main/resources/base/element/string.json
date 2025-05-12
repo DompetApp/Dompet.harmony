@@ -173,6 +173,10 @@
       "value": "Bank Card"
     },
     {
+      "name": "Bill",
+      "value": "Bill"
+    },
+    {
       "name": "Bind_HuaweiId_Number",
       "value": "Mobile number associated with HUAWEI ID"
     },

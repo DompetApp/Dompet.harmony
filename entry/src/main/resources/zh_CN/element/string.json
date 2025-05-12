@@ -173,6 +173,10 @@
       "value": "银行卡"
     },
     {
+      "name": "Bill",
+      "value": "账单"
+    },
+    {
       "name": "Bind_HuaweiId_Number",
       "value": "华为账号绑定号码"
     },

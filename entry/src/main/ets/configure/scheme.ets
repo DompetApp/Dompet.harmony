@@ -53,11 +53,9 @@ export class AppSchemer {
       this.timer = null
     }
 
-    if (this.promiser.completed == true) {
-      this.promiser = toPromise()
-      this.waiting(this.promiser)
-      this.timeout(this.promiser)
-    }
+    this.promiser = toPromise()
+    this.waiting(this.promiser)
+    this.timeout(this.promiser)
 
     this.promiser.then((ready) => {
       if (ready != true || !AppRouter.authorize.includes(scheme.url)) {

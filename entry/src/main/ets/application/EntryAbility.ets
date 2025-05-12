@@ -6,6 +6,7 @@ import { Sqliter } from "../configure/sqlite"
 import { Network } from "../configure/network"
 import { schemer } from "../configure/scheme"
 import { device } from "../configure/device"
+import { Scheme } from "../models/scheme"
 import { logger } from "../tracks/logger"
 import { store } from "../globals/store"
 import { AxiosError } from "@ohos/axios"
@@ -30,10 +31,22 @@ export default class EntryAbility extends UIAbility {
     schemer.init()
     logger.init()
     store.init()
+
+    if (want.parameters?.url) {
+      const parameters: Unknown = want.parameters
+      const scheme = Scheme.from(parameters)
+      schemer.forward(scheme)
+    }
   }
 
   onNewWant(want: Want, launchParam: AbilityConstant.LaunchParam) {
     console.log('EntryAbility: --- onNewWant ---')
+
+    if (want.parameters?.url) {
+      const parameters: Unknown = want.parameters
+      const scheme = Scheme.from(parameters)
+      schemer.forward(scheme)
+    }
   }
 
   onWindowStageCreate(windowStage: window.WindowStage) {
