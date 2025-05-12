@@ -263,7 +263,7 @@ export struct PageOperater {
   @Builder
   iconAvatarBuilder(obj: Unknown) {
     if (this.type !== 'Transfer' && obj.icon?.toLowerCase() === 'me') {
-      Image(!this.loginUser.avatar ? $rawfile(`images/payer/${obj.icon.toLowerCase()}.png`) : this.loginAvatar )
+      Image(!this.loginUser.avatar ? $rawfile(`images/payer/${obj.icon.toLowerCase()}.png`) : this.loginAvatar)
         .margin({ right: size.vp(4) })
         .objectFit(ImageFit.Fill)
         .borderRadius('50%')
@@ -540,8 +540,8 @@ export struct PageOperater {
         })
 
         const message = Message.from({
-          to: to,
-          from: from,
+          to: receive ? undefined : to,
+          from: receive ? from : undefined,
           type: type,
           desc: desc,
           date: date,

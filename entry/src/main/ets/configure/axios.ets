@@ -56,7 +56,7 @@ const createAxiosInterceptor = (axios: AxiosInstance) => {
   axios.interceptors.request.use(
     (config: AxiosReturnRequestConfig) => {
       config.requestTime = SafeDateTimeFormat.dateAndTime()
-      config.headers['token'] ??= persistent.read('token')
+      config.headers['token'] ??= persistent.read('token', '')
       return config
     },
   )
