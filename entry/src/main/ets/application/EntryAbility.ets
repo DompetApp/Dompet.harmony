@@ -1,5 +1,5 @@
-import { AbilityConstant, ConfigurationConstant } from "@kit.AbilityKit"
-import { errorManager, UIAbility, Want } from "@kit.AbilityKit"
+import { AbilityConstant, UIAbility } from "@kit.AbilityKit"
+import { errorManager, Want } from "@kit.AbilityKit"
 import { CtxManager } from "../configure/context"
 import { Socketor } from "../configure/socket"
 import { Sqliter } from "../configure/sqlite"
@@ -22,7 +22,6 @@ export default class EntryAbility extends UIAbility {
 
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam) {
     console.log('EntryAbility: --- onCreate ---')
-    this.context.getApplicationContext().setColorMode(ConfigurationConstant.ColorMode.COLOR_MODE_LIGHT)
     CtxManager.registerUIAbilityContext(this.context)
     webview.WebviewController.initializeWebEngine()
     Socketor.init()

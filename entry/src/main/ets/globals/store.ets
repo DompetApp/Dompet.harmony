@@ -105,7 +105,9 @@ export class AppStore {
     }
 
     if (locale === 'default') {
-      persistent.write('locale', locale)
+      i18n.System.setAppPreferredLanguage('default')
+      persistent.write('locale', 'default')
+      this.locale = 'default'
     }
   }
 
