@@ -206,7 +206,7 @@
     },
     {
       "name": "Date",
-      "value": "日期:"
+      "value": "日期："
     },
     {
       "name": "Digital_Wallet",
@@ -227,6 +227,10 @@
     {
       "name": "Don_t_have_an_account_yet",
       "value": "还没有账户吗？"
+    },
+    {
+      "name": "Email",
+      "value": "邮箱："
     },
     {
       "name": "Emma",
@@ -369,6 +373,14 @@
       "value": "个人信息"
     },
     {
+      "name": "Phone",
+      "value": "手机："
+    },
+    {
+      "name": "Please_enter_your_name",
+      "value": "请输入用户名..."
+    },
+    {
       "name": "Please_input_confirm_password",
       "value": "请输入确认密码..."
     },
@@ -402,7 +414,7 @@
     },
     {
       "name": "State",
-      "value": "状态:"
+      "value": "状态："
     },
     {
       "name": "Status",
@@ -477,6 +489,14 @@
       "value": "类型"
     },
     {
+      "name": "unavailable",
+      "value": "不可用"
+    },
+    {
+      "name": "Unavailable",
+      "value": "不可用"
+    },
+    {
       "name": "Unknown",
       "value": "未知"
     },
@@ -495,10 +515,6 @@
     {
       "name": "Username",
       "value": "用户名"
-    },
-    {
-      "name": "Unavailable",
-      "value": "不可用"
     },
     {
       "name": "Valid",

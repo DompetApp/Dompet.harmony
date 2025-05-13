@@ -206,6 +206,7 @@ export struct PageStats {
                       : this.loginAvatar
                   )
                     .objectFit(ImageFit.Fill)
+                    .draggable(false)
                     .height('100%')
                     .width('100%')
                 }
@@ -287,6 +288,7 @@ export struct PageStats {
             .objectFit(ImageFit.Fill)
             .height(size.vp(52))
             .width(size.vp(280))
+            .draggable(false)
 
           Row() {
             Image($rawfile('images/tabbar/home.png'))
@@ -294,24 +296,28 @@ export struct PageStats {
               .objectFit(ImageFit.Fill)
               .height(size.vp(28))
               .width(size.vp(28))
+              .draggable(false)
 
             Image($rawfile('images/tabbar/chart_select.png'))
               .objectFit(ImageFit.Fill)
               .height(size.vp(28))
               .width(size.vp(28))
               .onClick(Empty.fn)
+              .draggable(false)
 
             Image($rawfile('images/tabbar/notification.png'))
               .onClick(() => AppRouterMgr.push({ pageUrl: AppRouter.notification }))
               .objectFit(ImageFit.Fill)
               .height(size.vp(28))
               .width(size.vp(28))
+              .draggable(false)
 
             Image($rawfile('images/tabbar/settings.png'))
               .onClick(() => AppRouterMgr.push({ pageUrl: AppRouter.settings }))
               .objectFit(ImageFit.Fill)
               .height(size.vp(28))
               .width(size.vp(28))
+              .draggable(false)
           }
           .shadow({
             color: 'rgba(39, 34, 70, 0.098)',

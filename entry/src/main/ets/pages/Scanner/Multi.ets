@@ -146,6 +146,7 @@ export struct ScannerCodes {
         ForEach(this.multiCodeScanLocation, (arr: Array<number>, index: number) => {
           Row() {
             Image($rawfile('scanner/found.svg'))
+              .draggable(false)
               .width(size.vp(40))
               .height(size.vp(40))
               .opacity(this.multiCodeOpacity)

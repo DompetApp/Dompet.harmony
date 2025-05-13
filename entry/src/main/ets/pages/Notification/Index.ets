@@ -54,6 +54,7 @@ export struct PageNotification {
           .objectFit(ImageFit.Fill)
           .height(size.vp(36))
           .width(size.vp(36))
+          .draggable(false)
       }
       .justifyContent(FlexAlign.Center)
       .alignItems(HorizontalAlign.Start)
@@ -181,6 +182,7 @@ export struct PageNotification {
                             .objectFit(ImageFit.Fill)
                             .height(size.vp(20))
                             .width(size.vp(20))
+                            .draggable(false)
                         }
                         .shadow({
                           color: 'rgba(0, 0, 0, 0.058)',

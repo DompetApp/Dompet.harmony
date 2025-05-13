@@ -64,6 +64,7 @@ export struct PageHome {
               .objectFit(ImageFit.Fill)
               .height(size.vp(26))
               .width(size.vp(26))
+              .draggable(false)
           }
           .alignItems(HorizontalAlign.Center)
           .justifyContent(FlexAlign.Start)
@@ -91,6 +92,7 @@ export struct PageHome {
               .objectFit(ImageFit.Fill)
               .height(size.vp(26))
               .width(size.vp(26))
+              .draggable(false)
           }
           .alignItems(HorizontalAlign.Center)
           .justifyContent(FlexAlign.Start)
@@ -118,6 +120,7 @@ export struct PageHome {
               .objectFit(ImageFit.Fill)
               .height(size.vp(26))
               .width(size.vp(26))
+              .draggable(false)
           }
           .alignItems(HorizontalAlign.Center)
           .justifyContent(FlexAlign.Start)
@@ -184,6 +187,7 @@ export struct PageHome {
             .objectFit(ImageFit.Fill)
             .height(size.vp(44))
             .width(size.vp(44))
+            .draggable(false)
         }
         .alignItems(HorizontalAlign.Center)
         .justifyContent(FlexAlign.Center)
@@ -318,6 +322,7 @@ export struct PageHome {
                 .objectFit(ImageFit.Fill)
                 .height(size.vp(28))
                 .width(size.vp(28))
+                .draggable(false)
             }
             .shadow({
               color: 'rgba(39, 34, 70, 0.15)',
@@ -354,6 +359,7 @@ export struct PageHome {
                 .objectFit(ImageFit.Fill)
                 .height(size.vp(28))
                 .width(size.vp(28))
+                .draggable(false)
             }
             .shadow({
               color: 'rgba(39, 34, 70, 0.15)',
@@ -390,6 +396,7 @@ export struct PageHome {
                 .objectFit(ImageFit.Fill)
                 .height(size.vp(28))
                 .width(size.vp(28))
+                .draggable(false)
             }
             .shadow({
               color: 'rgba(39, 34, 70, 0.15)',
@@ -472,6 +479,7 @@ export struct PageHome {
                     : this.loginAvatar
                 )
                   .objectFit(ImageFit.Fill)
+                  .draggable(false)
                   .height('100%')
                   .width('100%')
               }
@@ -551,6 +559,7 @@ export struct PageHome {
           .objectFit(ImageFit.Fill)
           .height(size.vp(52))
           .width(size.vp(280))
+          .draggable(false)
 
         Row() {
           Image($rawfile('images/tabbar/home_select.png'))
@@ -558,24 +567,28 @@ export struct PageHome {
             .height(size.vp(28))
             .width(size.vp(28))
             .onClick(Empty.fn)
+            .draggable(false)
 
           Image($rawfile('images/tabbar/chart.png'))
             .onClick(() => AppRouterMgr.push({ pageUrl: AppRouter.stats }))
             .objectFit(ImageFit.Fill)
             .height(size.vp(28))
             .width(size.vp(28))
+            .draggable(false)
 
           Image($rawfile('images/tabbar/notification.png'))
             .onClick(() => AppRouterMgr.push({ pageUrl: AppRouter.notification }))
             .objectFit(ImageFit.Fill)
             .height(size.vp(28))
             .width(size.vp(28))
+            .draggable(false)
 
           Image($rawfile('images/tabbar/settings.png'))
             .onClick(() => AppRouterMgr.push({ pageUrl: AppRouter.settings }))
             .objectFit(ImageFit.Fill)
             .height(size.vp(28))
             .width(size.vp(28))
+            .draggable(false)
         }
         .shadow({
           color: 'rgba(39, 34, 70, 0.098)',

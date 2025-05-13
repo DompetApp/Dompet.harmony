@@ -44,6 +44,7 @@ export struct PageRegister {
           .objectFit(ImageFit.Fill)
           .height(size.vp(36))
           .width(size.vp(36))
+          .draggable(false)
       }
       .justifyContent(FlexAlign.Center)
       .alignItems(HorizontalAlign.Start)
@@ -67,6 +68,7 @@ export struct PageRegister {
                 Image($r('app.media.startIcon'))
                   .height(size.vp(66))
                   .width(size.vp(66))
+                  .draggable(false)
               }
               .alignItems(HorizontalAlign.Center)
               .justifyContent(FlexAlign.Center)

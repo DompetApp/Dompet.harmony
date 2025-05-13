@@ -120,6 +120,7 @@ export struct CacheImager {
           .height(this.loadingHeight)
           .width(this.loadingWidth)
           .objectFit(ImageFit.Fill)
+          .draggable(false)
       }
       .backgroundColor(this.loadingBgColor)
       .alignItems(HorizontalAlign.Center)

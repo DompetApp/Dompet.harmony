@@ -65,6 +65,7 @@ export struct WebviewTool {
             .objectFit(ImageFit.Fill)
             .height(size.vp(28))
             .width(size.vp(28))
+            .draggable(false)
         }
         .alignItems(HorizontalAlign.Center)
         .justifyContent(FlexAlign.Center)

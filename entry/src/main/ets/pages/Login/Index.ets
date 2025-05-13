@@ -47,6 +47,7 @@ export struct PageLogin {
           .objectFit(ImageFit.Fill)
           .height(size.vp(36))
           .width(size.vp(36))
+          .draggable(false)
       }
       .justifyContent(FlexAlign.Center)
       .alignItems(HorizontalAlign.Start)

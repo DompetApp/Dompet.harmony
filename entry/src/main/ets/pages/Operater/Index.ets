@@ -52,6 +52,7 @@ export struct PageOperater {
           .objectFit(ImageFit.Fill)
           .height(size.vp(36))
           .width(size.vp(36))
+          .draggable(false)
       }
       .justifyContent(FlexAlign.Center)
       .alignItems(HorizontalAlign.Start)
@@ -111,6 +112,7 @@ export struct PageOperater {
                     .objectFit(ImageFit.Fill)
                     .height(size.vp(24))
                     .width(size.vp(24))
+                    .draggable(false)
                 }
                 .padding({ left: size.vp(15), right: size.vp(6) })
                 .alignItems(HorizontalAlign.Start)
@@ -190,6 +192,7 @@ export struct PageOperater {
                           .objectFit(ImageFit.Fill)
                           .height(size.vp(27))
                           .width(size.vp(25))
+                          .draggable(false)
                       }
 
                       if (index === 11) {
@@ -197,6 +200,7 @@ export struct PageOperater {
                           .objectFit(ImageFit.Fill)
                           .height(size.vp(24))
                           .width(size.vp(24))
+                          .draggable(false)
                       }
                     }
                     .onClick(() => this.onKeyboardDown(index))
@@ -269,6 +273,7 @@ export struct PageOperater {
         .borderRadius('50%')
         .height(size.vp(20))
         .width(size.vp(20))
+        .draggable(false)
     }
 
     if (obj.icon && obj.icon.toLowerCase() !== 'me') {
@@ -278,6 +283,7 @@ export struct PageOperater {
         .borderRadius('50%')
         .height(size.vp(20))
         .width(size.vp(20))
+        .draggable(false)
     }
   }
 
@@ -312,6 +318,7 @@ export struct PageOperater {
               .objectFit(ImageFit.Fill)
               .height(size.vp(26))
               .width(size.vp(24))
+              .draggable(false)
           }
           .padding({ left: size.vp(15), right: size.vp(15) })
           .alignItems(HorizontalAlign.Start)

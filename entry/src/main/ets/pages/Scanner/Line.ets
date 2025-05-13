@@ -132,12 +132,14 @@ export struct ScannerLine {
       Image($rawfile('scanner/line.png'))
         .position({ y: this.linePosition + '%' })
         .height(size.vp(2))
+        .draggable(false)
         .width('100%')
 
       Image($rawfile('scanner/blur.png'))
         .scale({ y: Math.max(this.lineSpeed, 0.007) })
         .position({ y: this.linePosition + '%' })
         .height(size.vp(130))
+        .draggable(false)
         .width('100%')
         .rotate({
           angle: this.lineAngle,

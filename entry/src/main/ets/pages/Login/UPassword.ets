@@ -328,6 +328,7 @@ export struct LoginByPassword {
               Image($r('app.media.startIcon'))
                 .height(size.vp(66))
                 .width(size.vp(66))
+                .draggable(false)
             }
             .alignItems(HorizontalAlign.Center)
             .justifyContent(FlexAlign.Center)

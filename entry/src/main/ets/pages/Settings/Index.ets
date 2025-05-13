@@ -91,6 +91,7 @@ export struct PageSettings {
           .objectFit(ImageFit.Fill)
           .height(size.vp(36))
           .width(size.vp(36))
+          .draggable(false)
       }
       .justifyContent(FlexAlign.Center)
       .alignItems(HorizontalAlign.Start)
@@ -156,6 +157,7 @@ export struct PageSettings {
                     .objectFit(ImageFit.Fill)
                     .height(size.vp(24))
                     .width(size.vp(24))
+                    .draggable(false)
                 }
                 .alignItems(HorizontalAlign.Center)
                 .justifyContent(FlexAlign.Center)
@@ -188,6 +190,7 @@ export struct PageSettings {
                     .objectFit(ImageFit.Fill)
                     .height(size.vp(30))
                     .width(size.vp(30))
+                    .draggable(false)
                 }
                 .justifyContent(FlexAlign.Center)
                 .alignItems(HorizontalAlign.End)
@@ -207,6 +210,7 @@ export struct PageSettings {
                     .objectFit(ImageFit.Fill)
                     .height(size.vp(24))
                     .width(size.vp(24))
+                    .draggable(false)
                 }
                 .alignItems(HorizontalAlign.Center)
                 .justifyContent(FlexAlign.Center)
@@ -239,6 +243,7 @@ export struct PageSettings {
                     .objectFit(ImageFit.Fill)
                     .height(size.vp(30))
                     .width(size.vp(30))
+                    .draggable(false)
                 }
                 .justifyContent(FlexAlign.Center)
                 .alignItems(HorizontalAlign.End)
@@ -258,6 +263,7 @@ export struct PageSettings {
                     .objectFit(ImageFit.Fill)
                     .height(size.vp(24))
                     .width(size.vp(24))
+                    .draggable(false)
                 }
                 .alignItems(HorizontalAlign.Center)
                 .justifyContent(FlexAlign.Center)
@@ -290,6 +296,7 @@ export struct PageSettings {
                     .objectFit(ImageFit.Fill)
                     .height(size.vp(30))
                     .width(size.vp(30))
+                    .draggable(false)
                 }
                 .justifyContent(FlexAlign.Center)
                 .alignItems(HorizontalAlign.End)
@@ -309,6 +316,7 @@ export struct PageSettings {
                     .objectFit(ImageFit.Fill)
                     .height(size.vp(24))
                     .width(size.vp(24))
+                    .draggable(false)
                 }
                 .alignItems(HorizontalAlign.Center)
                 .justifyContent(FlexAlign.Center)
@@ -341,6 +349,7 @@ export struct PageSettings {
                     .objectFit(ImageFit.Fill)
                     .height(size.vp(30))
                     .width(size.vp(30))
+                    .draggable(false)
                 }
                 .justifyContent(FlexAlign.Center)
                 .alignItems(HorizontalAlign.End)
@@ -360,6 +369,7 @@ export struct PageSettings {
                     .objectFit(ImageFit.Fill)
                     .height(size.vp(24))
                     .width(size.vp(24))
+                    .draggable(false)
                 }
                 .alignItems(HorizontalAlign.Center)
                 .justifyContent(FlexAlign.Center)
@@ -392,6 +402,7 @@ export struct PageSettings {
                     .objectFit(ImageFit.Fill)
                     .height(size.vp(30))
                     .width(size.vp(30))
+                    .draggable(false)
                 }
                 .justifyContent(FlexAlign.Center)
                 .alignItems(HorizontalAlign.End)
@@ -411,6 +422,7 @@ export struct PageSettings {
                     .objectFit(ImageFit.Fill)
                     .height(size.vp(24))
                     .width(size.vp(24))
+                    .draggable(false)
                 }
                 .alignItems(HorizontalAlign.Center)
                 .justifyContent(FlexAlign.Center)
@@ -444,6 +456,7 @@ export struct PageSettings {
                     .objectFit(ImageFit.Fill)
                     .height(size.vp(20))
                     .width(size.vp(20))
+                    .draggable(false)
                 }
                 .justifyContent(FlexAlign.Center)
                 .alignItems(HorizontalAlign.End)
@@ -471,6 +484,7 @@ export struct PageSettings {
                     .objectFit(ImageFit.Fill)
                     .height(size.vp(36))
                     .width(size.vp(36))
+                    .draggable(false)
                 }
                 .alignItems(HorizontalAlign.Center)
                 .justifyContent(FlexAlign.Center)

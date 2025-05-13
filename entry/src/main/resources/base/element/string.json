@@ -229,6 +229,10 @@
       "value": "Don't have an account yet？"
     },
     {
+      "name": "Email",
+      "value": "Email:"
+    },
+    {
       "name": "Emma",
       "value": "Emma"
     },
@@ -369,6 +373,14 @@
       "value": "Person Profile"
     },
     {
+      "name": "Phone",
+      "value": "Phone:"
+    },
+    {
+      "name": "Please_enter_your_name",
+      "value": "Please enter your name..."
+    },
+    {
       "name": "Please_input_confirm_password",
       "value": "please input confirmation password..."
     },
@@ -477,6 +489,14 @@
       "value": "Type"
     },
     {
+      "name": "unavailable",
+      "value": "unavailable"
+    },
+    {
+      "name": "Unavailable",
+      "value": "Unavailable"
+    },
+    {
       "name": "Unknown",
       "value": "Unknown"
     },
@@ -495,10 +515,6 @@
     {
       "name": "Username",
       "value": "Username"
-    },
-    {
-      "name": "Unavailable",
-      "value": "Unavailable"
     },
     {
       "name": "Valid",
