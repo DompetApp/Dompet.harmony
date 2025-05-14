@@ -486,6 +486,7 @@ export struct PageHome {
               .alignItems(HorizontalAlign.Center)
               .justifyContent(FlexAlign.Center)
               .margin({ right: size.vp(15) })
+              .borderRadius(size.vp(15))
               .height(size.vp(39))
               .width(size.vp(39))
               .clip(true)

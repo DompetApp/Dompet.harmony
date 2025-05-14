@@ -1,10 +1,13 @@
+import { fileIo } from "@kit.CoreFileKit"
 import { HMRouter } from "@hadss/hmrouter"
 import { AppRouter } from "../../router/constants"
 import { AppRouterMgr } from "../../router/manager"
+import { photoAccessHelper } from "@kit.MediaLibraryKit"
 import { Toast } from "../../components/Toast/Index"
 import { FocusMgr } from "../../utils/focus"
 import { store } from "../../globals/store"
 import { event } from "../../globals/event"
+import { Empty } from "../../utils/empty"
 import { size } from "../../utils/size"
 import { image } from "@kit.ImageKit"
 import { UIUtils } from "@kit.ArkUI"
@@ -222,7 +225,7 @@ export struct PageNotification {
                 .width(size.vp(56))
 
                 Column() {
-                  Text(store.user.activate !== 'Y' ? $r('app.string.Unavailable') : $r('app.string.available'))
+                  Text(store.user.activate !== 'Y' ? $r('app.string.unavailable') : $r('app.string.available'))
                     .fontWeight(FontWeight.Medium)
                     .fontSize(size.vp(15))
                     .fontColor(0x130138)
@@ -295,14 +298,14 @@ export struct PageNotification {
     .width('100%')
   }
 
-  async aboutToDisappear() {
-    this.focusMgr.blur()
-  }
-
   async aboutToAppear() {
     this.name = store.user.name
     this.avatar = store.user.avatar
     this.readonly = !!store.user.name
+  }
+
+  async aboutToDisappear() {
+    this.focusMgr.blur()
   }
 
   async changeUserName() {
@@ -311,7 +314,29 @@ export struct PageNotification {
   }
 
   async pickNewAvatar() {
+    const photoPicker = new photoAccessHelper.PhotoViewPicker()
+    const photoSelectOptions = new photoAccessHelper.PhotoSelectOptions()
 
+    photoSelectOptions.MIMEType = photoAccessHelper.PhotoViewMIMETypes.IMAGE_TYPE
+    photoSelectOptions.isPhotoTakingSupported = false
+    photoSelectOptions.isEditSupported = false
+    photoSelectOptions.maxSelectNumber = 1
+    
+    const promise = photoPicker.select(photoSelectOptions).then(async photoSelectResult => {
+      const file = fileIo.openSync(photoSelectResult.photoUris[0], fileIo.OpenMode.READ_ONLY)
+      const imgSource = image.createImageSource(file.fd)
+
+      const pixelMap = await imgSource.createPixelMap({
+        desiredPixelFormat: 3,
+        editable: true,
+      })
+
+      const imagePacker: image.ImagePacker = image.createImagePacker()
+      const imageOptions: image.PackingOption = { format: "image/jpeg", quality: 100 }
+      this.avatar = new Uint8Array(await imagePacker.packToData(pixelMap, imageOptions))
+    })
+
+    promise.catch(Empty.fn)
   }
 
   async updateUser() {
@@ -319,16 +344,19 @@ export struct PageNotification {
 
     this.readonly = true
 
-    if (this.name !== store.user.name || this.avatar !== store.user.avatar) {
-      await event.updateUser(
-        store.user.from({
-          avatar: this.avatar,
-          name: this.name,
-        }),
-      )
-
+    if (this.name === store.user.name && this.avatar === store.user.avatar) {
       Toast.show({ message: $r('app.string.Update_user_successfully') })
+      return
     }
+
+    await event.updateUser(
+      store.user.from({
+        avatar: this.avatar,
+        name: this.name,
+      }),
+    )
+
+    Toast.show({ message: $r('app.string.Update_user_successfully') })
   }
 
   build() {
@@ -336,6 +364,7 @@ export struct PageNotification {
       this.scrollAreaBuilder()
       this.backRouteBuilder()
     }
+    .onClick(() => this.focusMgr.blur())
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
     .backgroundColor(0xffffff)
     .height('100%')
