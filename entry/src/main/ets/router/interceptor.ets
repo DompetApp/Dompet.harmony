@@ -4,6 +4,7 @@ import { HMInterceptorInfo } from "@hadss/hmrouter"
 import { HMInterceptorAction } from "@hadss/hmrouter"
 import { AppRouterMgr } from "../router/manager"
 import { AppRouter } from "../router/constants"
+import { logger } from "../tracks/logger"
 import { store } from "../globals/store"
 
 
@@ -17,6 +18,10 @@ export class RouteGlobalInterceptor implements IHMInterceptor {
 
     if (store.logined && AppRouter.anonymous.includes(info.targetName!)) {
       return HMInterceptorAction.DO_REJECT
+    }
+
+    if (info.type && info.srcName && info.targetName) {
+      logger.info(`RouteGlobalInterceptor: from ${info.srcName} to ${info.targetName} (${info.type})`)
     }
 
     return HMInterceptorAction.DO_NEXT
