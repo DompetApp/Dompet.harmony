@@ -83,8 +83,8 @@ export default class EntryAbility extends UIAbility {
 
   registerCustomizeFonts() {
     font.registerFont({
-      familyName: 'PingFang',
-      familySrc: $rawfile('fonts/PingFang.ttf')
+      familyName: 'Google.Roboto',
+      familySrc: $rawfile('fonts/Roboto.ttf')
     })
   }
 
