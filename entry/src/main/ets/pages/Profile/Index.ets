@@ -7,6 +7,7 @@ import { Toast } from "../../components/Toast/Index"
 import { FocusMgr } from "../../utils/focus"
 import { store } from "../../globals/store"
 import { event } from "../../globals/event"
+import { IUser } from "../../models/user"
 import { Empty } from "../../utils/empty"
 import { size } from "../../utils/size"
 import { image } from "@kit.ImageKit"
@@ -18,8 +19,9 @@ import { UIUtils } from "@kit.ArkUI"
   singleton: true
 })
 @ComponentV2
-export struct PageNotification {
+export struct PageProfile {
   @Local name: string = ''
+  @Local user: IUser = store.user
   @Local avatar: Uint8Array | null = null
   @Local focusMgr: FocusMgr = new FocusMgr(this.getUIContext())
   @Local readonly: boolean = true
@@ -32,8 +34,8 @@ export struct PageNotification {
       return imgSource.createPixelMapSync()
     }
 
-    if (store.user.avatar) {
-      const avatar = UIUtils.getTarget(store.user.avatar)
+    if (this.user.avatar) {
+      const avatar = UIUtils.getTarget(this.user.avatar)
       const imgSource = image.createImageSource(avatar.buffer)
       return imgSource.createPixelMapSync()
     }
@@ -107,7 +109,7 @@ export struct PageNotification {
                   right: size.vp(10),
                   bottom: size.vp(0)
                 })
-                .placeholderColor(store.user.name ? 0x130138 : 0x9f9f9f)
+                .placeholderColor(this.user.name ? 0x130138 : 0x9f9f9f)
                 .placeholderFont({ size: size.vp(16) })
                 .backgroundColor(Color.White)
                 .focusable(!this.readonly)
@@ -150,7 +152,7 @@ export struct PageNotification {
                 .width(size.vp(56))
 
                 Column() {
-                  Text(store.user.phone)
+                  Text(this.user.phone)
                     .fontWeight(FontWeight.Medium)
                     .fontSize(size.vp(15))
                     .fontColor(0x130138)
@@ -175,7 +177,7 @@ export struct PageNotification {
                 .width(size.vp(56))
 
                 Column() {
-                  Text(store.user.email)
+                  Text(this.user.email)
                     .fontWeight(FontWeight.Medium)
                     .fontSize(size.vp(15))
                     .fontColor(0x130138)
@@ -200,7 +202,7 @@ export struct PageNotification {
                 .width(size.vp(56))
 
                 Column() {
-                  Text(store.user.createDate)
+                  Text(this.user.createDate)
                     .fontWeight(FontWeight.Medium)
                     .fontSize(size.vp(15))
                     .fontColor(0x130138)
@@ -225,7 +227,7 @@ export struct PageNotification {
                 .width(size.vp(56))
 
                 Column() {
-                  Text(store.user.activate !== 'Y' ? $r('app.string.unavailable') : $r('app.string.available'))
+                  Text(this.user.activate !== 'Y' ? $r('app.string.unavailable') : $r('app.string.available'))
                     .fontWeight(FontWeight.Medium)
                     .fontSize(size.vp(15))
                     .fontColor(0x130138)
@@ -299,9 +301,9 @@ export struct PageNotification {
   }
 
   async aboutToAppear() {
-    this.name = store.user.name
-    this.avatar = store.user.avatar
-    this.readonly = !!store.user.name
+    this.name = this.user.name
+    this.avatar = this.user.avatar
+    this.readonly = !!this.user.name
   }
 
   async aboutToDisappear() {
@@ -321,7 +323,7 @@ export struct PageNotification {
     photoSelectOptions.isPhotoTakingSupported = false
     photoSelectOptions.isEditSupported = false
     photoSelectOptions.maxSelectNumber = 1
-    
+
     const promise = photoPicker.select(photoSelectOptions).then(async photoSelectResult => {
       const file = fileIo.openSync(photoSelectResult.photoUris[0], fileIo.OpenMode.READ_ONLY)
       const imgSource = image.createImageSource(file.fd)
@@ -344,13 +346,13 @@ export struct PageNotification {
 
     this.readonly = true
 
-    if (this.name === store.user.name && this.avatar === store.user.avatar) {
+    if (this.name === this.user.name && this.avatar === this.user.avatar) {
       Toast.show({ message: $r('app.string.Update_user_successfully') })
       return
     }
 
     await event.updateUser(
-      store.user.from({
+      this.user.from({
         avatar: this.avatar,
         name: this.name,
       }),

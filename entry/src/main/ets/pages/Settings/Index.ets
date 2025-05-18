@@ -14,9 +14,9 @@ import { size } from "../../utils/size"
 @ComponentV2
 export struct PageSettings {
   @Local context: UIContext = this.getUIContext()
-  @Local scroller: Scroller = new Scroller()
+  @Local bodyScroller: Scroller = new Scroller()
   @Local headHeight: number = size.vp(156)
-  @Local showShadow: boolean = false
+  @Local headShadow: boolean = false
 
   @Builder
   logoutBuilder() {
@@ -112,6 +112,7 @@ export struct PageSettings {
           Text($r('app.string.My_Settings'))
             .fontWeight(FontWeight.Bold)
             .letterSpacing(size.vp(3))
+            .lineHeight(size.vp(28))
             .fontSize(size.vp(20))
             .fontColor(0x130138)
         }
@@ -133,8 +134,8 @@ export struct PageSettings {
     .backgroundColor(Color.White)
     .width('100%')
     .shadow({
-      color: this.showShadow ? 'rgba(0, 0, 0, 0.038)' : Color.Transparent,
-      radius: this.showShadow ? vp2px(10) : 0,
+      color: this.headShadow ? 'rgba(0, 0, 0, 0.038)' : Color.Transparent,
+      radius: this.headShadow ? vp2px(10) : 0,
       offsetY: vp2px(1.2),
       offsetX: vp2px(0),
     })
@@ -144,7 +145,7 @@ export struct PageSettings {
   scrollAreaBuilder() {
     Column() {
       Column() {
-        Scroll(this.scroller) {
+        Scroll(this.bodyScroller) {
           Stack({ alignContent: Alignment.Top }) {
             Column()
               .height(`calc(100% + ${size.vp(62.5)}vp)`)
@@ -551,10 +552,10 @@ export struct PageSettings {
   }
 
   onDidScroll(_: number) {
-    this.headHeight = size.vp(156) - (this.scroller.currentOffset().yOffset * 1.6)
+    this.headHeight = size.vp(156) - (this.bodyScroller.currentOffset().yOffset * 1.6)
     this.headHeight = Math.min(this.headHeight, size.vp(156))
     this.headHeight = Math.max(this.headHeight, size.vp(56))
-    this.showShadow = this.headHeight <= size.vp(56)
+    this.headShadow = this.headHeight <= size.vp(56)
   }
 
   build() {

@@ -21,7 +21,7 @@ import { size } from "../../utils/size"
 })
 @ComponentV2
 export struct PageStats {
-  @Local scroller: Scroller = new Scroller()
+  @Local bodyScroller: Scroller = new Scroller()
   @Local bankOrders: IOrders = store.orders
   @Local loginUser: IUser = store.user
   @Local bankCard: ICard = store.card
@@ -46,6 +46,7 @@ export struct PageStats {
         Text($r('app.string.Balance'))
           .letterSpacing(size.vp(1.2))
           .fontWeight(FontWeight.Bold)
+          .lineHeight(size.vp(28))
           .fontSize(size.vp(20))
           .fontColor(0x130138)
 
@@ -87,7 +88,7 @@ export struct PageStats {
 
   @Builder
   scrollAreaBuilder() {
-    Scroll(this.scroller) {
+    Scroll(this.bodyScroller) {
       Column() {
         this.yearBalanceBuilder()
         this.transactionsBuilder()
@@ -104,7 +105,7 @@ export struct PageStats {
     .padding({ bottom: device.isPortrait ? size.vp(92) : 0 })
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM])
     .onDidScroll(() => {
-      const offset = this.scroller.currentOffset()
+      const offset = this.bodyScroller.currentOffset()
       this.showHeader = offset.yOffset >= size.vp(298)
     })
   }

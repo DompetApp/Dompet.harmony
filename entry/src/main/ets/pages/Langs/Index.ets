@@ -11,10 +11,10 @@ import { size } from "../../utils/size"
   singleton: true
 })
 @ComponentV2
-export struct PageNotification {
-  @Local scroller: Scroller = new Scroller()
+export struct PageLangs {
+  @Local bodyScroller: Scroller = new Scroller()
   @Local headHeight: number = size.vp(156)
-  @Local showShadow: boolean = false
+  @Local headShadow: boolean = false
 
   @Builder
   backRouteBuilder() {
@@ -47,6 +47,7 @@ export struct PageNotification {
           Text($r('app.string.Language'))
             .fontWeight(FontWeight.Bold)
             .letterSpacing(size.vp(3))
+            .lineHeight(size.vp(28))
             .fontSize(size.vp(20))
             .fontColor(0x130138)
         }
@@ -68,8 +69,8 @@ export struct PageNotification {
     .backgroundColor(Color.White)
     .width('100%')
     .shadow({
-      color: this.showShadow ? 'rgba(0, 0, 0, 0.038)' : Color.Transparent,
-      radius: this.showShadow ? vp2px(10) : 0,
+      color: this.headShadow ? 'rgba(0, 0, 0, 0.038)' : Color.Transparent,
+      radius: this.headShadow ? vp2px(10) : 0,
       offsetY: vp2px(1.2),
       offsetX: vp2px(0),
     })
@@ -79,7 +80,7 @@ export struct PageNotification {
   scrollAreaBuilder() {
     Column() {
       Column() {
-        Scroll(this.scroller) {
+        Scroll(this.bodyScroller) {
           Stack({ alignContent: Alignment.Top }) {
             Column()
               .height(`calc(100% + ${size.vp(100)}vp)`)
@@ -202,10 +203,10 @@ export struct PageNotification {
   }
 
   onDidScroll(_: number) {
-    this.headHeight = size.vp(156) - this.scroller.currentOffset().yOffset
+    this.headHeight = size.vp(156) - this.bodyScroller.currentOffset().yOffset
     this.headHeight = Math.min(this.headHeight, size.vp(156))
     this.headHeight = Math.max(this.headHeight, size.vp(56))
-    this.showShadow = this.headHeight <= size.vp(56)
+    this.headShadow = this.headHeight <= size.vp(56)
   }
 
   isDefault() {

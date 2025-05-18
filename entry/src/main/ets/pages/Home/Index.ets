@@ -22,9 +22,9 @@ import { UIUtils } from "@kit.ArkUI"
 })
 @ComponentV2
 export struct PageHome {
-  @Local showShadow: boolean = false
-  @Local showActions: boolean = false
-  @Local scroller: Scroller = new Scroller()
+  @Local headShadow: boolean = false
+  @Local headActions: boolean = false
+  @Local bodyScroller: Scroller = new Scroller()
   @Local bankOrders: IOrders = store.orders
   @Local loginUser: IUser = store.user
   @Local bankCard: ICard = store.card
@@ -149,14 +149,14 @@ export struct PageHome {
     }
     .width('100%')
     .height(this.headHeight)
-    .opacity(this.showActions ? 1 : 0)
+    .opacity(this.headActions ? 1 : 0)
     .alignItems(HorizontalAlign.Start)
     .justifyContent(FlexAlign.Center)
     .backgroundColor(Color.White)
-    .enabled(this.showActions)
+    .enabled(this.headActions)
     .animation({
       curve: Curve.Linear,
-      duration: this.showActions ? 480 : 300,
+      duration: this.headActions ? 480 : 300,
     })
   }
 
@@ -204,14 +204,14 @@ export struct PageHome {
     }
     .width('100%')
     .height(this.headHeight)
-    .opacity(this.showActions ? 0 : 1)
+    .opacity(this.headActions ? 0 : 1)
     .alignItems(HorizontalAlign.Start)
     .justifyContent(FlexAlign.Center)
     .backgroundColor(Color.White)
-    .enabled(!this.showActions)
+    .enabled(!this.headActions)
     .animation({
       curve: Curve.Linear,
-      duration: this.showActions ? 300 : 480,
+      duration: this.headActions ? 300 : 480,
     })
   }
 
@@ -226,8 +226,8 @@ export struct PageHome {
       .width('100%')
     }
     .shadow({
-      color: this.showShadow ? 'rgba(0, 0, 0, 0.038)' : Color.Transparent,
-      radius: this.showShadow ? vp2px(10) : 0,
+      color: this.headShadow ? 'rgba(0, 0, 0, 0.038)' : Color.Transparent,
+      radius: this.headShadow ? vp2px(10) : 0,
       offsetY: vp2px(1.2),
       offsetX: vp2px(0),
     })
@@ -245,7 +245,7 @@ export struct PageHome {
 
   @Builder
   scrollAreaBuilder() {
-    Scroll(this.scroller) {
+    Scroll(this.bodyScroller) {
       Column() {
         this.userBankCardBuilder()
         this.transactionsBuilder()
@@ -266,9 +266,9 @@ export struct PageHome {
     .padding({ bottom: this.headHeight + this.footHeight })
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM])
     .onDidScroll(() => {
-      const offset = this.scroller.currentOffset()
-      this.showShadow = offset.yOffset >= size.vp(42)
-      this.showActions = offset.yOffset >= size.vp(42)
+      const offset = this.bodyScroller.currentOffset()
+      this.headShadow = offset.yOffset >= size.vp(42)
+      this.headActions = offset.yOffset >= size.vp(42)
     })
   }
 

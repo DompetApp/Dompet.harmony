@@ -91,7 +91,7 @@ export class UserDatabaser {
 
         const card = Card.from({
           cardNo: '621062xxxxxx8888',
-          cardType: 'Debit Card',
+          cardType: 'Debit_Card',
           bankName: 'Citibank',
           expiryDate: '2058-12-01',
           balance: 0.0,
