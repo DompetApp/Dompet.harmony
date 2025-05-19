@@ -469,7 +469,7 @@ export struct PageSettings {
                   pageUrl: AppRouter.webview,
                   param: WebviewMeta.fromJson({
                     title: 'Dompet App',
-                    url: 'https://github.com/DompetApp/Dompet.harmony',
+                    url: 'https://juejin.cn/post/7505713576683405327',
                   })
                 })
               })
