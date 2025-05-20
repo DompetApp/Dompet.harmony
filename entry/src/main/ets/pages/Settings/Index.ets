@@ -45,7 +45,10 @@ export struct PageSettings {
         .backgroundColor(Color.Transparent)
         .borderRadius(size.vp(22))
         .height(size.vp(40))
-        .width('25%')
+        .padding({
+          left: size.vp(12),
+          right: size.vp(12)
+        })
 
         Button({ type: ButtonType.Normal, stateEffect: false }) {
           Text($r('app.string.Logout'))
@@ -61,7 +64,10 @@ export struct PageSettings {
         .backgroundColor(Color.Transparent)
         .borderRadius(size.vp(22))
         .height(size.vp(40))
-        .width('25%')
+        .padding({
+          left: size.vp(12),
+          right: size.vp(12)
+        })
       }
       .alignItems(VerticalAlign.Center)
       .justifyContent(FlexAlign.End)

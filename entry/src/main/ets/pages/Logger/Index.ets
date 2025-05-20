@@ -181,7 +181,7 @@ export struct PageLogger {
       this.backRouteBuilder()
 
       Loading({
-        bgColor: 'rgba(255, 255, 255, 0.8)',
+        bgColor: 'rgba(255, 255, 255, 0.65)',
         desc: $r('app.string.Loading_logs_please_wait'),
         state: this.first && this.loading,
       })
