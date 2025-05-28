@@ -4,7 +4,7 @@
   "dependencies": {
     "@hadss/hmrouter-transitions": "^1.0.0-rc.10",
     "@hadss/hmrouter": "^1.1.0-beta.0",
-    "@ohos/imageknife": "^3.2.5",
+    "@ohos/imageknife": "^3.2.6",
     "@ohos/crypto-js": "^2.0.4",
     "@ohos/axios": "^2.2.6",
     "@hitro/ark": "^1.1.1",
