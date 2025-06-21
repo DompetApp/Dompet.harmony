@@ -4,7 +4,7 @@ import { AppRouterMgr } from "../../router/manager"
 import { LoginByPassword } from "../Login/UPassword"
 import { LoginByAccount } from "../Login/UAccount"
 import { FocusMgr } from "../../utils/focus"
-import { size } from "../../utils/size"
+import { unit } from "../../utils/unity"
 
 
 @HMRouter({
@@ -43,19 +43,19 @@ export struct PageLogin {
       Column() {
         Image($rawfile('images/auth/back.png'))
           .onClick(() => this.switchMode())
-          .margin({ left: size.vp(20) })
+          .margin({ left: unit.vp(20) })
           .objectFit(ImageFit.Fill)
-          .height(size.vp(36))
-          .width(size.vp(36))
+          .height(unit.vp(36))
+          .width(unit.vp(36))
           .draggable(false)
       }
       .justifyContent(FlexAlign.Center)
       .alignItems(HorizontalAlign.Start)
-      .width(size.wmax(640))
+      .width(unit.wmax(640))
       .height('100%')
     }
     .width('100%')
-    .height(size.vp(56))
+    .height(unit.vp(56))
     .justifyContent(FlexAlign.Start)
     .alignItems(HorizontalAlign.Center)
   }
@@ -85,7 +85,7 @@ export struct PageLogin {
               this.backRouteBuilder()
             }
           }
-          .width(size.wmax(640))
+          .width(unit.wmax(640))
           .height('auto')
         }
         .justifyContent(FlexAlign.Start)

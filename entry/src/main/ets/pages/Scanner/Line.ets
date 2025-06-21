@@ -1,4 +1,4 @@
-import { size } from "../../utils/size"
+import { unit } from "../../utils/unity"
 import { AnimatorResult } from "@kit.ArkUI"
 import { Animator } from "@kit.ArkUI"
 import { curves } from "@kit.ArkUI"
@@ -131,14 +131,14 @@ export struct ScannerLine {
     Stack() {
       Image($rawfile('scanner/line.png'))
         .position({ y: this.linePosition + '%' })
-        .height(size.vp(2))
+        .height(unit.vp(2))
         .draggable(false)
         .width('100%')
 
       Image($rawfile('scanner/blur.png'))
         .scale({ y: Math.max(this.lineSpeed, 0.007) })
         .position({ y: this.linePosition + '%' })
-        .height(size.vp(130))
+        .height(unit.vp(130))
         .draggable(false)
         .width('100%')
         .rotate({

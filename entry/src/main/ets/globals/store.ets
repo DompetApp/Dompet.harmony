@@ -22,12 +22,14 @@ export class AppStore {
 
   // Auth / Locale
   public async init() {
+    this.locale = persistent.read('locale', this.locale)
     this.expired = persistent.read('expired', this.expired)
     this.logined = persistent.read('logined', this.logined)
-    this.locale = persistent.read('locale', this.locale)
 
-    if (this.logined) {
-      this.logined = Date.now() < this.expired
+    this.logined = this.logined && Date.now() < this.expired
+
+    if (!this.logined) {
+      this.ready.resolve(false)
     }
 
     if (this.locale) {

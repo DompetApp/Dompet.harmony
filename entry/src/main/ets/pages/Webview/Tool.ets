@@ -8,7 +8,7 @@ import { Toast } from "../../components/Toast/Index"
 import { AppRouterMgr } from "../../router/manager"
 import { device } from "../../configure/device"
 import { Empty } from "../../utils/empty"
-import { size } from "../../utils/size"
+import { unit } from "../../utils/unity"
 
 
 @ComponentV2
@@ -38,15 +38,15 @@ export struct WebviewTool {
             this.toolItemBuilder(type)
           })
         }
-        .columnsTemplate(`repeat(auto-stretch, ${size.vp(50)})`)
-        .columnsGap(size.vp(15))
-        .rowsGap(size.vp(16))
+        .columnsTemplate(`repeat(auto-stretch, ${unit.vp(50)})`)
+        .columnsGap(unit.vp(15))
+        .rowsGap(unit.vp(16))
         .padding({
-          left: size.vp(3),
-          right: size.vp(3)
+          left: unit.vp(3),
+          right: unit.vp(3)
         })
       }
-      .constraintSize({ minHeight: Math.min(size.vp(150), size.vh(30)) })
+      .constraintSize({ minHeight: Math.min(unit.vp(150), unit.vh(30)) })
       .alignItems(HorizontalAlign.Start)
       .justifyContent(FlexAlign.Start)
       .width('100%')
@@ -63,30 +63,30 @@ export struct WebviewTool {
         Column() {
           Image(this.getItemImage(type))
             .objectFit(ImageFit.Fill)
-            .height(size.vp(28))
-            .width(size.vp(28))
+            .height(unit.vp(28))
+            .width(unit.vp(28))
             .draggable(false)
         }
         .alignItems(HorizontalAlign.Center)
         .justifyContent(FlexAlign.Center)
         .backgroundColor(Color.White)
-        .borderRadius(size.vp(15))
-        .height(size.vp(50))
-        .width(size.vp(50))
+        .borderRadius(unit.vp(15))
+        .height(unit.vp(50))
+        .width(unit.vp(50))
         .clip(true)
 
         Column() {
           Text(this.getItemTitle(type))
             .textOverflow({ overflow: TextOverflow.Ellipsis })
             .fontWeight(FontWeight.Bold)
-            .fontSize(size.vp(10))
+            .fontSize(unit.vp(10))
             .fontColor(0x606266)
             .maxLines(2)
         }
         .alignItems(HorizontalAlign.Center)
         .justifyContent(FlexAlign.Center)
-        .padding({ top: size.vp(8) })
-        .width(size.vp(50))
+        .padding({ top: unit.vp(8) })
+        .width(unit.vp(50))
       }
       .width('100%')
       .height('auto')
@@ -180,7 +180,7 @@ export struct WebviewTool {
 
       if (type == 'browser') {
         const url = this.webviewController.getUrl()
-        const ctx = getContext(this) as common.UIAbilityContext
+        const ctx = this.getUIContext().getHostContext() as common.UIAbilityContext
 
         if (url.startsWith('https://') || url.startsWith('http://')) {
           ctx.openLink(url, { appLinkingOnly: false })
@@ -212,7 +212,7 @@ export struct WebviewTool {
           title: title,
         })
 
-        const context = getContext(this) as common.UIAbilityContext
+        const context = this.getUIContext().getHostContext() as common.UIAbilityContext
         const controller = new systemShare.ShareController(shareData)
 
         controller.show(context, {
@@ -281,19 +281,19 @@ export struct WebviewTool {
         Column() {
           Row() {
             Text($r('app.string.Webview_Settings'))
-              .letterSpacing(Math.max(size.vp(1.2), 1.2))
+              .letterSpacing(Math.max(unit.vp(1.2), 1.2))
               .fontWeight(FontWeight.Bold)
-              .fontSize(size.vp(16))
+              .fontSize(unit.vp(16))
               .fontColor(0x303133)
           }
-          .padding({ left: size.vp(8), right: size.vp(8) })
+          .padding({ left: unit.vp(8), right: unit.vp(8) })
           .justifyContent(FlexAlign.Start)
           .alignItems(VerticalAlign.Top)
           .width('100%')
 
           Divider()
-            .margin({ top: size.vp(15), bottom: size.vp(15) })
-            .strokeWidth(size.vp(0.6))
+            .margin({ top: unit.vp(15), bottom: unit.vp(15) })
+            .strokeWidth(unit.vp(0.6))
             .color(0xcfcfcf)
 
           Column() {
@@ -313,22 +313,22 @@ export struct WebviewTool {
           .width('100%')
 
           Divider()
-            .margin({ top: size.vp(20), bottom: size.vp(15) })
-            .strokeWidth(size.vp(0.6))
+            .margin({ top: unit.vp(20), bottom: unit.vp(15) })
+            .strokeWidth(unit.vp(0.6))
             .color(0xcfcfcf)
 
           Column() {
             Text($r('app.string.System_Cancel'))
-              .letterSpacing(Math.max(size.vp(1.2), 1.2))
+              .letterSpacing(Math.max(unit.vp(1.2), 1.2))
               .fontWeight(FontWeight.Bold)
-              .fontSize(size.vp(16))
+              .fontSize(unit.vp(16))
               .fontColor(0x646e93)
           }
           .padding({
-            top: size.vp(5),
-            left: size.vp(25),
-            right: size.vp(25),
-            bottom: Math.max(size.vp(20) - px2vp(device.bottom), 0)
+            top: unit.vp(5),
+            left: unit.vp(25),
+            right: unit.vp(25),
+            bottom: Math.max(unit.vp(20) - unit.px2vp(device.bottom), 0)
           })
           .alignItems(HorizontalAlign.Center)
           .justifyContent(FlexAlign.Center)
@@ -336,12 +336,12 @@ export struct WebviewTool {
           .height('auto')
           .width('100%')
         }
-        .borderRadius({ topLeft: size.vp(15), topRight: size.vp(15) })
+        .borderRadius({ topLeft: unit.vp(15), topRight: unit.vp(15) })
         .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM])
         .translate({ y: this.offsetY })
         .justifyContent(FlexAlign.End)
         .backgroundColor(0xebebeb)
-        .padding(size.vp(15))
+        .padding(unit.vp(15))
         .onClick(Empty.fn)
         .width('100%')
       }

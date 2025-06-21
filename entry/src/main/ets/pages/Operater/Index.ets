@@ -15,7 +15,7 @@ import { event } from "../../globals/event"
 import { store } from "../../globals/store"
 import { Order } from "../../models/order"
 import { IUser } from "../../models/user"
-import { size } from "../../utils/size"
+import { unit } from "../../utils/unity"
 
 
 @HMRouter({
@@ -48,19 +48,19 @@ export struct PageOperater {
       Column() {
         Image($rawfile('images/auth/back.png'))
           .onClick(() => AppRouterMgr.pop())
-          .margin({ left: size.vp(20) })
+          .margin({ left: unit.vp(20) })
           .objectFit(ImageFit.Fill)
-          .height(size.vp(36))
-          .width(size.vp(36))
+          .height(unit.vp(36))
+          .width(unit.vp(36))
           .draggable(false)
       }
       .justifyContent(FlexAlign.Center)
       .alignItems(HorizontalAlign.Start)
-      .width(size.wmax(640))
+      .width(unit.wmax(640))
       .height('100%')
     }
     .width('100%')
-    .height(size.vp(56))
+    .height(unit.vp(56))
     .justifyContent(FlexAlign.Start)
     .alignItems(HorizontalAlign.Center)
   }
@@ -74,16 +74,16 @@ export struct PageOperater {
             Column() {
               Text(money.USD(this.money))
                 .fontWeight(FontWeight.Bold)
-                .fontSize(size.vp(32))
+                .fontSize(unit.vp(32))
                 .fontColor(0x2f1155)
             }
             .margin({
-              top: size.vp(100),
-              bottom: size.vp(44),
+              top: unit.vp(100),
+              bottom: unit.vp(44),
             })
             .padding({
-              left: size.vp(32),
-              right: size.vp(32),
+              left: unit.vp(32),
+              right: unit.vp(32),
             })
             .alignItems(HorizontalAlign.Center)
             .justifyContent(FlexAlign.Center)
@@ -104,17 +104,17 @@ export struct PageOperater {
                 }
                 .justifyContent(FlexAlign.Start)
                 .alignItems(VerticalAlign.Top)
-                .height(size.vp(64))
+                .height(unit.vp(64))
                 .layoutWeight(1)
 
                 Column() {
                   Image($rawfile('images/operater/down.png'))
                     .objectFit(ImageFit.Fill)
-                    .height(size.vp(24))
-                    .width(size.vp(24))
+                    .height(unit.vp(24))
+                    .width(unit.vp(24))
                     .draggable(false)
                 }
-                .padding({ left: size.vp(15), right: size.vp(6) })
+                .padding({ left: unit.vp(15), right: unit.vp(6) })
                 .alignItems(HorizontalAlign.Start)
                 .justifyContent(FlexAlign.Center)
                 .height('100%')
@@ -123,12 +123,12 @@ export struct PageOperater {
               .alignItems(VerticalAlign.Center)
               .justifyContent(FlexAlign.Center)
               .backgroundColor(0xf2f2f2)
-              .borderRadius(size.vp(20))
+              .borderRadius(unit.vp(20))
               .padding({
-                top: size.vp(20),
-                left: size.vp(30),
-                right: size.vp(24),
-                bottom: size.vp(20),
+                top: unit.vp(20),
+                left: unit.vp(30),
+                right: unit.vp(24),
+                bottom: unit.vp(20),
               })
               .height('100%')
               .width('100%')
@@ -148,30 +148,30 @@ export struct PageOperater {
                   })
                   .alignItems(VerticalAlign.Center)
                   .justifyContent(FlexAlign.Start)
-                  .height(size.vp(50))
+                  .height(unit.vp(50))
                   .width('100%')
                 })
               }
               .shadow({
                 color: 'rgba(0, 0, 0, 0.05)',
-                radius: vp2px(5),
-                offsetY: vp2px(3),
-                offsetX: vp2px(0),
+                radius: unit.vp2px(5),
+                offsetY: unit.vp2px(3),
+                offsetX: unit.vp2px(0),
               })
-              .padding({ left: size.vp(30), right: size.vp(24) })
-              .height(this.showShadow ? size.vp(50 * this.options.length) : 0)
+              .padding({ left: unit.vp(30), right: unit.vp(24) })
+              .height(this.showShadow ? unit.vp(50 * this.options.length) : 0)
               .animation({ curve: Curve.Linear, duration: 240 })
               .alignItems(HorizontalAlign.Start)
               .justifyContent(FlexAlign.Center)
               .backgroundColor(Color.White)
-              .borderRadius(size.vp(20))
+              .borderRadius(unit.vp(20))
               .margin({ top: 66 })
               .width('100%')
               .clip(true)
             }
-            .margin({ bottom: size.vp(42) })
-            .height(size.vp(64))
-            .width(size.vp(311))
+            .margin({ bottom: unit.vp(42) })
+            .height(unit.vp(64))
+            .width(unit.vp(311))
             .clip(false)
             .zIndex(10)
 
@@ -183,23 +183,23 @@ export struct PageOperater {
                       if (index <= 9) {
                         Text(index !== 9 ? `${index + 1}` : '0')
                           .fontWeight(FontWeight.Medium)
-                          .fontSize(size.vp(24))
+                          .fontSize(unit.vp(24))
                           .fontColor(0x363853)
                       }
 
                       if (index === 10) {
                         Image($rawfile('images/operater/delete.png'))
                           .objectFit(ImageFit.Fill)
-                          .height(size.vp(27))
-                          .width(size.vp(25))
+                          .height(unit.vp(27))
+                          .width(unit.vp(25))
                           .draggable(false)
                       }
 
                       if (index === 11) {
                         Image($rawfile('images/operater/clear.png'))
                           .objectFit(ImageFit.Fill)
-                          .height(size.vp(24))
-                          .width(size.vp(24))
+                          .height(unit.vp(24))
+                          .width(unit.vp(24))
                           .draggable(false)
                       }
                     }
@@ -207,10 +207,10 @@ export struct PageOperater {
                     .alignItems(HorizontalAlign.Center)
                     .justifyContent(FlexAlign.Center)
                     .backgroundColor(Color.White)
-                    .borderRadius(size.vp(20))
+                    .borderRadius(unit.vp(20))
                     .enabled(!this.showShadow)
-                    .height(size.vp(60))
-                    .width(size.vp(60))
+                    .height(unit.vp(60))
+                    .width(unit.vp(60))
                     .stateStyles({
                       pressed: {
                         .backgroundColor(0xf0f0f0)
@@ -220,25 +220,25 @@ export struct PageOperater {
                 })
               }
               .columnsTemplate('1fr 1fr 1fr')
-              .columnsGap(size.vp(35))
-              .rowsGap(size.vp(20))
+              .columnsGap(unit.vp(35))
+              .rowsGap(unit.vp(20))
               .width('100%')
             }
             .alignItems(HorizontalAlign.Center)
             .justifyContent(FlexAlign.Start)
-            .margin({ bottom: size.vp(64) })
-            .width(size.vp(250))
+            .margin({ bottom: unit.vp(64) })
+            .width(unit.vp(250))
 
             Button($r(`app.string.${this.type}`), { type: ButtonType.Normal, stateEffect: true })
               .onClick(() => this.payMoney())
               .fontWeight(FontWeight.Medium)
-              .borderRadius(size.vp(20))
+              .borderRadius(unit.vp(20))
               .backgroundColor(0x5b259f)
               .enabled(!this.showShadow)
               .fontColor(Color.White)
-              .fontSize(size.vp(20))
-              .height(size.vp(60))
-              .width(size.vp(180))
+              .fontSize(unit.vp(20))
+              .height(unit.vp(60))
+              .width(unit.vp(180))
           }
           .constraintSize({ minHeight: '100%' })
           .alignItems(HorizontalAlign.Center)
@@ -254,7 +254,7 @@ export struct PageOperater {
       .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
       .alignItems(HorizontalAlign.Start)
       .justifyContent(FlexAlign.Center)
-      .width(size.wmax(640))
+      .width(unit.wmax(640))
       .height('100%')
     }
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
@@ -268,21 +268,21 @@ export struct PageOperater {
   iconAvatarBuilder(obj: Unknown) {
     if (this.type !== 'Transfer' && obj.icon?.toLowerCase() === 'me') {
       Image(!this.loginUser.avatar ? $rawfile(`images/payer/${obj.icon.toLowerCase()}.png`) : this.loginAvatar)
-        .margin({ right: size.vp(4) })
+        .margin({ right: unit.vp(4) })
         .objectFit(ImageFit.Fill)
         .borderRadius('50%')
-        .height(size.vp(20))
-        .width(size.vp(20))
+        .height(unit.vp(20))
+        .width(unit.vp(20))
         .draggable(false)
     }
 
     if (obj.icon && obj.icon.toLowerCase() !== 'me') {
       Image($rawfile(`images/payer/${obj.icon.toLowerCase()}.png`))
-        .margin({ right: size.vp(4) })
+        .margin({ right: unit.vp(4) })
         .objectFit(ImageFit.Fill)
         .borderRadius('50%')
-        .height(size.vp(20))
-        .width(size.vp(20))
+        .height(unit.vp(20))
+        .width(unit.vp(20))
         .draggable(false)
     }
   }
@@ -304,7 +304,7 @@ export struct PageOperater {
       Column() {
         Text(this.type == 'Top_up' ? $r(`app.string.${operate.from}`) : $r(`app.string.${operate.to}`))
           .fontWeight(FontWeight.Bold)
-          .fontSize(size.vp(16))
+          .fontSize(unit.vp(16))
           .fontColor(0x363853)
       }
       .alignItems(HorizontalAlign.Start)
@@ -316,11 +316,11 @@ export struct PageOperater {
           Column() {
             Image($rawfile('images/operater/left.png'))
               .objectFit(ImageFit.Fill)
-              .height(size.vp(26))
-              .width(size.vp(24))
+              .height(unit.vp(26))
+              .width(unit.vp(24))
               .draggable(false)
           }
-          .padding({ left: size.vp(15), right: size.vp(15) })
+          .padding({ left: unit.vp(15), right: unit.vp(15) })
           .alignItems(HorizontalAlign.Start)
           .justifyContent(FlexAlign.Center)
           .height('100%')
@@ -335,7 +335,7 @@ export struct PageOperater {
           Column() {
             Text($r(`app.string.${operate.from}`))
               .fontWeight(FontWeight.Bold)
-              .fontSize(size.vp(16))
+              .fontSize(unit.vp(16))
               .fontColor(0x363853)
           }
           .alignItems(HorizontalAlign.Start)
@@ -476,7 +476,7 @@ export struct PageOperater {
     }
 
     return media.createSoundPool(5, audioRendererInfo).then(async sound => {
-      const rawFd = await getContext(this).resourceManager.getRawFd('medias/pay.wav')
+      const rawFd = await this.getUIContext().getHostContext()!.resourceManager.getRawFd('medias/pay.wav')
       const loaded = new Promise<void>((resolve) => sound.on('loadComplete', () => resolve()))
       const played = new Promise<void>((resolve) => sound.on('playFinished', () => resolve()))
       const soundId = await sound.load(rawFd.fd, rawFd.offset, rawFd.length)

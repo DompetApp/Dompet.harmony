@@ -9,7 +9,7 @@ import { store } from "../../globals/store"
 import { event } from "../../globals/event"
 import { IUser } from "../../models/user"
 import { Empty } from "../../utils/empty"
-import { size } from "../../utils/size"
+import { unit } from "../../utils/unity"
 import { image } from "@kit.ImageKit"
 import { UIUtils } from "@kit.ArkUI"
 
@@ -49,19 +49,19 @@ export struct PageProfile {
       Column() {
         Image($rawfile('images/auth/back.png'))
           .onClick(() => AppRouterMgr.pop())
-          .margin({ left: size.vp(20) })
+          .margin({ left: unit.vp(20) })
           .objectFit(ImageFit.Fill)
-          .height(size.vp(36))
-          .width(size.vp(36))
+          .height(unit.vp(36))
+          .width(unit.vp(36))
           .draggable(false)
       }
       .justifyContent(FlexAlign.Center)
       .alignItems(HorizontalAlign.Start)
-      .width(size.wmax(640))
+      .width(unit.wmax(640))
       .height('100%')
     }
     .width('100%')
-    .height(size.vp(56))
+    .height(unit.vp(56))
     .justifyContent(FlexAlign.Start)
     .alignItems(HorizontalAlign.Center)
   }
@@ -82,86 +82,86 @@ export struct PageProfile {
               Column() {
                 Text($r('app.string.Change'))
                   .fontWeight(FontWeight.Normal)
-                  .letterSpacing(size.vp(1))
-                  .fontSize(size.vp(11.2))
+                  .letterSpacing(unit.vp(1))
+                  .fontSize(unit.vp(11.2))
                   .fontColor(Color.White)
               }
               .backgroundColor('rgba(47, 17, 86, 0.75)')
               .alignItems(HorizontalAlign.Center)
               .justifyContent(FlexAlign.Center)
-              .padding({ bottom: size.vp(3) })
-              .height(size.vp(24))
+              .padding({ bottom: unit.vp(3) })
+              .height(unit.vp(24))
               .width('100%')
             }
             .backgroundColor('rgba(234, 233, 229, 0.85)')
             .onClick(() => this.pickNewAvatar())
-            .margin({ bottom: size.vp(10) })
-            .borderRadius(size.vp(48))
-            .height(size.vp(96))
-            .width(size.vp(96))
+            .margin({ bottom: unit.vp(10) })
+            .borderRadius(unit.vp(48))
+            .height(unit.vp(96))
+            .width(unit.vp(96))
             .clip(true)
 
             Row() {
               TextInput({ text: $$this.name, placeholder: $r('app.string.Please_enter_your_name') })
                 .padding({
-                  top: size.vp(0),
-                  left: size.vp(10),
-                  right: size.vp(10),
-                  bottom: size.vp(0)
+                  top: unit.vp(0),
+                  left: unit.vp(10),
+                  right: unit.vp(10),
+                  bottom: unit.vp(0)
                 })
                 .placeholderColor(this.user.name ? 0x130138 : 0x9f9f9f)
-                .placeholderFont({ size: size.vp(16) })
+                .placeholderFont({ size: unit.vp(16) })
                 .backgroundColor(Color.White)
                 .focusable(!this.readonly)
-                .borderRadius(size.vp(0))
-                .fontSize(size.vp(18))
+                .borderRadius(unit.vp(0))
+                .fontSize(unit.vp(18))
                 .fontColor(0x130138)
-                .height(size.vp(18))
+                .height(unit.vp(18))
                 .width('auto')
                 .id('name')
 
               Column() {
                 Image($rawfile('images/profile/edit.png'))
-                  .margin({ top: size.vp(1.5) })
+                  .margin({ top: unit.vp(1.5) })
                   .objectFit(ImageFit.Fill)
-                  .height(size.vp(20))
-                  .width(size.vp(20))
+                  .height(unit.vp(20))
+                  .width(unit.vp(20))
                   .draggable(false)
               }
               .onClick(() => this.changeUserName())
               .alignItems(HorizontalAlign.Center)
               .justifyContent(FlexAlign.Center)
-              .height(size.vp(42))
-              .width(size.vp(22))
+              .height(unit.vp(42))
+              .width(unit.vp(22))
             }
             .justifyContent(FlexAlign.Center)
             .alignItems(VerticalAlign.Center)
-            .margin({ bottom: size.vp(42) })
-            .height(size.vp(42))
+            .margin({ bottom: unit.vp(42) })
+            .height(unit.vp(42))
 
             Column() {
               Row() {
                 Column() {
                   Text($r('app.string.Phone'))
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(size.vp(15))
+                    .fontSize(unit.vp(15))
                     .fontColor(0x130138)
                 }
                 .alignItems(HorizontalAlign.Start)
                 .justifyContent(FlexAlign.Start)
-                .width(size.vp(56))
+                .width(unit.vp(56))
 
                 Column() {
                   Text(this.user.phone)
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(size.vp(15))
+                    .fontSize(unit.vp(15))
                     .fontColor(0x130138)
                 }
                 .alignItems(HorizontalAlign.Start)
                 .justifyContent(FlexAlign.Start)
               }
-              .margin({ bottom: size.vp(10) })
-              .constraintSize({ minHeight: size.vp(30) })
+              .margin({ bottom: unit.vp(10) })
+              .constraintSize({ minHeight: unit.vp(30) })
               .alignItems(VerticalAlign.Center)
               .justifyContent(FlexAlign.Start)
 
@@ -169,24 +169,24 @@ export struct PageProfile {
                 Column() {
                   Text($r('app.string.Email'))
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(size.vp(15))
+                    .fontSize(unit.vp(15))
                     .fontColor(0x130138)
                 }
                 .alignItems(HorizontalAlign.Start)
                 .justifyContent(FlexAlign.Start)
-                .width(size.vp(56))
+                .width(unit.vp(56))
 
                 Column() {
                   Text(this.user.email)
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(size.vp(15))
+                    .fontSize(unit.vp(15))
                     .fontColor(0x130138)
                 }
                 .alignItems(HorizontalAlign.Start)
                 .justifyContent(FlexAlign.Start)
               }
-              .margin({ bottom: size.vp(10) })
-              .constraintSize({ minHeight: size.vp(30) })
+              .margin({ bottom: unit.vp(10) })
+              .constraintSize({ minHeight: unit.vp(30) })
               .alignItems(VerticalAlign.Center)
               .justifyContent(FlexAlign.Start)
 
@@ -194,24 +194,24 @@ export struct PageProfile {
                 Column() {
                   Text($r('app.string.Date'))
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(size.vp(15))
+                    .fontSize(unit.vp(15))
                     .fontColor(0x130138)
                 }
                 .alignItems(HorizontalAlign.Start)
                 .justifyContent(FlexAlign.Start)
-                .width(size.vp(56))
+                .width(unit.vp(56))
 
                 Column() {
                   Text(this.user.createDate)
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(size.vp(15))
+                    .fontSize(unit.vp(15))
                     .fontColor(0x130138)
                 }
                 .alignItems(HorizontalAlign.Start)
                 .justifyContent(FlexAlign.Start)
               }
-              .margin({ bottom: size.vp(10) })
-              .constraintSize({ minHeight: size.vp(30) })
+              .margin({ bottom: unit.vp(10) })
+              .constraintSize({ minHeight: unit.vp(30) })
               .alignItems(VerticalAlign.Center)
               .justifyContent(FlexAlign.Start)
 
@@ -219,41 +219,41 @@ export struct PageProfile {
                 Column() {
                   Text($r('app.string.State'))
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(size.vp(15))
+                    .fontSize(unit.vp(15))
                     .fontColor(0x130138)
                 }
                 .alignItems(HorizontalAlign.Start)
                 .justifyContent(FlexAlign.Start)
-                .width(size.vp(56))
+                .width(unit.vp(56))
 
                 Column() {
                   Text(this.user.activate !== 'Y' ? $r('app.string.unavailable') : $r('app.string.available'))
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(size.vp(15))
+                    .fontSize(unit.vp(15))
                     .fontColor(0x130138)
                 }
                 .alignItems(HorizontalAlign.Start)
                 .justifyContent(FlexAlign.Start)
               }
-              .margin({ bottom: size.vp(10) })
-              .constraintSize({ minHeight: size.vp(30) })
+              .margin({ bottom: unit.vp(10) })
+              .constraintSize({ minHeight: unit.vp(30) })
               .alignItems(VerticalAlign.Center)
               .justifyContent(FlexAlign.Start)
             }
             .alignItems(HorizontalAlign.Start)
             .justifyContent(FlexAlign.Start)
             .constraintSize({
-              minWidth: size.vp(100),
-              minHeight: size.vp(44),
+              minWidth: unit.vp(100),
+              minHeight: unit.vp(44),
             })
 
             Text($r('app.string.Update'))
               .onClick(() => this.updateUser())
               .backgroundColor(Color.Transparent)
               .fontWeight(FontWeight.Medium)
-              .letterSpacing(size.vp(1.2))
-              .borderRadius(size.vp(20))
-              .fontSize(size.vp(15))
+              .letterSpacing(unit.vp(1.2))
+              .borderRadius(unit.vp(20))
+              .fontSize(unit.vp(15))
               .fontColor(0x5b259f)
               .stateStyles({
                 pressed: {
@@ -261,21 +261,21 @@ export struct PageProfile {
                 }
               })
               .margin({
-                top: size.vp(56),
-                bottom: size.vp(30),
+                top: unit.vp(56),
+                bottom: unit.vp(30),
               })
               .padding({
-                top: size.vp(12),
-                left: size.vp(35),
-                right: size.vp(35),
-                bottom: size.vp(12),
+                top: unit.vp(12),
+                left: unit.vp(35),
+                right: unit.vp(35),
+                bottom: unit.vp(12),
               })
           }
           .padding({
-            top: size.vp(110),
-            left: size.vp(30),
-            right: size.vp(30),
-            bottom: size.vp(18)
+            top: unit.vp(110),
+            left: unit.vp(30),
+            right: unit.vp(30),
+            bottom: unit.vp(18)
           })
           .constraintSize({ minHeight: '100%' })
           .alignItems(HorizontalAlign.Center)
@@ -290,7 +290,7 @@ export struct PageProfile {
       .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
       .alignItems(HorizontalAlign.Start)
       .justifyContent(FlexAlign.Center)
-      .width(size.wmax(640))
+      .width(unit.wmax(640))
       .height('100%')
     }
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])

@@ -1,6 +1,7 @@
 import { ImageKnifeComponent } from "@ohos/imageknife"
 import { ImageKnifeRequest } from "@ohos/imageknife"
 import { ImageKnifeData } from "@ohos/imageknife"
+import { unit } from "../../utils/unity"
 
 @ObservedV2
 export class CacheImageOptions {
@@ -145,8 +146,8 @@ export struct CacheImager {
         this.error = true
       },
       onLoadSuccess: (_, data) => {
-        this.rawWidth = px2vp(data.imageWidth)
-        this.rawHeight = px2vp(data.imageHeight)
+        this.rawWidth = unit.px2vp(data.imageWidth)
+        this.rawHeight = unit.px2vp(data.imageHeight)
         this.loading = false
         this.success = true
         this.error = false

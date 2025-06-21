@@ -1,7 +1,6 @@
-import { HMInterceptor } from "@hadss/hmrouter"
+import { IHMInterceptorChain } from "@hadss/hmrouter"
 import { IHMInterceptor } from "@hadss/hmrouter"
-import { HMInterceptorInfo } from "@hadss/hmrouter"
-import { HMInterceptorAction } from "@hadss/hmrouter"
+import { HMInterceptor } from "@hadss/hmrouter"
 import { AppRouterMgr } from "../router/manager"
 import { AppRouter } from "../router/constants"
 import { logger } from "../tracks/logger"
@@ -10,20 +9,23 @@ import { store } from "../globals/store"
 
 @HMInterceptor({ interceptorName: 'RouteGlobalInterceptor', global: true })
 export class RouteGlobalInterceptor implements IHMInterceptor {
-  handle(info: HMInterceptorInfo): HMInterceptorAction {
-    if (!store.logined && AppRouter.authorize.includes(info.targetName!)) {
+  async intercept(chain: IHMInterceptorChain) {
+    const route = chain.getRouterInfo()
+    const ready = await store.ready.promise;
+
+    if (!ready && AppRouter.authorize.includes(route.targetName!)) {
       AppRouterMgr.reset({ pageUrl: AppRouter.login })
-      return HMInterceptorAction.DO_REJECT
+      return chain.onIntercept()
     }
 
-    if (store.logined && AppRouter.anonymous.includes(info.targetName!)) {
-      return HMInterceptorAction.DO_REJECT
+    if (ready && AppRouter.anonymous.includes(route.targetName!)) {
+      return chain.onIntercept()
     }
 
-    if (info.type && info.srcName && info.targetName) {
-      logger.info(`RouteGlobalInterceptor: from ${info.srcName} to ${info.targetName} (${info.type})`)
+    if (route.type && route.srcName && route.targetName) {
+      logger.info(`RouteGlobalInterceptor: from ${route.srcName} to ${route.targetName} (${route.type})`)
     }
 
-    return HMInterceptorAction.DO_NEXT
+    await chain.onContinue()
   }
 }

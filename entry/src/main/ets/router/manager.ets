@@ -14,7 +14,7 @@ export class AppRouterMgr extends HMRouterMgr {
 
     if (pathInfo.pageUrl === AppRouter.webview) {
       const param: IWebviewMeta = pathInfo.param = WebviewMgr.format(pathInfo.param) as Unknown
-      const stack: NavPathStack = HMRouterMgr.getPathStack(pathInfo.navigationId) as Unknown
+      const stack: NavPathStack = HMRouterMgr.getPathStack(pathInfo.navigationId!) as Unknown
       const params: IWebviewMeta[] = stack.getParamByName(AppRouter.webview) as Unknown
       const indexs: number[] = stack.getIndexByName(AppRouter.webview) as Unknown
       const place: number = params.findIndex(p => p.key === param.key) as number
@@ -30,7 +30,7 @@ export class AppRouterMgr extends HMRouterMgr {
       }
     }
 
-    return HMRouterMgr.replace(pathInfo, callback)
+    return HMRouterMgr.replaceAsync(pathInfo, callback)
   }
 
   static async reset(pathInfo: HMRouterPathInfo, callback?: HMRouterPathCallback) {
@@ -40,7 +40,7 @@ export class AppRouterMgr extends HMRouterMgr {
 
     pathInfo.navigationId = pathInfo.navigationId ?? AppNav.root
     HMRouterMgr.getPathStack(pathInfo.navigationId)?.clear()
-    return HMRouterMgr.replace(pathInfo, callback)
+    return HMRouterMgr.replaceAsync(pathInfo, callback)
   }
 
   static async push(pathInfo: HMRouterPathInfo, callback?: HMRouterPathCallback) {
@@ -50,7 +50,7 @@ export class AppRouterMgr extends HMRouterMgr {
 
     if (pathInfo.pageUrl === AppRouter.webview) {
       const param: IWebviewMeta = pathInfo.param = WebviewMgr.format(pathInfo.param) as Unknown
-      const stack: NavPathStack = HMRouterMgr.getPathStack(pathInfo.navigationId) as Unknown
+      const stack: NavPathStack = HMRouterMgr.getPathStack(pathInfo.navigationId!) as Unknown
       const params: IWebviewMeta[] = stack.getParamByName(AppRouter.webview) as Unknown
       const indexs: number[] = stack.getIndexByName(AppRouter.webview) as Unknown
       const place: number = params.findIndex(p => p.key === param.key) as number
@@ -66,7 +66,7 @@ export class AppRouterMgr extends HMRouterMgr {
       }
     }
 
-    return HMRouterMgr.push(pathInfo, callback)
+    return HMRouterMgr.pushAsync(pathInfo, callback)
   }
 
   static async pop(pathInfo?: HMRouterPathInfo, skiped?: number) {
@@ -76,7 +76,7 @@ export class AppRouterMgr extends HMRouterMgr {
 
     if (pathInfo?.pageUrl === AppRouter.webview) {
       const param: IWebviewMeta = pathInfo.param = WebviewMgr.format(pathInfo.param) as Unknown
-      const stack: NavPathStack = HMRouterMgr.getPathStack(pathInfo.navigationId) as Unknown
+      const stack: NavPathStack = HMRouterMgr.getPathStack(pathInfo.navigationId!) as Unknown
       const params: IWebviewMeta[] = stack.getParamByName(AppRouter.webview) as Unknown
       const indexs: number[] = stack.getIndexByName(AppRouter.webview) as Unknown
       const place: number = params.findIndex(p => p.key === param.key) as number
@@ -93,6 +93,6 @@ export class AppRouterMgr extends HMRouterMgr {
       }
     }
 
-    return HMRouterMgr.pop(pathInfo, skiped)
+    return HMRouterMgr.popAsync(pathInfo, skiped)
   }
 }

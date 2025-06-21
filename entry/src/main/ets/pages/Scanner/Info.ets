@@ -1,6 +1,6 @@
 import { AppRouterMgr } from "../../router/manager"
 import { ScanResult } from "../Scanner/-service"
-import { size } from "../../utils/size"
+import { unit } from "../../utils/unity"
 
 
 @ComponentV2
@@ -36,8 +36,8 @@ export struct ScannerInfo {
         }
         .justifyContent(FlexAlign.Center)
         .alignItems(VerticalAlign.Center)
-        .height(size.vp(56))
-        .width(size.vp(56))
+        .height(unit.vp(56))
+        .width(unit.vp(56))
         .onClick(() => {
           if (!this.running) {
             AppRouterMgr.pop()
@@ -48,7 +48,7 @@ export struct ScannerInfo {
           Text($r('app.string.Scanner_Scan_Code_Result'))
             .fontWeight(FontWeight.Bold)
             .textAlign(TextAlign.Center)
-            .fontSize(size.vp(18))
+            .fontSize(unit.vp(18))
             .fontColor(0x303133)
         }
         .justifyContent(FlexAlign.Center)
@@ -58,11 +58,11 @@ export struct ScannerInfo {
         Row()
           .justifyContent(FlexAlign.Center)
           .alignItems(VerticalAlign.Center)
-          .height(size.vp(56))
-          .width(size.vp(56))
+          .height(unit.vp(56))
+          .width(unit.vp(56))
       }
       .width('100%')
-      .height(size.vh(size.vp(56)))
+      .height(unit.hp(unit.vp(56)))
       .backgroundColor(Color.White)
       .justifyContent(FlexAlign.Center)
       .alignItems(VerticalAlign.Center)
@@ -74,24 +74,24 @@ export struct ScannerInfo {
             .wordBreak(WordBreak.BREAK_ALL)
             .fontWeight(FontWeight.Medium)
             .textAlign(TextAlign.Start)
-            .fontSize(size.vp(14))
+            .fontSize(unit.vp(14))
             .fontColor(0x606266)
         }
         .padding({
-          top: size.vp(25),
-          left: size.vp(32),
-          right: size.vp(32),
-          bottom: size.vp(25)
+          top: unit.vp(25),
+          left: unit.vp(32),
+          right: unit.vp(32),
+          bottom: unit.vp(25)
         })
         .justifyContent(FlexAlign.Start)
         .alignItems(HorizontalAlign.Start)
-        .constraintSize({ minHeight: '100%' })
+        .constraintSize({ minHeight: `calc(100% - ${unit.vp(56)}vp)` })
         .width('100%')
       }
       .width('100%')
       .height('100%')
       .scrollBar(BarState.Off)
-      .margin({ top: size.vp(56) })
+      .margin({ top: unit.vp(56) })
       .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM])
     }
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM])

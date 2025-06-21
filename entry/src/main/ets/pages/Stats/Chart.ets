@@ -4,6 +4,7 @@ import { YearOrder } from "../../models/order"
 import { IOrders } from "../../models/order"
 import { IOrder } from "../../models/order"
 import { store } from "../../globals/store"
+import { unit } from "../../utils/unity"
 import { webview } from "@kit.ArkWeb"
 import { display } from "@kit.ArkUI"
 
@@ -66,8 +67,8 @@ export struct YearBalanceChart {
 
   render() {
     if (this.attached) {
-      const left = device.orientation === display.Orientation.LANDSCAPE_INVERTED ? `${px2vp(device.top) + 5}` : '25'
-      const right = device.orientation === display.Orientation.LANDSCAPE ? `${px2vp(device.top) + 5}` : '25'
+      const left = device.orientation === display.Orientation.LANDSCAPE_INVERTED ? unit.px2vp(device.top) + 5 : '25'
+      const right = device.orientation === display.Orientation.LANDSCAPE ? unit.px2vp(device.top) + 5 : '25'
 
       this.webviewController.runJavaScript(`
         render({

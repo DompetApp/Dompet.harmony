@@ -1,6 +1,6 @@
 import { sendableContextManager } from "@kit.AbilityKit"
+import { StageManager } from "../configure/stage"
 import { common } from "@kit.AbilityKit"
-import { window } from "@kit.ArkUI"
 
 'use shared'
 
@@ -36,6 +36,6 @@ export class CtxManager {
   }
 
   static get uiContext() {
-    return window.getLastWindow(CtxManager.uiAbilityContext).then(windowClass => windowClass.getUIContext())
+    return StageManager.mainWindow?.getUIContext()
   }
 }

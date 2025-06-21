@@ -1,5 +1,5 @@
 import { AttributeUpdater } from "@kit.ArkUI"
-import { size } from "../../utils/size"
+import { unit } from "../../utils/unity"
 
 export class LoadingModifier extends AttributeUpdater<ColumnAttribute> {
   applyNormalAttribute(instance: ColumnAttribute) {
@@ -61,14 +61,14 @@ export struct Loading {
       LoadingProgress()
         .enableLoading(true)
         .color(this.fontColor)
-        .height(size.vp(60))
-        .width(size.vp(60))
+        .height(unit.vp(60))
+        .width(unit.vp(60))
 
       Text(this.desc)
         .fontWeight(FontWeight.Medium)
         .fontColor(this.fontColor)
-        .fontSize(size.vp(14))
-        .margin(size.vp(5))
+        .fontSize(unit.vp(14))
+        .margin(unit.vp(5))
     }
     .attributeModifier(this.loadingModifier)
     .alignItems(HorizontalAlign.Center)

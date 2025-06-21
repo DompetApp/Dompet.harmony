@@ -4,7 +4,7 @@ import { AppRouterMgr } from "../../router/manager"
 import { dater } from "../../formats/dater"
 import { store } from "../../globals/store"
 import { ICard } from "../../models/card"
-import { size } from "../../utils/size"
+import { unit } from "../../utils/unity"
 
 
 @HMRouter({
@@ -18,8 +18,8 @@ export struct PageCard {
   @Local isAnimating: boolean = false
   @Local bodyScroller: Scroller = new Scroller()
   @Local headBgColor: ResourceColor = Color.Transparent
-  @Local headOffset: number = size.vp(50)
-  @Local headHeight: number = size.vp(156)
+  @Local headOffset: number = unit.vp(50)
+  @Local headHeight: number = unit.vp(156)
   @Local headShadow: boolean = false
 
   @Builder
@@ -28,19 +28,19 @@ export struct PageCard {
       Column() {
         Image($rawfile('images/auth/back.png'))
           .onClick(() => AppRouterMgr.pop())
-          .margin({ left: size.vp(20) })
+          .margin({ left: unit.vp(20) })
           .objectFit(ImageFit.Fill)
-          .height(size.vp(36))
-          .width(size.vp(36))
+          .height(unit.vp(36))
+          .width(unit.vp(36))
           .draggable(false)
       }
       .justifyContent(FlexAlign.Center)
       .alignItems(HorizontalAlign.Start)
-      .width(size.wmax(640))
+      .width(unit.wmax(640))
       .height('100%')
     }
     .width('100%')
-    .height(size.vp(56))
+    .height(unit.vp(56))
     .justifyContent(FlexAlign.Start)
     .alignItems(HorizontalAlign.Center)
   }
@@ -52,12 +52,12 @@ export struct PageCard {
         Column() {
           Text($r('app.string.Bank_Card'))
             .fontWeight(FontWeight.Bold)
-            .letterSpacing(size.vp(3))
-            .lineHeight(size.vp(28))
-            .fontSize(size.vp(20))
+            .letterSpacing(unit.vp(3))
+            .lineHeight(unit.vp(28))
+            .fontSize(unit.vp(20))
             .fontColor(0x130138)
         }
-        .padding({ top: this.headOffset, left: size.vp(32), right: size.vp(32) })
+        .padding({ top: this.headOffset, left: unit.vp(32), right: unit.vp(32) })
         .alignItems(HorizontalAlign.Center)
         .justifyContent(FlexAlign.Center)
         .height('100%')
@@ -65,20 +65,20 @@ export struct PageCard {
       }
       .justifyContent(FlexAlign.Center)
       .alignItems(HorizontalAlign.Start)
-      .width(size.wmax(640))
+      .width(unit.wmax(640))
       .height('100%')
     }
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP])
     .alignItems(HorizontalAlign.Center)
     .backgroundColor(this.headBgColor)
-    .height(size.hp(this.headHeight))
+    .height(unit.hp(this.headHeight))
     .justifyContent(FlexAlign.Start)
     .width('100%')
     .shadow({
       color: this.headShadow ? 'rgba(0, 0, 0, 0.038)' : Color.Transparent,
-      radius: this.headShadow ? vp2px(10) : 0,
-      offsetY: vp2px(1.2),
-      offsetX: vp2px(0),
+      radius: this.headShadow ? unit.vp2px(10) : 0,
+      offsetY: unit.vp2px(1.2),
+      offsetX: unit.vp2px(0),
     })
   }
 
@@ -89,14 +89,14 @@ export struct PageCard {
         Scroll(this.bodyScroller) {
           Stack({ alignContent: Alignment.Top }) {
             Column()
-              .height(`calc(100% + ${size.vp(62.5)}vp)`)
+              .height(`calc(100% + ${unit.vp(62.5)}vp)`)
               .width('100%')
 
             Column() {
               this.cardContentBuilder()
               this.cardButtonBuilder()
             }
-            .padding({ top: size.vp(156) })
+            .padding({ top: unit.vp(156) })
             .alignItems(HorizontalAlign.Center)
             .justifyContent(FlexAlign.Start)
             .width('100%')
@@ -113,7 +113,7 @@ export struct PageCard {
       .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
       .alignItems(HorizontalAlign.Start)
       .justifyContent(FlexAlign.Center)
-      .width(size.wmax(640))
+      .width(unit.wmax(640))
       .height('100%')
     }
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
@@ -134,15 +134,15 @@ export struct PageCard {
             .width('100%')
 
           Image($rawfile('images/card/visa.png'))
-            .position({ right: size.vp(38.5), bottom: size.vp(21) })
+            .position({ right: unit.vp(38.5), bottom: unit.vp(21) })
             .objectFit(ImageFit.Fill)
-            .height(size.vp(44))
-            .width(size.vp(29))
+            .height(unit.vp(44))
+            .width(unit.vp(29))
         }
         .rotate({ angle: this.isExpand ? 90 : 0, centerX: '50%', centerY: '50%' })
-        .height(this.isExpand ? size.vp(305) : size.vp(340))
-        .width(this.isExpand ? size.vp(215) : size.vp(240))
-        .margin({ bottom: this.isExpand ? size.vp(13) : size.vp(40) })
+        .height(this.isExpand ? unit.vp(305) : unit.vp(340))
+        .width(this.isExpand ? unit.vp(215) : unit.vp(240))
+        .margin({ bottom: this.isExpand ? unit.vp(13) : unit.vp(40) })
         .animation({
           duration: 480,
           curve: Curve.Linear,
@@ -153,10 +153,10 @@ export struct PageCard {
           Column() {
             Image($rawfile('images/card/shadow.png'))
               .objectFit(ImageFit.Fill)
-              .height(size.vp(79))
-              .width(size.vp(206))
+              .height(unit.vp(79))
+              .width(unit.vp(206))
           }
-          .position({ bottom: this.isExpand ? size.vp(15) : 0 })
+          .position({ bottom: this.isExpand ? unit.vp(15) : 0 })
           .alignItems(HorizontalAlign.Center)
           .justifyContent(FlexAlign.Start)
         }
@@ -166,100 +166,100 @@ export struct PageCard {
         Row() {
           Text($r('app.string.CardNo'))
             .fontWeight(FontWeight.Normal)
-            .fontSize(size.vp(14.8))
+            .fontSize(unit.vp(14.8))
             .fontColor(0xbdbdbd)
-            .width(size.vp(80))
+            .width(unit.vp(80))
 
           Text(this.card.cardNo)
             .fontWeight(FontWeight.Normal)
-            .letterSpacing(size.vp(1.2))
-            .fontSize(size.vp(14))
+            .letterSpacing(unit.vp(1.2))
+            .fontSize(unit.vp(14))
             .fontColor(0x303133)
         }
-        .margin({ bottom: size.vp(18) })
+        .margin({ bottom: unit.vp(18) })
         .alignItems(VerticalAlign.Center)
         .justifyContent(FlexAlign.Start)
-        .height(size.vp(20))
+        .height(unit.vp(20))
         .width('100%')
 
         Row() {
           Text($r('app.string.Type'))
             .fontWeight(FontWeight.Normal)
-            .fontSize(size.vp(14.8))
+            .fontSize(unit.vp(14.8))
             .fontColor(0xbdbdbd)
-            .width(size.vp(80))
+            .width(unit.vp(80))
 
           Text($r(`app.string.${this.card.cardType}`))
             .fontWeight(FontWeight.Normal)
-            .fontSize(size.vp(14))
+            .fontSize(unit.vp(14))
             .fontColor(0x303133)
         }
-        .margin({ bottom: size.vp(18) })
+        .margin({ bottom: unit.vp(18) })
         .alignItems(VerticalAlign.Center)
         .justifyContent(FlexAlign.Start)
-        .height(size.vp(20))
+        .height(unit.vp(20))
         .width('100%')
 
         Row() {
           Text($r('app.string.Bank'))
             .fontWeight(FontWeight.Normal)
-            .fontSize(size.vp(14.8))
+            .fontSize(unit.vp(14.8))
             .fontColor(0xbdbdbd)
-            .width(size.vp(80))
+            .width(unit.vp(80))
 
           Text($r(`app.string.${this.card.bankName}`))
             .fontWeight(FontWeight.Normal)
-            .fontSize(size.vp(14))
+            .fontSize(unit.vp(14))
             .fontColor(0x303133)
         }
-        .margin({ bottom: size.vp(18) })
+        .margin({ bottom: unit.vp(18) })
         .alignItems(VerticalAlign.Center)
         .justifyContent(FlexAlign.Start)
-        .height(size.vp(20))
+        .height(unit.vp(20))
         .width('100%')
 
         Row() {
           Text($r('app.string.Status'))
             .fontWeight(FontWeight.Normal)
-            .fontSize(size.vp(14.8))
+            .fontSize(unit.vp(14.8))
             .fontColor(0xbdbdbd)
-            .width(size.vp(80))
+            .width(unit.vp(80))
 
           Text(this.card.status === 'Y' ? $r('app.string.Available') : $r('app.string.Unavailable'))
             .fontWeight(FontWeight.Normal)
-            .fontSize(size.vp(14))
+            .fontSize(unit.vp(14))
             .fontColor(0x303133)
         }
-        .margin({ bottom: size.vp(18) })
+        .margin({ bottom: unit.vp(18) })
         .alignItems(VerticalAlign.Center)
         .justifyContent(FlexAlign.Start)
-        .height(size.vp(20))
+        .height(unit.vp(20))
         .width('100%')
 
         Row() {
           Text($r('app.string.Valid'))
             .fontWeight(FontWeight.Normal)
-            .fontSize(size.vp(14.8))
+            .fontSize(unit.vp(14.8))
             .fontColor(0xbdbdbd)
-            .width(size.vp(80))
+            .width(unit.vp(80))
 
           Text(dater.format(this.card.expiryDate, { dateStyle: 'medium' }))
             .fontWeight(FontWeight.Normal)
-            .fontSize(size.vp(14))
+            .fontSize(unit.vp(14))
             .fontColor(0x303133)
         }
         .alignItems(VerticalAlign.Center)
         .justifyContent(FlexAlign.Start)
-        .height(size.vp(20))
+        .height(unit.vp(20))
         .width('100%')
       }
       .width('100%')
       .padding({
-        left: size.vp(35),
-        right: size.vp(35),
+        left: unit.vp(35),
+        right: unit.vp(35),
       })
       .opacity(this.isExpand ? 1 : 0)
-      .height(this.isExpand ? size.vp(172) : 0)
+      .height(this.isExpand ? unit.vp(172) : 0)
       .alignItems(HorizontalAlign.Start)
       .justifyContent(FlexAlign.Start)
       .animation({
@@ -269,12 +269,12 @@ export struct PageCard {
       })
     }
     .margin({
-      top: this.isExpand ? size.vp(-36) : 0,
-      bottom: this.isExpand ? size.vp(56) : size.vp(48),
+      top: this.isExpand ? unit.vp(-36) : 0,
+      bottom: this.isExpand ? unit.vp(56) : unit.vp(48),
     })
     .padding({
-      left: this.isExpand ? size.vp(30) : size.vp(17),
-      right: this.isExpand ? size.vp(30) : size.vp(17),
+      left: this.isExpand ? unit.vp(30) : unit.vp(17),
+      right: this.isExpand ? unit.vp(30) : unit.vp(17),
     })
     .alignItems(HorizontalAlign.Center)
     .justifyContent(FlexAlign.Center)
@@ -292,9 +292,9 @@ export struct PageCard {
       Text(this.isExpand ? $r('app.string.Hide') : $r('app.string.Display'))
         .backgroundColor(Color.Transparent)
         .fontWeight(FontWeight.Medium)
-        .letterSpacing(size.vp(1.2))
-        .borderRadius(size.vp(20))
-        .fontSize(size.vp(16))
+        .letterSpacing(unit.vp(1.2))
+        .borderRadius(unit.vp(20))
+        .fontSize(unit.vp(16))
         .fontColor(0x5b259f)
         .stateStyles({
           pressed: {
@@ -302,10 +302,10 @@ export struct PageCard {
           }
         })
         .padding({
-          top: size.vp(10),
-          left: size.vp(30),
-          right: size.vp(30),
-          bottom: size.vp(10),
+          top: unit.vp(10),
+          left: unit.vp(30),
+          right: unit.vp(30),
+          bottom: unit.vp(10),
         })
         .onClick(() => {
           if (!this.isAnimating) {
@@ -320,16 +320,16 @@ export struct PageCard {
   }
 
   onDidScroll() {
-    this.headHeight = size.vp(156) - (this.bodyScroller.currentOffset().yOffset * 1.6)
-    this.headHeight = Math.min(this.headHeight, size.vp(156))
-    this.headHeight = Math.max(this.headHeight, size.vp(56))
+    this.headHeight = unit.vp(156) - (this.bodyScroller.currentOffset().yOffset * 1.6)
+    this.headHeight = Math.min(this.headHeight, unit.vp(156))
+    this.headHeight = Math.max(this.headHeight, unit.vp(56))
 
-    this.headOffset = size.vp(50) - (this.bodyScroller.currentOffset().yOffset / 1.25)
-    this.headOffset = Math.min(this.headOffset, size.vp(50))
-    this.headOffset = Math.max(this.headOffset, size.vp(0))
+    this.headOffset = unit.vp(50) - (this.bodyScroller.currentOffset().yOffset / 1.25)
+    this.headOffset = Math.min(this.headOffset, unit.vp(50))
+    this.headOffset = Math.max(this.headOffset, unit.vp(0))
 
-    this.headBgColor = this.headHeight < size.vp(60) ? Color.White : Color.Transparent
-    this.headShadow = this.headHeight <= size.vp(56)
+    this.headBgColor = this.headHeight < unit.vp(60) ? Color.White : Color.Transparent
+    this.headShadow = this.headHeight <= unit.vp(56)
   }
 
   build() {

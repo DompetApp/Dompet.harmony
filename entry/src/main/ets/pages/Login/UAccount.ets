@@ -10,7 +10,8 @@ import { crypto } from "../../utils/crypto"
 import { event } from "../../globals/event"
 import { Empty } from "../../utils/empty"
 import { User } from "../../models/user"
-import { size } from "../../utils/size"
+import { unit } from "../../utils/unity"
+import { common } from "@kit.AbilityKit"
 import Axios from "@ohos/axios"
 
 
@@ -27,7 +28,7 @@ export struct LoginByAccount {
   @Local anonymousPhone: string = ''
   @Local authorizationCode: string = ''
   @Event switchMode: () => void = Empty.fn
-  @Local context: Context = getContext(this) as Unknown
+  @Local context: common.UIAbilityContext = this.getUIContext().getHostContext() as Unknown
   @Local selected: boolean = false
   @Local guesting: boolean = false
   @Local loading: boolean = false
@@ -38,7 +39,7 @@ export struct LoginByAccount {
       Row() {
         Text($r('app.string.User_Agreement_And_Privacy_Policy'))
           .fontWeight(FontWeight.Bold)
-          .fontSize(size.vp(20))
+          .fontSize(unit.vp(20))
           .fontColor(0x303133)
       }
       .justifyContent(FlexAlign.Center)
@@ -84,18 +85,18 @@ export struct LoginByAccount {
             .fontWeight(FontWeight.Normal)
             .fontColor(0x020202)
         }
-        .lineHeight(size.vp(24))
-        .fontSize(size.vp(15))
+        .lineHeight(unit.vp(24))
+        .fontSize(unit.vp(15))
       }
       .alignItems(HorizontalAlign.Start)
       .justifyContent(FlexAlign.Start)
-      .margin({ top: size.vp(15) })
+      .margin({ top: unit.vp(15) })
       .width('100%')
 
       Row() {
         Button({ type: ButtonType.Normal, stateEffect: false }) {
           Text($r('app.string.System_Cancel'))
-            .fontSize(size.vp(15))
+            .fontSize(unit.vp(15))
             .fontColor(0x1f1f1f)
         }
         .onClick(() => {
@@ -103,13 +104,13 @@ export struct LoginByAccount {
           Dialog.hide()
         })
         .backgroundColor(Color.Transparent)
-        .borderRadius(size.vp(22))
-        .height(size.vp(40))
+        .borderRadius(unit.vp(22))
+        .height(unit.vp(40))
         .width('48%')
 
         Button({ type: ButtonType.Normal, stateEffect: false }) {
           Text($r('app.string.AgreeSignIn'))
-            .fontSize(size.vp(15))
+            .fontSize(unit.vp(15))
             .fontColor(0xffffff)
         }
         .onClick(() => {
@@ -118,20 +119,20 @@ export struct LoginByAccount {
           Dialog.hide()
         })
         .backgroundColor(0xcf0e2c)
-        .borderRadius(size.vp(22))
-        .height(size.vp(40))
+        .borderRadius(unit.vp(22))
+        .height(unit.vp(40))
         .width('48%')
       }
       .justifyContent(FlexAlign.SpaceEvenly)
       .alignItems(VerticalAlign.Center)
-      .margin({ top: size.vp(15) })
+      .margin({ top: unit.vp(15) })
       .width('100%')
     }
     .padding({
-      top: size.vp(20),
-      left: size.vp(20),
-      right: size.vp(20),
-      bottom: size.vp(20)
+      top: unit.vp(20),
+      left: unit.vp(20),
+      right: unit.vp(20),
+      bottom: unit.vp(20)
     })
     .alignItems(HorizontalAlign.Start)
     .justifyContent(FlexAlign.Start)
@@ -169,8 +170,8 @@ export struct LoginByAccount {
         Dialog.custom({
           autoCancel: false,
           builder: () => this.dialogBuilder(resolve),
-          offset: { dx: 0, dy: size.vp(-35) },
-          width: size.vp(320),
+          offset: { dx: 0, dy: unit.vp(-35) },
+          width: unit.vp(320),
         })
       })
     }
@@ -276,34 +277,34 @@ export struct LoginByAccount {
             if (!this.avatarUri) {
               Column() {
                 Image($r('app.media.startIcon'))
-                  .height(size.vp(66))
-                  .width(size.vp(66))
+                  .height(unit.vp(66))
+                  .width(unit.vp(66))
                   .draggable(false)
               }
               .alignItems(HorizontalAlign.Center)
               .justifyContent(FlexAlign.Center)
               .backgroundColor(Color.White)
-              .borderRadius(size.vp(20))
-              .padding(size.vp(7))
-              .height(size.vp(80))
-              .width(size.vp(80))
+              .borderRadius(unit.vp(20))
+              .padding(unit.vp(7))
+              .height(unit.vp(80))
+              .width(unit.vp(80))
             }
 
             if (this.avatarUri) {
               Image(this.avatarUri)
                 .backgroundColor(Color.White)
-                .borderRadius(size.vp(40))
-                .height(size.vp(80))
-                .width(size.vp(80))
+                .borderRadius(unit.vp(40))
+                .height(unit.vp(80))
+                .width(unit.vp(80))
                 .draggable(false)
             }
           }
           .alignItems(VerticalAlign.Center)
           .justifyContent(FlexAlign.Center)
-          .margin({ top: size.vh(6) })
+          .margin({ top: unit.vh(6) })
           .constraintSize({
-            minHeight: size.vp(150),
-            maxHeight: size.vp(180)
+            minHeight: unit.vp(150),
+            maxHeight: unit.vp(180)
           })
           .height('40%')
           .width('100%')
@@ -317,14 +318,14 @@ export struct LoginByAccount {
           Text(this.anonymousPhone || '******')
             .textAlign(TextAlign.Center)
             .fontWeight(FontWeight.Bold)
-            .fontSize(size.vp(36))
+            .fontSize(unit.vp(36))
             .fontColor(0x303133)
 
           Text($r('app.string.Bind_HuaweiId_Number'))
             .fontWeight(FontWeight.Regular)
             .textAlign(TextAlign.Center)
-            .margin({ top: size.vp(12) })
-            .fontSize(size.vp(12.4))
+            .margin({ top: unit.vp(12) })
+            .fontSize(unit.vp(12.4))
             .fontColor(0x909399)
         }
         .justifyContent(FlexAlign.Start)
@@ -337,9 +338,9 @@ export struct LoginByAccount {
             Row() {
               if (this.loading || this.guesting) {
                 LoadingProgress()
-                  .margin({ right: size.vp(6) })
-                  .height(size.vp(24))
-                  .width(size.vp(24))
+                  .margin({ right: unit.vp(6) })
+                  .height(unit.vp(24))
+                  .width(unit.vp(24))
                   .color(Color.White)
               }
 
@@ -349,7 +350,7 @@ export struct LoginByAccount {
                   : $r('app.string.Huawei_Account_OneTap_Login')
               )
                 .fontWeight(FontWeight.Medium)
-                .letterSpacing(size.vp(0.5))
+                .letterSpacing(unit.vp(0.5))
                 .fontColor(0xffffff)
                 .fontSize(14)
             }
@@ -357,9 +358,9 @@ export struct LoginByAccount {
           .backgroundColor(this.loading || this.guesting ? 0xeb9fab : 0xce0e2d)
           .enabled(!this.loading && !this.guesting)
           .onClick(() => this.loginByAccount())
-          .margin({ bottom: size.vp(18) })
-          .borderRadius(size.vp(20))
-          .height(size.vp(40))
+          .margin({ bottom: unit.vp(18) })
+          .borderRadius(unit.vp(20))
+          .height(unit.vp(40))
           .width('100%')
 
           Button({ type: ButtonType.Normal, stateEffect: true }) {
@@ -367,25 +368,25 @@ export struct LoginByAccount {
               Text($r('app.string.Other_Login_Methods'))
                 .fontColor(this.loading || this.guesting ? 0x909399 : 0x303133)
                 .fontWeight(FontWeight.Normal)
-                .letterSpacing(size.vp(0.5))
+                .letterSpacing(unit.vp(0.5))
                 .fontSize(14)
             }
           }
           .enabled(!this.loading && !this.guesting)
           .onClick(() => this.switchMode())
-          .margin({ bottom: size.vp(18) })
+          .margin({ bottom: unit.vp(18) })
           .backgroundColor(0xe6e7e9)
-          .borderRadius(size.vp(20))
-          .height(size.vp(40))
+          .borderRadius(unit.vp(20))
+          .height(unit.vp(40))
           .width('100%')
         }
         .justifyContent(FlexAlign.Center)
         .alignItems(HorizontalAlign.Center)
-        .constraintSize({ maxWidth: size.vp(330) })
-        .margin({ top: size.vh(8) })
+        .constraintSize({ maxWidth: unit.vp(330) })
+        .margin({ top: unit.vh(8) })
         .padding({
-          left: size.vp(15),
-          right: size.vp(15)
+          left: unit.vp(15),
+          right: unit.vp(15)
         })
         .height('auto')
         .width('100%')
@@ -396,9 +397,9 @@ export struct LoginByAccount {
             .onClick(() => this.loginByGuest())
             .backgroundColor(Color.Transparent)
             .fontWeight(FontWeight.Medium)
-            .letterSpacing(size.vp(0.5))
-            .borderRadius(size.vp(20))
-            .fontSize(size.vp(14))
+            .letterSpacing(unit.vp(0.5))
+            .borderRadius(unit.vp(20))
+            .fontSize(unit.vp(14))
             .fontColor(0x909399)
             .stateStyles({
               pressed: {
@@ -406,18 +407,18 @@ export struct LoginByAccount {
               }
             })
             .padding({
-              top: size.vp(10),
-              left: size.vp(22),
-              right: size.vp(22),
-              bottom: size.vp(10),
+              top: unit.vp(10),
+              left: unit.vp(22),
+              right: unit.vp(22),
+              bottom: unit.vp(10),
             })
         }
         .justifyContent(FlexAlign.Center)
         .alignItems(HorizontalAlign.Center)
-        .height(size.vh(24))
+        .height(unit.vh(24))
         .width('100%')
       }
-      .padding({ bottom: size.vp(30) })
+      .padding({ bottom: unit.vp(30) })
       .height('auto')
       .width('100%')
 
@@ -427,29 +428,29 @@ export struct LoginByAccount {
             .onChange(value => this.selected = value)
             .selectedColor(0xce0e2d)
             .select(this.selected)
-            .height(size.vp(15))
-            .width(size.vp(15))
+            .height(unit.vp(15))
+            .width(unit.vp(15))
         }
         .justifyContent(FlexAlign.Start)
         .alignItems(VerticalAlign.Center)
-        .height(size.vp(18))
-        .width(size.vp(24))
+        .height(unit.vp(18))
+        .width(unit.vp(24))
 
         Row() {
           Text() {
             Span($r('app.string.I_have_read_and_agree'))
               .fontWeight(FontWeight.Normal)
-              .fontSize(size.vp(12))
+              .fontSize(unit.vp(12))
               .fontColor(0x909399)
 
             Span(this.isInChinese() ? "《" : " 《")
               .fontWeight(FontWeight.Medium)
-              .fontSize(size.vp(12))
+              .fontSize(unit.vp(12))
               .fontColor(0x303133)
 
             Span($r('app.string.Huawei_Account_Authentication_Agreement'))
               .fontWeight(FontWeight.Medium)
-              .fontSize(size.vp(12))
+              .fontSize(unit.vp(12))
               .fontColor(0x303133)
               .onClick(() => {
                 AppRouterMgr.push({
@@ -464,33 +465,33 @@ export struct LoginByAccount {
 
             Span(this.isInChinese() ? "》" : "》 ")
               .fontWeight(FontWeight.Medium)
-              .fontSize(size.vp(12))
+              .fontSize(unit.vp(12))
               .fontColor(0x303133)
 
             Span(this.isInChinese() ? "《" : " 《")
               .fontWeight(FontWeight.Medium)
-              .fontSize(size.vp(12))
+              .fontSize(unit.vp(12))
               .fontColor(0x303133)
 
             Span($r('app.string.Dompet_Wallet_Privacy_Policy'))
               .fontWeight(FontWeight.Medium)
-              .fontSize(size.vp(12))
+              .fontSize(unit.vp(12))
               .fontColor(0x303133)
               .onClick(Empty.fn)
 
             Span(this.isInChinese() ? "》" : "》 ")
               .fontWeight(FontWeight.Medium)
-              .fontSize(size.vp(12))
+              .fontSize(unit.vp(12))
               .fontColor(0x303133)
           }
         }
         .onClick(() => this.selected = !this.selected)
-        .constraintSize({ minHeight: size.vp(18) })
+        .constraintSize({ minHeight: unit.vp(18) })
         .alignItems(VerticalAlign.Center)
         .justifyContent(FlexAlign.Start)
         .height('auto')
       }
-      .padding({ left: size.vp(20), right: size.vp(20) })
+      .padding({ left: unit.vp(20), right: unit.vp(20) })
       .position({ left: 0, bottom: 0 })
       .width('100%')
     }

@@ -10,7 +10,7 @@ import { ScanResults, ScanResult, ScanCallback } from "./-service"
 import { Dialog } from "../../components/Dialog/Index"
 import { device } from "../../configure/device"
 import { grant } from "../../utils/grant"
-import { size } from "../../utils/size"
+import { unit } from "../../utils/unity"
 import { Album } from "./-album"
 
 
@@ -28,11 +28,15 @@ export struct PageScanner {
   @Local scanParams: Unknown = AppRouterMgr.getCurrentParam(HMParamType.routeParam)
   @Local scanParser: (_?: ScanResult) => boolean = typeof this.scanParams == 'function' ? this.scanParams : (() => true)
   private scanOptions: ScanOptions = { scanTypes: [scanCore.ScanType.ALL], enableMultiMode: true, enableAlbum: true }
-  private viewControl: ViewControl = { width: px2vp(device.width), height: px2vp(device.height), surfaceId: '' }
-  private uiContext: common.UIAbilityContext = getContext(this) as common.UIAbilityContext
+  private uiContext: common.UIAbilityContext = this.getUIContext().getHostContext() as common.UIAbilityContext
   private mediaPlayer: MediaPlayer = MediaPlayer.getInstance(this.uiContext)
   private scanCallback = this.createScanCallback()
   private navCallback = this.createNavCallback()
+  private viewControl: ViewControl = {
+    width: unit.px2vp(device.width),
+    height: unit.px2vp(device.height),
+    surfaceId: '',
+  }
 
   @Computed
   get isSupportFlashlight() {
@@ -158,8 +162,8 @@ export struct PageScanner {
     this.showDialog = false
 
     if (this.viewControl.surfaceId) {
-      this.viewControl.width = px2vp(device.width)
-      this.viewControl.height = px2vp(device.height)
+      this.viewControl.width = unit.px2vp(device.width)
+      this.viewControl.height = unit.px2vp(device.height)
       this.scanService.resetCamera(this.scanOptions, this.viewControl, this.scanCallback)
     }
   }
@@ -169,8 +173,8 @@ export struct PageScanner {
     this.showDialog = false
 
     if (this.viewControl.surfaceId) {
-      this.viewControl.width = px2vp(device.width)
-      this.viewControl.height = px2vp(device.height)
+      this.viewControl.width = unit.px2vp(device.width)
+      this.viewControl.height = unit.px2vp(device.height)
       this.scanService.initCamera(this.scanOptions, this.viewControl, this.scanCallback)
     }
   }
@@ -180,14 +184,14 @@ export struct PageScanner {
     if (this.scanService.isGranted) {
       ScannerView({
         initialize: (surfaceId) => {
-          this.viewControl.width = px2vp(device.width)
-          this.viewControl.height = px2vp(device.height)
+          this.viewControl.width = unit.px2vp(device.width)
+          this.viewControl.height = unit.px2vp(device.height)
           this.viewControl.surfaceId = surfaceId
           this.startScanner()
         },
         viewSize: {
-          width: px2vp(device.width),
-          height: px2vp(device.height)
+          width: unit.px2vp(device.width),
+          height: unit.px2vp(device.height)
         },
       })
     }
@@ -198,8 +202,8 @@ export struct PageScanner {
     if (this.scanService.isScanLine) {
       Column() {
         ScannerLine({ isScanned: this.scanService.isScanned, isOpenAlbum: this.scanService.isOpenAlbum })
-          .margin({ top: size.vp(120), bottom: size.vp(10) })
-          .height(`calc(100% - ${size.vp(150)}vp)`)
+          .margin({ top: unit.vp(120), bottom: unit.vp(10) })
+          .height(`calc(100% - ${unit.vp(150)}vp)`)
           .constraintSize({ maxHeight: 420 })
       }
       .alignItems(HorizontalAlign.Start)
@@ -220,12 +224,12 @@ export struct PageScanner {
           .fontWeight(FontWeight.Normal)
           .textAlign(TextAlign.Center)
           .fontFamily('HarmonyHeiTi')
-          .fontSize(size.vp(18))
+          .fontSize(unit.vp(18))
           .width('100%')
       }
       .visibility(this.scanResults.size > 0 ? Visibility.Hidden : Visibility.Visible)
-      .margin({ top: size.vp(80), bottom: size.vp(30) })
-      .padding({ left: size.vp(24), right: size.vp(24) })
+      .margin({ top: unit.vp(80), bottom: unit.vp(30) })
+      .padding({ left: unit.vp(24), right: unit.vp(24) })
       .alignItems(HorizontalAlign.Center)
       .justifyContent(FlexAlign.Start)
       .width('100%')
@@ -235,11 +239,11 @@ export struct PageScanner {
           Text($r('app.string.Scanner_Unrecognized_Code'))
             .fontColor($r('sys.color.ohos_id_color_text_secondary'))
             .fontFamily('HarmonyHeiTi')
-            .fontSize(size.vp(14))
-            .padding(size.vp(8))
+            .fontSize(unit.vp(14))
+            .padding(unit.vp(8))
         }
-        .margin({ top: size.vp(16) })
-        .borderRadius(size.vp(16))
+        .margin({ top: unit.vp(16) })
+        .borderRadius(unit.vp(16))
         .backgroundColor(0xfcfcfc)
       }
     }
@@ -251,10 +255,10 @@ export struct PageScanner {
       Column() {
         Column() {
           SymbolGlyph(this.scanService.isFlashlight ? $r('sys.symbol.flashlight_on') : $r('sys.symbol.flashlight_off'))
-            .margin({ top: size.vp(3), bottom: size.vp(10) })
+            .margin({ top: unit.vp(3), bottom: unit.vp(10) })
             .fontColor([$r('sys.color.font_on_primary')])
             .fontWeight(FontWeight.Normal)
-            .fontSize(size.vp(24))
+            .fontSize(unit.vp(24))
             .stateStyles({
               pressed: {
                 .opacity(0.4)
@@ -268,9 +272,9 @@ export struct PageScanner {
             .fontColor($r('sys.color.icon_on_primary'))
             .textAlign(TextAlign.Center)
             .fontFamily('HarmonyHeiTi')
-            .fontSize(size.vp(12))
+            .fontSize(unit.vp(12))
         }
-        .height(size.vp(80))
+        .height(unit.vp(80))
         .justifyContent(FlexAlign.Center)
         .margin({ bottom: device.isPortrait ? '25%' : 10 })
         .visibility(this.isSupportFlashlight ? Visibility.Visible : Visibility.Hidden)
@@ -282,15 +286,15 @@ export struct PageScanner {
               SymbolGlyph($r('sys.symbol.picture'))
                 .fontColor([$r('sys.color.font_on_primary')])
                 .fontWeight(FontWeight.Regular)
-                .fontSize(size.vp(24))
+                .fontSize(unit.vp(24))
             }
-            .margin({ top: size.vp(3), bottom: size.vp(10) })
+            .margin({ top: unit.vp(3), bottom: unit.vp(10) })
             .backgroundColor('rgba(250, 250, 250, 0.55)')
             .alignItems(HorizontalAlign.Center)
             .justifyContent(FlexAlign.Center)
-            .borderRadius(size.vp(48))
-            .height(size.vp(48))
-            .width(size.vp(48))
+            .borderRadius(unit.vp(48))
+            .height(unit.vp(48))
+            .width(unit.vp(48))
             .clip(true)
 
             Text($r('app.string.Scanner_Gallery'))
@@ -298,7 +302,7 @@ export struct PageScanner {
               .fontColor($r('sys.color.font_on_primary'))
               .textAlign(TextAlign.Center)
               .fontFamily('HarmonyHeiTi')
-              .fontSize(size.vp(12))
+              .fontSize(unit.vp(12))
           }
           .margin({ bottom: device.isPortrait ? '12%' : 10 })
           .alignItems(HorizontalAlign.Center)
@@ -333,12 +337,12 @@ export struct PageScanner {
       SymbolGlyph($r('sys.symbol.xmark'))
         .fontColor([$r('sys.color.font_on_primary')])
         .fontWeight(FontWeight.Normal)
-        .fontSize(size.vp(24))
+        .fontSize(unit.vp(24))
     }
-    .width(size.vp(40))
-    .height(size.vp(40))
+    .width(unit.vp(40))
+    .height(unit.vp(40))
     .backgroundColor('rgba(255,255,255,0.15)')
-    .margin({ top: size.vp(20), left: size.vp(20) })
+    .margin({ top: unit.vp(20), left: unit.vp(20) })
     .onClick(() => this.scanResults.size > 1 ? this.retryScanner() : AppRouterMgr.pop())
   }
 

@@ -12,7 +12,7 @@ import { i18n } from "@kit.LocalizationKit"
 import { event } from "../../globals/event"
 import { Empty } from "../../utils/empty"
 import { User } from "../../models/user"
-import { size } from "../../utils/size"
+import { unit } from "../../utils/unity"
 import Axios from "@ohos/axios"
 
 
@@ -29,7 +29,7 @@ export struct PageRegister {
   @Local password: string = ''
   @Local avatarUri: string = ''
   @Local confirmPwd: string = ''
-  @Local context: common.UIAbilityContext = getContext(this) as Unknown
+  @Local context: common.UIAbilityContext = this.getUIContext().getHostContext() as Unknown
   @Local focusMgr: FocusMgr = new FocusMgr(this.getUIContext())
   @Local selected: boolean = false
   @Local loading: boolean = false
@@ -40,19 +40,19 @@ export struct PageRegister {
       Column() {
         Image($rawfile('images/auth/back.png'))
           .onClick(() => AppRouterMgr.pop())
-          .margin({ left: size.vp(20) })
+          .margin({ left: unit.vp(20) })
           .objectFit(ImageFit.Fill)
-          .height(size.vp(36))
-          .width(size.vp(36))
+          .height(unit.vp(36))
+          .width(unit.vp(36))
           .draggable(false)
       }
       .justifyContent(FlexAlign.Center)
       .alignItems(HorizontalAlign.Start)
-      .width(size.wmax(640))
+      .width(unit.wmax(640))
       .height('100%')
     }
     .width('100%')
-    .height(size.vp(56))
+    .height(unit.vp(56))
     .justifyContent(FlexAlign.Start)
     .alignItems(HorizontalAlign.Center)
   }
@@ -66,24 +66,24 @@ export struct PageRegister {
             Row() {
               Column() {
                 Image($r('app.media.startIcon'))
-                  .height(size.vp(66))
-                  .width(size.vp(66))
+                  .height(unit.vp(66))
+                  .width(unit.vp(66))
                   .draggable(false)
               }
               .alignItems(HorizontalAlign.Center)
               .justifyContent(FlexAlign.Center)
               .backgroundColor(Color.White)
-              .borderRadius(size.vp(20))
-              .padding(size.vp(7))
-              .height(size.vp(80))
-              .width(size.vp(80))
+              .borderRadius(unit.vp(20))
+              .padding(unit.vp(7))
+              .height(unit.vp(80))
+              .width(unit.vp(80))
             }
             .alignItems(VerticalAlign.Center)
             .justifyContent(FlexAlign.Center)
-            .margin({ top: size.vh(6) })
+            .margin({ top: unit.vh(6) })
             .constraintSize({
-              minHeight: size.vp(150),
-              maxHeight: size.vp(180)
+              minHeight: unit.vp(150),
+              maxHeight: unit.vp(180)
             })
             .height('40%')
             .width('100%')
@@ -97,16 +97,16 @@ export struct PageRegister {
             Stack({ alignContent: Alignment.TopStart }) {
               TextInput({ text: $$this.phone, placeholder: $r('app.string.Please_input_phone_number') })
                 .onSubmit(() => this.focusMgr.focus('register_pwd'))
-                .constraintSize({ minHeight: size.vp(52) })
-                .placeholderFont({ size: size.vp(13) })
+                .constraintSize({ minHeight: unit.vp(52) })
+                .placeholderFont({ size: unit.vp(13) })
                 .enterKeyType(EnterKeyType.Next)
-                .padding({ left: size.vp(68) })
+                .padding({ left: unit.vp(68) })
                 .inputFilter('^[0-9]{0,11}$')
                 .backgroundColor(Color.White)
                 .type(InputType.PhoneNumber)
                 .placeholderColor(0x909399)
-                .borderRadius(size.vp(20))
-                .fontSize(size.vp(14))
+                .borderRadius(unit.vp(20))
+                .fontSize(unit.vp(14))
                 .fontColor(0x303133)
                 .id('register_phone')
                 .maxLength(11)
@@ -114,23 +114,23 @@ export struct PageRegister {
               Row() {
                 Text('+86')
                   .fontWeight(FontWeight.Regular)
-                  .fontSize(size.vp(14))
+                  .fontSize(unit.vp(14))
                   .fontColor(0x000000)
 
                 Divider()
                   .position({
-                    top: size.vp(18),
-                    right: size.vp(5)
+                    top: unit.vp(18),
+                    right: unit.vp(5)
                   })
-                  .strokeWidth(size.vp(1.4))
-                  .height(size.vp(16))
+                  .strokeWidth(unit.vp(1.4))
+                  .height(unit.vp(16))
                   .color(0xcfcfcf)
                   .vertical(true)
               }
               .justifyContent(FlexAlign.Center)
               .alignItems(VerticalAlign.Center)
-              .height(size.vp(52))
-              .width(size.vp(58))
+              .height(unit.vp(52))
+              .width(unit.vp(58))
             }
             .height('auto')
             .width('100%')
@@ -138,88 +138,88 @@ export struct PageRegister {
             Stack({ alignContent: Alignment.TopStart }) {
               TextInput({ text: $$this.password, placeholder: $r('app.string.Please_input_password') })
                 .onSubmit(() => this.focusMgr.focus('register_confirm_pwd'))
-                .constraintSize({ minHeight: size.vp(52) })
-                .placeholderFont({ size: size.vp(13) })
+                .constraintSize({ minHeight: unit.vp(52) })
+                .placeholderFont({ size: unit.vp(13) })
                 .enterKeyType(EnterKeyType.Next)
-                .padding({ left: size.vp(68) })
+                .padding({ left: unit.vp(68) })
                 .backgroundColor(Color.White)
                 .placeholderColor(0x909399)
-                .borderRadius(size.vp(20))
+                .borderRadius(unit.vp(20))
                 .type(InputType.Password)
                 .showPasswordIcon(false)
-                .fontSize(size.vp(14))
+                .fontSize(unit.vp(14))
                 .fontColor(0x303133)
                 .id('register_pwd')
 
               Row() {
                 SymbolGlyph($r('sys.symbol.lock'))
                   .fontWeight(FontWeight.Regular)
-                  .fontSize(size.vp(18.5))
+                  .fontSize(unit.vp(18.5))
                   .fontColor([0x000000])
 
                 Divider()
                   .position({
-                    top: size.vp(18),
-                    right: size.vp(5)
+                    top: unit.vp(18),
+                    right: unit.vp(5)
                   })
-                  .strokeWidth(size.vp(1.4))
-                  .height(size.vp(16))
+                  .strokeWidth(unit.vp(1.4))
+                  .height(unit.vp(16))
                   .color(0xcfcfcf)
                   .vertical(true)
               }
               .justifyContent(FlexAlign.Center)
               .alignItems(VerticalAlign.Center)
-              .height(size.vp(52))
-              .width(size.vp(58))
+              .height(unit.vp(52))
+              .width(unit.vp(58))
             }
-            .margin({ top: size.vp(16) })
+            .margin({ top: unit.vp(16) })
             .height('auto')
             .width('100%')
 
             Stack({ alignContent: Alignment.TopStart }) {
               TextInput({ text: $$this.confirmPwd, placeholder: $r('app.string.Please_input_confirm_password') })
-                .constraintSize({ minHeight: size.vp(52) })
-                .placeholderFont({ size: size.vp(13) })
+                .constraintSize({ minHeight: unit.vp(52) })
+                .placeholderFont({ size: unit.vp(13) })
                 .enterKeyType(EnterKeyType.Next)
-                .padding({ left: size.vp(68) })
+                .padding({ left: unit.vp(68) })
                 .backgroundColor(Color.White)
                 .id('register_confirm_pwd')
                 .placeholderColor(0x909399)
-                .borderRadius(size.vp(20))
+                .borderRadius(unit.vp(20))
                 .type(InputType.Password)
                 .showPasswordIcon(false)
-                .fontSize(size.vp(14))
+                .fontSize(unit.vp(14))
                 .fontColor(0x303133)
 
               Row() {
                 SymbolGlyph($r('sys.symbol.lock'))
                   .fontWeight(FontWeight.Regular)
-                  .fontSize(size.vp(18.5))
+                  .fontSize(unit.vp(18.5))
                   .fontColor([0x000000])
 
                 Divider()
                   .position({
-                    top: size.vp(18),
-                    right: size.vp(5)
+                    top: unit.vp(18),
+                    right: unit.vp(5)
                   })
-                  .strokeWidth(size.vp(1.4))
-                  .height(size.vp(16))
+                  .strokeWidth(unit.vp(1.4))
+                  .height(unit.vp(16))
                   .color(0xcfcfcf)
                   .vertical(true)
               }
               .justifyContent(FlexAlign.Center)
               .alignItems(VerticalAlign.Center)
-              .height(size.vp(52))
-              .width(size.vp(58))
+              .height(unit.vp(52))
+              .width(unit.vp(58))
             }
-            .margin({ top: size.vp(16) })
+            .margin({ top: unit.vp(16) })
             .height('auto')
             .width('100%')
           }
           .justifyContent(FlexAlign.Start)
           .alignItems(HorizontalAlign.Center)
-          .padding({ left: size.vp(15), right: size.vp(15) })
-          .constraintSize({ maxWidth: size.vp(340) })
+          .padding({ left: unit.vp(15), right: unit.vp(15) })
+          .constraintSize({ maxWidth: unit.vp(340) })
           .height('auto')
           .width('100%')
 
@@ -228,14 +228,14 @@ export struct PageRegister {
               Row() {
                 if (this.loading) {
                   LoadingProgress()
-                    .margin({ right: size.vp(6) })
-                    .height(size.vp(24))
-                    .width(size.vp(24))
+                    .margin({ right: unit.vp(6) })
+                    .height(unit.vp(24))
+                    .width(unit.vp(24))
                     .color(Color.White)
 
                   Text($r('app.string.Logging_in'))
                     .fontWeight(FontWeight.Medium)
-                    .letterSpacing(size.vp(0.5))
+                    .letterSpacing(unit.vp(0.5))
                     .fontColor(0xffffff)
                     .fontSize(14)
                 }
@@ -243,7 +243,7 @@ export struct PageRegister {
                 if (!this.loading) {
                   Text($r('app.string.Account_Registration'))
                     .fontWeight(FontWeight.Medium)
-                    .letterSpacing(size.vp(0.5))
+                    .letterSpacing(unit.vp(0.5))
                     .fontColor(0xffffff)
                     .fontSize(14)
                 }
@@ -251,21 +251,21 @@ export struct PageRegister {
             }
             .backgroundColor(this.loading ? 0xeb9fab : 0xce0e2d)
             .onClick(() => this.registerUser())
-            .margin({ bottom: size.vp(18) })
-            .borderRadius(size.vp(20))
+            .margin({ bottom: unit.vp(18) })
+            .borderRadius(unit.vp(20))
             .enabled(!this.loading)
-            .height(size.vp(40))
+            .height(unit.vp(40))
             .width('100%')
           }
           .justifyContent(FlexAlign.Center)
           .alignItems(HorizontalAlign.Center)
-          .padding({ left: size.vp(15), right: size.vp(15) })
-          .constraintSize({ maxWidth: size.vp(330) })
-          .margin({ top: size.vh(6) })
+          .padding({ left: unit.vp(15), right: unit.vp(15) })
+          .constraintSize({ maxWidth: unit.vp(330) })
+          .margin({ top: unit.vh(6) })
           .height('auto')
           .width('100%')
         }
-        .padding({ bottom: size.vp(30) })
+        .padding({ bottom: unit.vp(30) })
         .height('auto')
         .width('100%')
 
@@ -275,29 +275,29 @@ export struct PageRegister {
               .onChange(value => this.selected = value)
               .selectedColor(0xce0e2d)
               .select(this.selected)
-              .height(size.vp(15))
-              .width(size.vp(15))
+              .height(unit.vp(15))
+              .width(unit.vp(15))
           }
           .justifyContent(FlexAlign.Start)
           .alignItems(VerticalAlign.Center)
-          .height(size.vp(18))
-          .width(size.vp(24))
+          .height(unit.vp(18))
+          .width(unit.vp(24))
 
           Row() {
             Text() {
               Span($r('app.string.I_have_read_and_agree'))
                 .fontWeight(FontWeight.Normal)
-                .fontSize(size.vp(12))
+                .fontSize(unit.vp(12))
                 .fontColor(0x909399)
 
               Span(this.isInChinese() ? "《" : " 《")
                 .fontWeight(FontWeight.Medium)
-                .fontSize(size.vp(12))
+                .fontSize(unit.vp(12))
                 .fontColor(0x303133)
 
               Span($r('app.string.Huawei_Account_Authentication_Agreement'))
                 .fontWeight(FontWeight.Medium)
-                .fontSize(size.vp(12))
+                .fontSize(unit.vp(12))
                 .fontColor(0x303133)
                 .onClick(() => {
                   AppRouterMgr.push({
@@ -312,33 +312,33 @@ export struct PageRegister {
 
               Span(this.isInChinese() ? "》" : "》 ")
                 .fontWeight(FontWeight.Medium)
-                .fontSize(size.vp(12))
+                .fontSize(unit.vp(12))
                 .fontColor(0x303133)
 
               Span(this.isInChinese() ? "《" : " 《")
                 .fontWeight(FontWeight.Medium)
-                .fontSize(size.vp(12))
+                .fontSize(unit.vp(12))
                 .fontColor(0x303133)
 
               Span($r('app.string.Dompet_Wallet_Privacy_Policy'))
                 .fontWeight(FontWeight.Medium)
-                .fontSize(size.vp(12))
+                .fontSize(unit.vp(12))
                 .fontColor(0x303133)
                 .onClick(Empty.fn)
 
               Span(this.isInChinese() ? "》" : "》 ")
                 .fontWeight(FontWeight.Medium)
-                .fontSize(size.vp(12))
+                .fontSize(unit.vp(12))
                 .fontColor(0x303133)
             }
           }
           .onClick(() => this.selected = !this.selected)
-          .constraintSize({ minHeight: size.vp(18) })
+          .constraintSize({ minHeight: unit.vp(18) })
           .alignItems(VerticalAlign.Center)
           .justifyContent(FlexAlign.Start)
           .height('auto')
         }
-        .padding({ left: size.vp(20), right: size.vp(20) })
+        .padding({ left: unit.vp(20), right: unit.vp(20) })
         .position({ left: 0, bottom: 0 })
         .width('100%')
       }
@@ -359,7 +359,7 @@ export struct PageRegister {
       Row() {
         Text($r('app.string.User_Agreement_And_Privacy_Policy'))
           .fontWeight(FontWeight.Bold)
-          .fontSize(size.vp(20))
+          .fontSize(unit.vp(20))
           .fontColor(0x303133)
       }
       .justifyContent(FlexAlign.Center)
@@ -405,18 +405,18 @@ export struct PageRegister {
             .fontWeight(FontWeight.Normal)
             .fontColor(0x020202)
         }
-        .lineHeight(size.vp(24))
-        .fontSize(size.vp(15))
+        .lineHeight(unit.vp(24))
+        .fontSize(unit.vp(15))
       }
       .alignItems(HorizontalAlign.Start)
       .justifyContent(FlexAlign.Start)
-      .margin({ top: size.vp(15) })
+      .margin({ top: unit.vp(15) })
       .width('100%')
 
       Row() {
         Button({ type: ButtonType.Normal, stateEffect: false }) {
           Text($r('app.string.System_Cancel'))
-            .fontSize(size.vp(15))
+            .fontSize(unit.vp(15))
             .fontColor(0x1f1f1f)
         }
         .onClick(() => {
@@ -424,13 +424,13 @@ export struct PageRegister {
           Dialog.hide()
         })
         .backgroundColor(Color.Transparent)
-        .borderRadius(size.vp(22))
-        .height(size.vp(40))
+        .borderRadius(unit.vp(22))
+        .height(unit.vp(40))
         .width('48%')
 
         Button({ type: ButtonType.Normal, stateEffect: false }) {
           Text($r('app.string.AgreeSignIn'))
-            .fontSize(size.vp(15))
+            .fontSize(unit.vp(15))
             .fontColor(0xffffff)
         }
         .onClick(() => {
@@ -439,20 +439,20 @@ export struct PageRegister {
           Dialog.hide()
         })
         .backgroundColor(0xcf0e2c)
-        .borderRadius(size.vp(22))
-        .height(size.vp(40))
+        .borderRadius(unit.vp(22))
+        .height(unit.vp(40))
         .width('48%')
       }
       .justifyContent(FlexAlign.SpaceEvenly)
       .alignItems(VerticalAlign.Center)
-      .margin({ top: size.vp(15) })
+      .margin({ top: unit.vp(15) })
       .width('100%')
     }
     .padding({
-      top: size.vp(20),
-      left: size.vp(20),
-      right: size.vp(20),
-      bottom: size.vp(20)
+      top: unit.vp(20),
+      left: unit.vp(20),
+      right: unit.vp(20),
+      bottom: unit.vp(20)
     })
     .alignItems(HorizontalAlign.Start)
     .justifyContent(FlexAlign.Start)
@@ -481,8 +481,8 @@ export struct PageRegister {
         Dialog.custom({
           autoCancel: false,
           builder: () => this.dialogBuilder(resolve),
-          offset: { dx: 0, dy: size.vp(-35) },
-          width: size.vp(320),
+          offset: { dx: 0, dy: unit.vp(-35) },
+          width: unit.vp(320),
         })
       })
     }

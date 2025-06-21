@@ -29,10 +29,8 @@ export class Sqliter {
       Sqliter.appUser = await AppDatabaser.recentUser()
     }
 
-    if (Sqliter.appUser) {
-      !store.logined
-        ? event.logout()
-        : event.login()
+    if (store.logined) {
+      !Sqliter.appUser ? event.logout() : event.login()
     }
   }
 

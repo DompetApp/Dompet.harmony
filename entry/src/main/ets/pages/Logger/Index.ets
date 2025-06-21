@@ -4,7 +4,7 @@ import { AppRouterMgr } from "../../router/manager"
 import { Loading } from "../../components/Loading/Index"
 import { IString } from "../../tracks/logger"
 import { logger } from "../../tracks/logger"
-import { size } from "../../utils/size"
+import { unit } from "../../utils/unity"
 
 
 @HMRouter({
@@ -19,7 +19,7 @@ export struct PageLogger {
   @Local bodyHScroller: Scroller = new Scroller()
   @Local bodyVScroller: Scroller = new Scroller()
   @Local readAsString: () => void = this.createReadAsString()
-  @Local headHeight: number = size.vp(56)
+  @Local headHeight: number = unit.vp(56)
   @Local headShadow: boolean = true
   @Local content: IString = {
     filename: '',
@@ -33,19 +33,19 @@ export struct PageLogger {
       Column() {
         Image($rawfile('images/auth/back.png'))
           .onClick(() => AppRouterMgr.pop())
-          .margin({ left: size.vp(20) })
+          .margin({ left: unit.vp(20) })
           .objectFit(ImageFit.Fill)
-          .height(size.vp(36))
-          .width(size.vp(36))
+          .height(unit.vp(36))
+          .width(unit.vp(36))
           .draggable(false)
       }
       .justifyContent(FlexAlign.Center)
       .alignItems(HorizontalAlign.Start)
-      .width(size.wmax(640))
+      .width(unit.wmax(640))
       .height('100%')
     }
     .width('100%')
-    .height(size.vp(56))
+    .height(unit.vp(56))
     .justifyContent(FlexAlign.Start)
     .alignItems(HorizontalAlign.Center)
   }
@@ -57,12 +57,12 @@ export struct PageLogger {
         Column() {
           Text($r('app.string.Run_Logger'))
             .fontWeight(FontWeight.Bold)
-            .letterSpacing(size.vp(3))
-            .lineHeight(size.vp(28))
-            .fontSize(size.vp(20))
+            .letterSpacing(unit.vp(3))
+            .lineHeight(unit.vp(28))
+            .fontSize(unit.vp(20))
             .fontColor(0x130138)
         }
-        .padding({ left: size.vp(32), right: size.vp(32) })
+        .padding({ left: unit.vp(32), right: unit.vp(32) })
         .alignItems(HorizontalAlign.Center)
         .justifyContent(FlexAlign.Center)
         .height('100%')
@@ -70,20 +70,20 @@ export struct PageLogger {
       }
       .justifyContent(FlexAlign.Center)
       .alignItems(HorizontalAlign.Start)
-      .width(size.wmax(640))
+      .width(unit.wmax(640))
       .height('100%')
     }
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP])
     .alignItems(HorizontalAlign.Center)
-    .height(size.hp(this.headHeight))
+    .height(unit.hp(this.headHeight))
     .justifyContent(FlexAlign.Start)
     .backgroundColor(Color.White)
     .width('100%')
     .shadow({
       color: this.headShadow ? 'rgba(0, 0, 0, 0.038)' : Color.Transparent,
-      radius: this.headShadow ? vp2px(10) : 0,
-      offsetY: vp2px(1.2),
-      offsetX: vp2px(0),
+      radius: this.headShadow ? unit.vp2px(10) : 0,
+      offsetY: unit.vp2px(1.2),
+      offsetX: unit.vp2px(0),
     })
   }
 
@@ -99,8 +99,8 @@ export struct PageLogger {
                 .copyOption(CopyOptions.LocalDevice)
                 .fontWeight(FontWeight.Normal)
                 .enableHapticFeedback(true)
-                .lineHeight(size.vp(18))
-                .fontSize(size.vp(12))
+                .lineHeight(unit.vp(18))
+                .fontSize(unit.vp(12))
                 .fontColor(0x303133)
             }
             .justifyContent(FlexAlign.Start)
@@ -110,9 +110,9 @@ export struct PageLogger {
               minHeight: '100%'
             })
             .padding({
-              top: size.vp(4),
-              left: size.vp(4),
-              right: size.vp(4),
+              top: unit.vp(4),
+              left: unit.vp(4),
+              right: unit.vp(4),
             })
           }
           .scrollable(ScrollDirection.Horizontal)
@@ -122,7 +122,7 @@ export struct PageLogger {
         }
         .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
         .scrollable(ScrollDirection.Vertical)
-        .margin({ top: size.vp(56) })
+        .margin({ top: unit.vp(56) })
         .scrollBar(BarState.Auto)
         .height('100%')
         .width('100%')
@@ -130,7 +130,7 @@ export struct PageLogger {
       .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
       .alignItems(HorizontalAlign.Start)
       .justifyContent(FlexAlign.Center)
-      .width(size.wmax(640))
+      .width(unit.wmax(640))
       .height('100%')
     }
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])

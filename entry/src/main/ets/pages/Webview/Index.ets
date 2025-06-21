@@ -8,7 +8,7 @@ import { HMWBridger } from "../../pages/Webview/bridger"
 import { Loading } from "../../components/Loading/Index"
 import { IWebviewMeta } from "../../models/web"
 import { device } from "../../configure/device"
-import { size } from "../../utils/size"
+import { unit } from "../../utils/unity"
 import { util } from "@kit.ArkTS"
 
 
@@ -25,7 +25,7 @@ export struct PageWebview {
   @Local webviewController: webview.WebviewController = new webview.WebviewController()
   @Local webviewBridger: HMWBridger = new HMWBridger(this.webviewController) as Unknown
   @Local webviewMeta: IWebviewMeta = AppRouterMgr.getCurrentParam() as Unknown
-  @Local context: common.UIAbilityContext = getContext(this) as Unknown
+  @Local context: common.UIAbilityContext = this.getUIContext().getHostContext() as Unknown
 
   async loadUrl() {
     const url = this.webviewMeta.url.trim()
@@ -193,8 +193,8 @@ export struct PageWebview {
           }
           .justifyContent(FlexAlign.Center)
           .alignItems(VerticalAlign.Center)
-          .height(size.vp(56))
-          .width(size.vp(56))
+          .height(unit.vp(56))
+          .width(unit.vp(56))
           .onClick(() => {
             this.webviewController.accessBackward()
               ? this.webviewController.backward()
@@ -206,13 +206,13 @@ export struct PageWebview {
               .textOverflow({ overflow: TextOverflow.Ellipsis })
               .fontWeight(FontWeight.Bold)
               .textAlign(TextAlign.Center)
-              .fontSize(size.vp(18))
+              .fontSize(unit.vp(18))
               .fontColor(0x303133)
               .maxLines(1)
           }
           .justifyContent(FlexAlign.Center)
           .alignItems(VerticalAlign.Center)
-          .height(size.vp(56))
+          .height(unit.vp(56))
           .layoutWeight(1)
 
           Row() {
@@ -220,31 +220,31 @@ export struct PageWebview {
               Column()
                 .backgroundColor(0x333333)
                 .borderRadius('50%')
-                .height(size.vp(5))
-                .width(size.vp(5))
+                .height(unit.vp(5))
+                .width(unit.vp(5))
 
               Column()
-                .margin({ left: size.vp(3), right: size.vp(3) })
+                .margin({ left: unit.vp(3), right: unit.vp(3) })
                 .backgroundColor(0x333333)
                 .borderRadius('50%')
-                .height(size.vp(7))
-                .width(size.vp(7))
+                .height(unit.vp(7))
+                .width(unit.vp(7))
 
               Column()
                 .backgroundColor(0x333333)
                 .borderRadius('50%')
-                .height(size.vp(5))
-                .width(size.vp(5))
+                .height(unit.vp(5))
+                .width(unit.vp(5))
             }
             .alignItems(VerticalAlign.Center)
             .justifyContent(FlexAlign.Center)
-            .height(size.vp(26))
-            .width(size.vp(44))
+            .height(unit.vp(26))
+            .width(unit.vp(44))
           }
           .justifyContent(FlexAlign.Center)
           .alignItems(VerticalAlign.Center)
-          .height(size.vp(56))
-          .width(size.vp(56))
+          .height(unit.vp(56))
+          .width(unit.vp(56))
           .onClick(() => {
             if (!this.webviewMeta.loading) {
               this.popuping(true)
@@ -252,7 +252,7 @@ export struct PageWebview {
           })
         }
         .width('100%')
-        .height(size.hp(size.vp(56)))
+        .height(unit.hp(unit.vp(56)))
         .backgroundColor(Color.White)
         .justifyContent(FlexAlign.Center)
         .alignItems(VerticalAlign.Center)

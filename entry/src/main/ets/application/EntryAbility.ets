@@ -1,9 +1,10 @@
 import { AbilityConstant, UIAbility } from "@kit.AbilityKit"
 import { errorManager, Want } from "@kit.AbilityKit"
+import { StageManager } from "../configure/stage"
 import { CtxManager } from "../configure/context"
+import { Network } from "../configure/network"
 import { Socketor } from "../configure/socket"
 import { Sqliter } from "../configure/sqlite"
-import { Network } from "../configure/network"
 import { schemer } from "../configure/scheme"
 import { device } from "../configure/device"
 import { Scheme } from "../models/scheme"
@@ -13,7 +14,6 @@ import { AxiosError } from "@ohos/axios"
 import { Empty } from "../utils/empty"
 import { webview } from "@kit.ArkWeb"
 import { window } from "@kit.ArkUI"
-import { font } from "@kit.ArkUI"
 
 
 export default class EntryAbility extends UIAbility {
@@ -55,6 +55,8 @@ export default class EntryAbility extends UIAbility {
     this.windowClass.on("avoidAreaChange", this.onAvoidAreaChange)
     this.windowClass.on('windowSizeChange', this.onWindowSizeChange)
 
+    StageManager.registerStageWindowClass(this.windowClass)
+
     windowStage.loadContent('pages/Index', (err) => {
       if (err.code) {
         console.log('EntryAbility: --- onWindowStageCreate: failure ---> ' + JSON.stringify(err))
@@ -82,9 +84,9 @@ export default class EntryAbility extends UIAbility {
   }
 
   registerCustomizeFonts() {
-    font.registerFont({
+    this.windowClass?.getUIContext().getFont().registerFont({
+      familySrc: $rawfile('fonts/Roboto.ttf'),
       familyName: 'Google.Roboto',
-      familySrc: $rawfile('fonts/Roboto.ttf')
     })
   }
 
@@ -119,6 +121,12 @@ export default class EntryAbility extends UIAbility {
         }
       }
     })
+  }
+
+  onWindowStageDestroy() {
+    console.log('EntryAbility: --- onWindowStageDestroy ---')
+    StageManager.unregisterStageWindowClass()
+    this.windowClass = null
   }
 
   onForeground() {

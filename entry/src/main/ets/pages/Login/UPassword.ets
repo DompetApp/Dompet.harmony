@@ -13,7 +13,7 @@ import { crypto } from "../../utils/crypto"
 import { event } from "../../globals/event"
 import { Empty } from "../../utils/empty"
 import { User } from "../../models/user"
-import { size } from "../../utils/size"
+import { unit } from "../../utils/unity"
 import Axios from "@ohos/axios"
 
 
@@ -30,7 +30,7 @@ export struct LoginByPassword {
   @Local avatarUri: string = ''
   @Local authorizationCode: string = ''
   @Event visitRegister: () => void = Empty.fn
-  @Local context: common.UIAbilityContext = getContext(this) as Unknown
+  @Local context: common.UIAbilityContext = this.getUIContext().getHostContext() as Unknown
   @Local focusMgr: FocusMgr = new FocusMgr(this.getUIContext())
   @Local selected: boolean = false
   @Local phoneing: boolean = false
@@ -43,7 +43,7 @@ export struct LoginByPassword {
       Row() {
         Text($r('app.string.User_Agreement_And_Privacy_Policy'))
           .fontWeight(FontWeight.Bold)
-          .fontSize(size.vp(20))
+          .fontSize(unit.vp(20))
           .fontColor(0x303133)
       }
       .justifyContent(FlexAlign.Center)
@@ -89,18 +89,18 @@ export struct LoginByPassword {
             .fontWeight(FontWeight.Normal)
             .fontColor(0x020202)
         }
-        .lineHeight(size.vp(24))
-        .fontSize(size.vp(15))
+        .lineHeight(unit.vp(24))
+        .fontSize(unit.vp(15))
       }
       .alignItems(HorizontalAlign.Start)
       .justifyContent(FlexAlign.Start)
-      .margin({ top: size.vp(15) })
+      .margin({ top: unit.vp(15) })
       .width('100%')
 
       Row() {
         Button({ type: ButtonType.Normal, stateEffect: false }) {
           Text($r('app.string.System_Cancel'))
-            .fontSize(size.vp(15))
+            .fontSize(unit.vp(15))
             .fontColor(0x1f1f1f)
         }
         .onClick(() => {
@@ -108,13 +108,13 @@ export struct LoginByPassword {
           Dialog.hide()
         })
         .backgroundColor(Color.Transparent)
-        .borderRadius(size.vp(22))
-        .height(size.vp(40))
+        .borderRadius(unit.vp(22))
+        .height(unit.vp(40))
         .width('48%')
 
         Button({ type: ButtonType.Normal, stateEffect: false }) {
           Text($r('app.string.AgreeSignIn'))
-            .fontSize(size.vp(15))
+            .fontSize(unit.vp(15))
             .fontColor(0xffffff)
         }
         .onClick(() => {
@@ -123,20 +123,20 @@ export struct LoginByPassword {
           Dialog.hide()
         })
         .backgroundColor(0xcf0e2c)
-        .borderRadius(size.vp(22))
-        .height(size.vp(40))
+        .borderRadius(unit.vp(22))
+        .height(unit.vp(40))
         .width('48%')
       }
       .justifyContent(FlexAlign.SpaceEvenly)
       .alignItems(VerticalAlign.Center)
-      .margin({ top: size.vp(15) })
+      .margin({ top: unit.vp(15) })
       .width('100%')
     }
     .padding({
-      top: size.vp(20),
-      left: size.vp(20),
-      right: size.vp(20),
-      bottom: size.vp(20)
+      top: unit.vp(20),
+      left: unit.vp(20),
+      right: unit.vp(20),
+      bottom: unit.vp(20)
     })
     .alignItems(HorizontalAlign.Start)
     .justifyContent(FlexAlign.Start)
@@ -202,8 +202,8 @@ export struct LoginByPassword {
         Dialog.custom({
           autoCancel: false,
           builder: () => this.dialogBuilder(resolve),
-          offset: { dx: 0, dy: size.vp(-35) },
-          width: size.vp(320),
+          offset: { dx: 0, dy: unit.vp(-35) },
+          width: unit.vp(320),
         })
       })
     }
@@ -326,24 +326,24 @@ export struct LoginByPassword {
           Row() {
             Column() {
               Image($r('app.media.startIcon'))
-                .height(size.vp(66))
-                .width(size.vp(66))
+                .height(unit.vp(66))
+                .width(unit.vp(66))
                 .draggable(false)
             }
             .alignItems(HorizontalAlign.Center)
             .justifyContent(FlexAlign.Center)
             .backgroundColor(Color.White)
-            .borderRadius(size.vp(20))
-            .padding(size.vp(7))
-            .height(size.vp(80))
-            .width(size.vp(80))
+            .borderRadius(unit.vp(20))
+            .padding(unit.vp(7))
+            .height(unit.vp(80))
+            .width(unit.vp(80))
           }
           .alignItems(VerticalAlign.Center)
           .justifyContent(FlexAlign.Center)
-          .margin({ top: size.vh(6) })
+          .margin({ top: unit.vh(6) })
           .constraintSize({
-            minHeight: size.vp(150),
-            maxHeight: size.vp(180)
+            minHeight: unit.vp(150),
+            maxHeight: unit.vp(180)
           })
           .height('40%')
           .width('100%')
@@ -357,16 +357,16 @@ export struct LoginByPassword {
           Stack({ alignContent: Alignment.TopStart }) {
             TextInput({ text: $$this.phone, placeholder: $r('app.string.Please_input_phone_number') })
               .onSubmit(() => this.focusMgr.focus('login_pwd'))
-              .constraintSize({ minHeight: size.vp(52) })
-              .placeholderFont({ size: size.vp(13) })
+              .constraintSize({ minHeight: unit.vp(52) })
+              .placeholderFont({ size: unit.vp(13) })
               .enterKeyType(EnterKeyType.Next)
-              .padding({ left: size.vp(68) })
+              .padding({ left: unit.vp(68) })
               .inputFilter('^[0-9]{0,11}$')
               .backgroundColor(Color.White)
               .type(InputType.PhoneNumber)
               .placeholderColor(0x909399)
-              .borderRadius(size.vp(20))
-              .fontSize(size.vp(14))
+              .borderRadius(unit.vp(20))
+              .fontSize(unit.vp(14))
               .fontColor(0x303133)
               .id('login_phone')
               .maxLength(11)
@@ -374,71 +374,71 @@ export struct LoginByPassword {
             Row() {
               Text('+86')
                 .fontWeight(FontWeight.Regular)
-                .fontSize(size.vp(14))
+                .fontSize(unit.vp(14))
                 .fontColor(0x000000)
 
               Divider()
                 .position({
-                  top: size.vp(18),
-                  right: size.vp(5)
+                  top: unit.vp(18),
+                  right: unit.vp(5)
                 })
-                .strokeWidth(size.vp(1.4))
-                .height(size.vp(16))
+                .strokeWidth(unit.vp(1.4))
+                .height(unit.vp(16))
                 .color(0xcfcfcf)
                 .vertical(true)
             }
             .justifyContent(FlexAlign.Center)
             .alignItems(VerticalAlign.Center)
-            .height(size.vp(52))
-            .width(size.vp(58))
+            .height(unit.vp(52))
+            .width(unit.vp(58))
           }
           .height('auto')
           .width('100%')
 
           Stack({ alignContent: Alignment.TopStart }) {
             TextInput({ text: $$this.password, placeholder: $r('app.string.Please_input_password') })
-              .constraintSize({ minHeight: size.vp(52) })
-              .placeholderFont({ size: size.vp(13) })
+              .constraintSize({ minHeight: unit.vp(52) })
+              .placeholderFont({ size: unit.vp(13) })
               .enterKeyType(EnterKeyType.Next)
-              .padding({ left: size.vp(68) })
+              .padding({ left: unit.vp(68) })
               .backgroundColor(Color.White)
               .placeholderColor(0x909399)
-              .borderRadius(size.vp(20))
+              .borderRadius(unit.vp(20))
               .type(InputType.Password)
               .showPasswordIcon(false)
-              .fontSize(size.vp(14))
+              .fontSize(unit.vp(14))
               .fontColor(0x303133)
               .id('login_pwd')
 
             Row() {
               SymbolGlyph($r('sys.symbol.lock'))
                 .fontWeight(FontWeight.Regular)
-                .fontSize(size.vp(18.5))
+                .fontSize(unit.vp(18.5))
                 .fontColor([0x000000])
 
               Divider()
                 .position({
-                  top: size.vp(18),
-                  right: size.vp(5)
+                  top: unit.vp(18),
+                  right: unit.vp(5)
                 })
-                .strokeWidth(size.vp(1.4))
-                .height(size.vp(16))
+                .strokeWidth(unit.vp(1.4))
+                .height(unit.vp(16))
                 .color(0xcfcfcf)
                 .vertical(true)
             }
             .justifyContent(FlexAlign.Center)
             .alignItems(VerticalAlign.Center)
-            .height(size.vp(52))
-            .width(size.vp(58))
+            .height(unit.vp(52))
+            .width(unit.vp(58))
           }
-          .margin({ top: size.vp(16) })
+          .margin({ top: unit.vp(16) })
           .height('auto')
           .width('100%')
         }
         .justifyContent(FlexAlign.Start)
         .alignItems(HorizontalAlign.Center)
-        .padding({ left: size.vp(15), right: size.vp(15) })
-        .constraintSize({ maxWidth: size.vp(340) })
+        .padding({ left: unit.vp(15), right: unit.vp(15) })
+        .constraintSize({ maxWidth: unit.vp(340) })
         .height('auto')
         .width('100%')
 
@@ -447,14 +447,14 @@ export struct LoginByPassword {
             Row() {
               if (this.loading || this.guesting) {
                 LoadingProgress()
-                  .margin({ right: size.vp(6) })
-                  .height(size.vp(24))
-                  .width(size.vp(24))
+                  .margin({ right: unit.vp(6) })
+                  .height(unit.vp(24))
+                  .width(unit.vp(24))
                   .color(Color.White)
 
                 Text($r('app.string.Logging_in'))
                   .fontWeight(FontWeight.Medium)
-                  .letterSpacing(size.vp(0.5))
+                  .letterSpacing(unit.vp(0.5))
                   .fontColor(0xffffff)
                   .fontSize(14)
               }
@@ -462,7 +462,7 @@ export struct LoginByPassword {
               if (!this.loading && !this.guesting && !this.phoneing) {
                 Text(this.checkPhone() ? $r('app.string.Account_Login') : $r('app.string.Get_the_local_phone_number'))
                   .fontWeight(FontWeight.Medium)
-                  .letterSpacing(size.vp(0.5))
+                  .letterSpacing(unit.vp(0.5))
                   .fontColor(0xffffff)
                   .fontSize(14)
               }
@@ -470,7 +470,7 @@ export struct LoginByPassword {
               if (!this.loading && !this.guesting && this.phoneing) {
                 Text($r('app.string.Getting_phone_number'))
                   .fontWeight(FontWeight.Medium)
-                  .letterSpacing(size.vp(0.5))
+                  .letterSpacing(unit.vp(0.5))
                   .fontColor(0xffffff)
                   .fontSize(14)
               }
@@ -479,9 +479,9 @@ export struct LoginByPassword {
           .onClick(() => this.checkPhone() ? this.loginByPassword() : this.getAccountPhone())
           .backgroundColor(this.loading || this.guesting || this.phoneing ? 0xeb9fab : 0xce0e2d)
           .enabled(!this.loading && !this.guesting)
-          .margin({ bottom: size.vp(18) })
-          .borderRadius(size.vp(20))
-          .height(size.vp(40))
+          .margin({ bottom: unit.vp(18) })
+          .borderRadius(unit.vp(20))
+          .height(unit.vp(40))
           .width('100%')
 
           Button({ type: ButtonType.Normal, stateEffect: true }) {
@@ -489,23 +489,23 @@ export struct LoginByPassword {
               Text($r('app.string.Go_To_Register'))
                 .fontColor(this.loading || this.guesting ? 0x909399 : 0x303133)
                 .fontWeight(FontWeight.Normal)
-                .letterSpacing(size.vp(0.5))
+                .letterSpacing(unit.vp(0.5))
                 .fontSize(14)
             }
           }
           .enabled(!this.loading && !this.guesting || this.phoneing)
           .onClick(() => this.visitRegister())
-          .margin({ bottom: size.vp(18) })
+          .margin({ bottom: unit.vp(18) })
           .backgroundColor(0xe6e7e9)
-          .borderRadius(size.vp(20))
-          .height(size.vp(40))
+          .borderRadius(unit.vp(20))
+          .height(unit.vp(40))
           .width('100%')
         }
         .justifyContent(FlexAlign.Center)
         .alignItems(HorizontalAlign.Center)
-        .padding({ left: size.vp(15), right: size.vp(15) })
-        .constraintSize({ maxWidth: size.vp(330) })
-        .margin({ top: size.vh(6) })
+        .padding({ left: unit.vp(15), right: unit.vp(15) })
+        .constraintSize({ maxWidth: unit.vp(330) })
+        .margin({ top: unit.vh(6) })
         .height('auto')
         .width('100%')
 
@@ -515,9 +515,9 @@ export struct LoginByPassword {
             .onClick(() => this.loginByGuest())
             .backgroundColor(Color.Transparent)
             .fontWeight(FontWeight.Medium)
-            .letterSpacing(size.vp(0.5))
-            .borderRadius(size.vp(20))
-            .fontSize(size.vp(14))
+            .letterSpacing(unit.vp(0.5))
+            .borderRadius(unit.vp(20))
+            .fontSize(unit.vp(14))
             .fontColor(0x909399)
             .stateStyles({
               pressed: {
@@ -525,18 +525,18 @@ export struct LoginByPassword {
               }
             })
             .padding({
-              top: size.vp(10),
-              left: size.vp(22),
-              right: size.vp(22),
-              bottom: size.vp(10),
+              top: unit.vp(10),
+              left: unit.vp(22),
+              right: unit.vp(22),
+              bottom: unit.vp(10),
             })
         }
         .justifyContent(FlexAlign.Center)
         .alignItems(HorizontalAlign.Center)
-        .height(size.vh(24))
+        .height(unit.vh(24))
         .width('100%')
       }
-      .padding({ bottom: size.vp(30) })
+      .padding({ bottom: unit.vp(30) })
       .height('auto')
       .width('100%')
 
@@ -546,29 +546,29 @@ export struct LoginByPassword {
             .onChange(value => this.selected = value)
             .selectedColor(0xce0e2d)
             .select(this.selected)
-            .height(size.vp(15))
-            .width(size.vp(15))
+            .height(unit.vp(15))
+            .width(unit.vp(15))
         }
         .justifyContent(FlexAlign.Start)
         .alignItems(VerticalAlign.Center)
-        .height(size.vp(18))
-        .width(size.vp(24))
+        .height(unit.vp(18))
+        .width(unit.vp(24))
 
         Row() {
           Text() {
             Span($r('app.string.I_have_read_and_agree'))
               .fontWeight(FontWeight.Normal)
-              .fontSize(size.vp(12))
+              .fontSize(unit.vp(12))
               .fontColor(0x909399)
 
             Span(this.isInChinese() ? "《" : " 《")
               .fontWeight(FontWeight.Medium)
-              .fontSize(size.vp(12))
+              .fontSize(unit.vp(12))
               .fontColor(0x303133)
 
             Span($r('app.string.Huawei_Account_Authentication_Agreement'))
               .fontWeight(FontWeight.Medium)
-              .fontSize(size.vp(12))
+              .fontSize(unit.vp(12))
               .fontColor(0x303133)
               .onClick(() => {
                 AppRouterMgr.push({
@@ -583,33 +583,33 @@ export struct LoginByPassword {
 
             Span(this.isInChinese() ? "》" : "》 ")
               .fontWeight(FontWeight.Medium)
-              .fontSize(size.vp(12))
+              .fontSize(unit.vp(12))
               .fontColor(0x303133)
 
             Span(this.isInChinese() ? "《" : " 《")
               .fontWeight(FontWeight.Medium)
-              .fontSize(size.vp(12))
+              .fontSize(unit.vp(12))
               .fontColor(0x303133)
 
             Span($r('app.string.Dompet_Wallet_Privacy_Policy'))
               .fontWeight(FontWeight.Medium)
-              .fontSize(size.vp(12))
+              .fontSize(unit.vp(12))
               .fontColor(0x303133)
               .onClick(Empty.fn)
 
             Span(this.isInChinese() ? "》" : "》 ")
               .fontWeight(FontWeight.Medium)
-              .fontSize(size.vp(12))
+              .fontSize(unit.vp(12))
               .fontColor(0x303133)
           }
         }
         .onClick(() => this.selected = !this.selected)
-        .constraintSize({ minHeight: size.vp(18) })
+        .constraintSize({ minHeight: unit.vp(18) })
         .alignItems(VerticalAlign.Center)
         .justifyContent(FlexAlign.Start)
         .height('auto')
       }
-      .padding({ left: size.vp(20), right: size.vp(20) })
+      .padding({ left: unit.vp(20), right: unit.vp(20) })
       .position({ left: 0, bottom: 0 })
       .width('100%')
     }

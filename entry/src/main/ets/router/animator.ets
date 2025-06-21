@@ -1,5 +1,5 @@
+import { AttributeUpdater } from "@kit.ArkUI"
 import { HMAnimatorHandle } from "@hadss/hmrouter"
-import { TranslateOption } from "@hadss/hmrouter"
 import { IHMAnimator } from "@hadss/hmrouter"
 import { HMAnimator } from "@hadss/hmrouter"
 import { Empty } from "../utils/empty"
@@ -20,20 +20,28 @@ export class RouteNoneAnimator implements IHMAnimator {
 @HMAnimator({ animatorName: 'RouteDownUpAnimator' })
 export class RouteDownUpAnimator implements IHMAnimator {
   effect(enterHandle: HMAnimatorHandle, exitHandle: HMAnimatorHandle) {
-    enterHandle.finish((translateOption: TranslateOption) => {
-      translateOption.y = '0'
+    enterHandle.start((modifier: AttributeUpdater<NavDestinationAttribute>) => {
+      modifier.attribute?.translate({ y: '100%' }).opacity(0.4)
     })
 
-    enterHandle.start((translateOption: TranslateOption) => {
-      translateOption.y = '100%'
+    enterHandle.finish((modifier: AttributeUpdater<NavDestinationAttribute>) => {
+      modifier.attribute?.translate({ y: 0 }).opacity(1)
     })
 
-    exitHandle.finish((translateOption: TranslateOption) => {
-      translateOption.y = '100%'
+    enterHandle.onFinish((modifier: AttributeUpdater<NavDestinationAttribute>) => {
+      modifier.attribute?.translate({ y: 0 }).opacity(1)
     })
 
-    exitHandle.start((translateOption: TranslateOption) => {
-      translateOption.y = '0'
+    exitHandle.start((modifier: AttributeUpdater<NavDestinationAttribute>) => {
+      modifier.attribute?.translate({ y: 0 }).opacity(1)
+    })
+
+    exitHandle.finish((modifier: AttributeUpdater<NavDestinationAttribute>) => {
+      modifier.attribute?.translate({ y: '100%' }).opacity(0.4)
+    })
+
+    exitHandle.onFinish((modifier: AttributeUpdater<NavDestinationAttribute>) => {
+      modifier.attribute?.translate({ y: 0 }).opacity(1)
     })
 
     enterHandle.duration = 500

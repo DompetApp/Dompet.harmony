@@ -1,6 +1,6 @@
 import { ScanResults, ScanService, ScanResult } from "./-service"
 import { device } from "../../configure/device"
-import { size } from "../../utils/size"
+import { unit } from "../../utils/unity"
 import { curves } from "@kit.ArkUI"
 
 
@@ -88,7 +88,7 @@ export struct ScannerCodes {
   getOffsetY(location: number[]) {
     const top: number = location[1]
     const bottom: number = location[3]
-    return (top + bottom) / 2 - px2vp(device.top)
+    return (top + bottom) / 2 - unit.px2vp(device.top)
   }
 
   openMultiCode(index: number) {
@@ -133,11 +133,11 @@ export struct ScannerCodes {
           .fontWeight(FontWeight.Normal)
           .textAlign(TextAlign.Center)
           .fontFamily('HarmonyHeiTi')
-          .fontSize(size.vp(18))
+          .fontSize(unit.vp(18))
           .width('100%')
       }
-      .margin({ top: size.vp(80), bottom: size.vp(30) })
-      .padding({ left: size.vp(24), right: size.vp(24) })
+      .margin({ top: unit.vp(80), bottom: unit.vp(30) })
+      .padding({ left: unit.vp(24), right: unit.vp(24) })
       .alignItems(HorizontalAlign.Center)
       .justifyContent(FlexAlign.Start)
       .width('100%')
@@ -147,8 +147,8 @@ export struct ScannerCodes {
           Row() {
             Image($rawfile('scanner/found.svg'))
               .draggable(false)
-              .width(size.vp(40))
-              .height(size.vp(40))
+              .width(unit.vp(40))
+              .height(unit.vp(40))
               .opacity(this.multiCodeOpacity)
               .scale({ x: this.multiCodeScale, y: this.multiCodeScale })
               .onAppear(() => {
@@ -164,9 +164,9 @@ export struct ScannerCodes {
             x: this.getOffsetX(arr),
             y: this.getOffsetY(arr)
           })
-          .width(size.vp(40))
-          .height(size.vp(40))
-          .markAnchor({ x: size.vp(20), y: size.vp(20) })
+          .width(unit.vp(40))
+          .height(unit.vp(40))
+          .markAnchor({ x: unit.vp(20), y: unit.vp(20) })
           .scale({ x: this.fadeOutScale, y: this.fadeOutScale })
           .opacity(this.fadeOutOpacity)
         })
@@ -176,10 +176,10 @@ export struct ScannerCodes {
         Image($rawfile('scanner/selected.svg'))
           .scale({ x: this.singleCodeScale, y: this.singleCodeScale })
           .position({ x: this.singleCodeX, y: this.singleCodeY })
-          .markAnchor({ x: size.vp(20), y: size.vp(20) })
+          .markAnchor({ x: unit.vp(20), y: unit.vp(20) })
           .opacity(this.singleCodeOpacity)
-          .height(size.vp(40))
-          .width(size.vp(40))
+          .height(unit.vp(40))
+          .width(unit.vp(40))
           .draggable(false)
       }
     }

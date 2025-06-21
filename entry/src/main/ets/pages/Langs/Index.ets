@@ -3,7 +3,7 @@ import { AppRouter } from "../../router/constants"
 import { AppRouterMgr } from "../../router/manager"
 import { Toast } from "../../components/Toast/Index"
 import { store } from "../../globals/store"
-import { size } from "../../utils/size"
+import { unit } from "../../utils/unity"
 
 
 @HMRouter({
@@ -13,7 +13,7 @@ import { size } from "../../utils/size"
 @ComponentV2
 export struct PageLangs {
   @Local bodyScroller: Scroller = new Scroller()
-  @Local headHeight: number = size.vp(156)
+  @Local headHeight: number = unit.vp(156)
   @Local headShadow: boolean = false
 
   @Builder
@@ -22,19 +22,19 @@ export struct PageLangs {
       Column() {
         Image($rawfile('images/auth/back.png'))
           .onClick(() => AppRouterMgr.pop())
-          .margin({ left: size.vp(20) })
+          .margin({ left: unit.vp(20) })
           .objectFit(ImageFit.Fill)
-          .height(size.vp(36))
-          .width(size.vp(36))
+          .height(unit.vp(36))
+          .width(unit.vp(36))
           .draggable(false)
       }
       .justifyContent(FlexAlign.Center)
       .alignItems(HorizontalAlign.Start)
-      .width(size.wmax(640))
+      .width(unit.wmax(640))
       .height('100%')
     }
     .width('100%')
-    .height(size.vp(56))
+    .height(unit.vp(56))
     .justifyContent(FlexAlign.Start)
     .alignItems(HorizontalAlign.Center)
   }
@@ -46,12 +46,12 @@ export struct PageLangs {
         Column() {
           Text($r('app.string.Language'))
             .fontWeight(FontWeight.Bold)
-            .letterSpacing(size.vp(3))
-            .lineHeight(size.vp(28))
-            .fontSize(size.vp(20))
+            .letterSpacing(unit.vp(3))
+            .lineHeight(unit.vp(28))
+            .fontSize(unit.vp(20))
             .fontColor(0x130138)
         }
-        .padding({ left: size.vp(32), right: size.vp(32) })
+        .padding({ left: unit.vp(32), right: unit.vp(32) })
         .alignItems(HorizontalAlign.Center)
         .justifyContent(FlexAlign.Center)
         .height('100%')
@@ -59,20 +59,20 @@ export struct PageLangs {
       }
       .justifyContent(FlexAlign.Center)
       .alignItems(HorizontalAlign.Start)
-      .width(size.wmax(640))
+      .width(unit.wmax(640))
       .height('100%')
     }
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP])
     .alignItems(HorizontalAlign.Center)
-    .height(size.hp(this.headHeight))
+    .height(unit.hp(this.headHeight))
     .justifyContent(FlexAlign.Start)
     .backgroundColor(Color.White)
     .width('100%')
     .shadow({
       color: this.headShadow ? 'rgba(0, 0, 0, 0.038)' : Color.Transparent,
-      radius: this.headShadow ? vp2px(10) : 0,
-      offsetY: vp2px(1.2),
-      offsetX: vp2px(0),
+      radius: this.headShadow ? unit.vp2px(10) : 0,
+      offsetY: unit.vp2px(1.2),
+      offsetX: unit.vp2px(0),
     })
   }
 
@@ -83,7 +83,7 @@ export struct PageLangs {
         Scroll(this.bodyScroller) {
           Stack({ alignContent: Alignment.Top }) {
             Column()
-              .height(`calc(100% + ${size.vp(100)}vp)`)
+              .height(`calc(100% + ${unit.vp(100)}vp)`)
               .width('100%')
 
             Column() {
@@ -91,67 +91,67 @@ export struct PageLangs {
                 Text($r('app.string.Follow_System_Language'))
                   .fontWeight(this.isDefault() ? FontWeight.Bold : FontWeight.Normal)
                   .fontColor(this.isDefault() ? 0x8438FF : 0x808288)
-                  .fontSize(size.vp(16))
+                  .fontSize(unit.vp(16))
               }
               .alignItems(HorizontalAlign.Center)
               .justifyContent(FlexAlign.Center)
               .backgroundColor(Color.White)
-              .borderRadius(size.vp(15))
+              .borderRadius(unit.vp(15))
               .border({
                 color: this.isDefault() ? 0x8438FF : 'rgba(0, 0, 0, 0.26)',
-                width: this.isDefault() ? size.vp(1.4) : size.vp(1.2)
+                width: this.isDefault() ? unit.vp(1.4) : unit.vp(1.2)
               })
               .onClick(() => this.changeLocaler('default'))
-              .margin({ bottom: size.vp(25) })
-              .padding(size.vp(20))
-              .height(size.vp(64))
+              .margin({ bottom: unit.vp(25) })
+              .padding(unit.vp(20))
+              .height(unit.vp(64))
               .width('100%')
 
               Column() {
                 Text($r('app.string.Chinese_zh_CN'))
                   .fontWeight(this.isZhCN() ? FontWeight.Bold : FontWeight.Normal)
                   .fontColor(this.isZhCN() ? 0x8438FF : 0x808288)
-                  .fontSize(size.vp(16))
+                  .fontSize(unit.vp(16))
               }
               .alignItems(HorizontalAlign.Center)
               .justifyContent(FlexAlign.Center)
               .backgroundColor(Color.White)
-              .borderRadius(size.vp(15))
+              .borderRadius(unit.vp(15))
               .border({
                 color: this.isZhCN() ? 0x8438FF : 'rgba(0, 0, 0, 0.26)',
-                width: this.isZhCN() ? size.vp(1.4) : size.vp(1.2)
+                width: this.isZhCN() ? unit.vp(1.4) : unit.vp(1.2)
               })
               .onClick(() => this.changeLocaler('zh-CN'))
-              .margin({ bottom: size.vp(25) })
-              .padding(size.vp(20))
-              .height(size.vp(64))
+              .margin({ bottom: unit.vp(25) })
+              .padding(unit.vp(20))
+              .height(unit.vp(64))
               .width('100%')
 
               Column() {
                 Text($r('app.string.English_en_US'))
                   .fontWeight(this.isEnUS() ? FontWeight.Bold : FontWeight.Normal)
                   .fontColor(this.isEnUS() ? 0x8438FF : 0x808288)
-                  .fontSize(size.vp(16))
+                  .fontSize(unit.vp(16))
               }
               .alignItems(HorizontalAlign.Center)
               .justifyContent(FlexAlign.Center)
               .backgroundColor(Color.White)
-              .borderRadius(size.vp(15))
+              .borderRadius(unit.vp(15))
               .border({
                 color: this.isEnUS() ? 0x8438FF : 'rgba(0, 0, 0, 0.26)',
-                width: this.isEnUS() ? size.vp(1.4) : size.vp(1.2)
+                width: this.isEnUS() ? unit.vp(1.4) : unit.vp(1.2)
               })
               .onClick(() => this.changeLocaler('en-US'))
-              .margin({ bottom: size.vp(25) })
-              .padding(size.vp(20))
-              .height(size.vp(64))
+              .margin({ bottom: unit.vp(25) })
+              .padding(unit.vp(20))
+              .height(unit.vp(64))
               .width('100%')
             }
             .padding({
-              top: size.vp(188),
-              left: size.vp(48),
-              right: size.vp(48),
-              bottom: size.vp(35),
+              top: unit.vp(188),
+              left: unit.vp(48),
+              right: unit.vp(48),
+              bottom: unit.vp(35),
             })
             .alignItems(HorizontalAlign.Center)
             .justifyContent(FlexAlign.Start)
@@ -170,7 +170,7 @@ export struct PageLangs {
       .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
       .alignItems(HorizontalAlign.Start)
       .justifyContent(FlexAlign.Center)
-      .width(size.wmax(640))
+      .width(unit.wmax(640))
       .height('100%')
     }
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
@@ -203,10 +203,10 @@ export struct PageLangs {
   }
 
   onDidScroll(_: number) {
-    this.headHeight = size.vp(156) - this.bodyScroller.currentOffset().yOffset
-    this.headHeight = Math.min(this.headHeight, size.vp(156))
-    this.headHeight = Math.max(this.headHeight, size.vp(56))
-    this.headShadow = this.headHeight <= size.vp(56)
+    this.headHeight = unit.vp(156) - this.bodyScroller.currentOffset().yOffset
+    this.headHeight = Math.min(this.headHeight, unit.vp(156))
+    this.headHeight = Math.max(this.headHeight, unit.vp(56))
+    this.headShadow = this.headHeight <= unit.vp(56)
   }
 
   isDefault() {

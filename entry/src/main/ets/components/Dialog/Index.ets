@@ -21,7 +21,7 @@ export class Dialog {
   static async custom(options: CustomDialogOptions) {
     options.onWillDisappear = options.onWillDisappear || options.close || undefined
 
-    const promptAction = (await CtxManager.uiContext).getPromptAction()
+    const promptAction = CtxManager.uiContext!.getPromptAction()
 
     return promptAction.openCustomDialog(options).then(id => {
       Dialog.ids.add(id)
@@ -71,7 +71,7 @@ export class Dialog {
       ]
     }
 
-    const promptAction = (await CtxManager.uiContext).getPromptAction()
+    const promptAction = CtxManager.uiContext!.getPromptAction()
 
     promptAction.showDialog(options, (err, data) => {
       if (err) {
@@ -103,7 +103,7 @@ export class Dialog {
   }
 
   static async hide(keys?: number | number[]) {
-    const promptAction = (await CtxManager.uiContext).getPromptAction()
+    const promptAction = CtxManager.uiContext!.getPromptAction()
     const reverseIds = Array.from(Dialog.ids).reverse()
     const isInteger = Number.isInteger(keys)
     const isArray = Array.isArray(keys)
