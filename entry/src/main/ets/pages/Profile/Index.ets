@@ -83,7 +83,7 @@ export struct PageProfile {
                 Text($r('app.string.Change'))
                   .fontWeight(FontWeight.Normal)
                   .letterSpacing(unit.vp(1))
-                  .fontSize(unit.vp(11.2))
+                  .fontSize(unit.fp(11.2))
                   .fontColor(Color.White)
               }
               .backgroundColor('rgba(47, 17, 86, 0.75)')
@@ -114,7 +114,7 @@ export struct PageProfile {
                 .backgroundColor(Color.White)
                 .focusable(!this.readonly)
                 .borderRadius(unit.vp(0))
-                .fontSize(unit.vp(18))
+                .fontSize(unit.fp(18))
                 .fontColor(0x130138)
                 .height(unit.vp(18))
                 .width('auto')
@@ -144,7 +144,7 @@ export struct PageProfile {
                 Column() {
                   Text($r('app.string.Phone'))
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(unit.vp(15))
+                    .fontSize(unit.fp(15))
                     .fontColor(0x130138)
                 }
                 .alignItems(HorizontalAlign.Start)
@@ -154,7 +154,7 @@ export struct PageProfile {
                 Column() {
                   Text(this.user.phone)
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(unit.vp(15))
+                    .fontSize(unit.fp(15))
                     .fontColor(0x130138)
                 }
                 .alignItems(HorizontalAlign.Start)
@@ -169,7 +169,7 @@ export struct PageProfile {
                 Column() {
                   Text($r('app.string.Email'))
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(unit.vp(15))
+                    .fontSize(unit.fp(15))
                     .fontColor(0x130138)
                 }
                 .alignItems(HorizontalAlign.Start)
@@ -179,7 +179,7 @@ export struct PageProfile {
                 Column() {
                   Text(this.user.email)
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(unit.vp(15))
+                    .fontSize(unit.fp(15))
                     .fontColor(0x130138)
                 }
                 .alignItems(HorizontalAlign.Start)
@@ -194,7 +194,7 @@ export struct PageProfile {
                 Column() {
                   Text($r('app.string.Date'))
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(unit.vp(15))
+                    .fontSize(unit.fp(15))
                     .fontColor(0x130138)
                 }
                 .alignItems(HorizontalAlign.Start)
@@ -204,7 +204,7 @@ export struct PageProfile {
                 Column() {
                   Text(this.user.createDate)
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(unit.vp(15))
+                    .fontSize(unit.fp(15))
                     .fontColor(0x130138)
                 }
                 .alignItems(HorizontalAlign.Start)
@@ -219,7 +219,7 @@ export struct PageProfile {
                 Column() {
                   Text($r('app.string.State'))
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(unit.vp(15))
+                    .fontSize(unit.fp(15))
                     .fontColor(0x130138)
                 }
                 .alignItems(HorizontalAlign.Start)
@@ -229,7 +229,7 @@ export struct PageProfile {
                 Column() {
                   Text(this.user.activate !== 'Y' ? $r('app.string.unavailable') : $r('app.string.available'))
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(unit.vp(15))
+                    .fontSize(unit.fp(15))
                     .fontColor(0x130138)
                 }
                 .alignItems(HorizontalAlign.Start)
@@ -253,7 +253,7 @@ export struct PageProfile {
               .fontWeight(FontWeight.Medium)
               .letterSpacing(unit.vp(1.2))
               .borderRadius(unit.vp(20))
-              .fontSize(unit.vp(15))
+              .fontSize(unit.fp(15))
               .fontColor(0x5b259f)
               .stateStyles({
                 pressed: {

@@ -75,8 +75,8 @@ export struct PageNotification {
           Text($r('app.string.Notification'))
             .fontWeight(FontWeight.Bold)
             .letterSpacing(unit.vp(3))
-            .lineHeight(unit.vp(28))
-            .fontSize(unit.vp(20))
+            .lineHeight(unit.fp(28))
+            .fontSize(unit.fp(20))
             .fontColor(0x130138)
         }
         .padding({ left: unit.vp(32), right: unit.vp(32) })
@@ -121,7 +121,7 @@ export struct PageNotification {
                     Text(group.year === new Date().getFullYear() ? $r('app.string.This_year') : `${group.year}`)
                       .letterSpacing(group.year === new Date().getFullYear() ? 3 : 1)
                       .fontWeight(FontWeight.Bold)
-                      .fontSize(unit.vp(14.8))
+                      .fontSize(unit.fp(14.8))
                       .fontColor(0x363853)
                   }
                   .alignItems(HorizontalAlign.Center)
@@ -142,7 +142,7 @@ export struct PageNotification {
                                 hourCycle: 'h23',
                               }))
                                 .fontWeight(FontWeight.Normal)
-                                .fontSize(unit.vp(12))
+                                .fontSize(unit.fp(12))
                                 .fontColor(0xafafaf)
                             }
                             .alignItems(HorizontalAlign.Start)
@@ -155,8 +155,8 @@ export struct PageNotification {
                                 .textOverflow({ overflow: TextOverflow.Ellipsis })
                                 .wordBreak(WordBreak.BREAK_WORD)
                                 .fontWeight(FontWeight.Medium)
-                                .lineHeight(unit.vp(22))
-                                .fontSize(unit.vp(14.5))
+                                .lineHeight(unit.fp(22))
+                                .fontSize(unit.fp(14.5))
                                 .fontColor(0x363853)
                                 .maxLines(2)
                             }
@@ -167,7 +167,7 @@ export struct PageNotification {
                             Column() {
                               Text(money.usd(msg.money))
                                 .fontWeight(FontWeight.Medium)
-                                .fontSize(unit.vp(12))
+                                .fontSize(unit.fp(12))
                                 .fontColor(0x606266)
                             }
                             .alignItems(HorizontalAlign.Start)

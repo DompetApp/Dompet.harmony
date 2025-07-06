@@ -133,7 +133,7 @@ export struct ScannerCodes {
           .fontWeight(FontWeight.Normal)
           .textAlign(TextAlign.Center)
           .fontFamily('HarmonyHeiTi')
-          .fontSize(unit.vp(18))
+          .fontSize(unit.fp(18))
           .width('100%')
       }
       .margin({ top: unit.vp(80), bottom: unit.vp(30) })

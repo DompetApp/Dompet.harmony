@@ -2,6 +2,7 @@ import { i18n } from "@kit.LocalizationKit"
 import { AppRouter } from "../../router/constants"
 import { AppRouterMgr } from "../../router/manager"
 import authentication from "@hms.core.authentication"
+import { CacheImager } from "../../components/Imager/Index"
 import { Dialog } from "../../components/Dialog/Index"
 import { Toast } from "../../components/Toast/Index"
 import { Servicer } from "../../configure/service"
@@ -39,7 +40,7 @@ export struct LoginByAccount {
       Row() {
         Text($r('app.string.User_Agreement_And_Privacy_Policy'))
           .fontWeight(FontWeight.Bold)
-          .fontSize(unit.vp(20))
+          .fontSize(unit.fp(20))
           .fontColor(0x303133)
       }
       .justifyContent(FlexAlign.Center)
@@ -85,8 +86,8 @@ export struct LoginByAccount {
             .fontWeight(FontWeight.Normal)
             .fontColor(0x020202)
         }
-        .lineHeight(unit.vp(24))
-        .fontSize(unit.vp(15))
+        .lineHeight(unit.fp(24))
+        .fontSize(unit.fp(15))
       }
       .alignItems(HorizontalAlign.Start)
       .justifyContent(FlexAlign.Start)
@@ -96,7 +97,7 @@ export struct LoginByAccount {
       Row() {
         Button({ type: ButtonType.Normal, stateEffect: false }) {
           Text($r('app.string.System_Cancel'))
-            .fontSize(unit.vp(15))
+            .fontSize(unit.fp(15))
             .fontColor(0x1f1f1f)
         }
         .onClick(() => {
@@ -110,7 +111,7 @@ export struct LoginByAccount {
 
         Button({ type: ButtonType.Normal, stateEffect: false }) {
           Text($r('app.string.AgreeSignIn'))
-            .fontSize(unit.vp(15))
+            .fontSize(unit.fp(15))
             .fontColor(0xffffff)
         }
         .onClick(() => {
@@ -276,10 +277,16 @@ export struct LoginByAccount {
           Row() {
             if (!this.avatarUri) {
               Column() {
-                Image($r('app.media.startIcon'))
-                  .height(unit.vp(66))
-                  .width(unit.vp(66))
-                  .draggable(false)
+                CacheImager({
+                  imagerOptions: {
+                    loadSrc: $r('app.media.startIcon'),
+                    objectFit: ImageFit.Fill,
+                  },
+                  adaptiveHeight: unit.vp(66),
+                  adaptiveWidth: unit.vp(66),
+                  loading: false,
+                  error: false,
+                })
               }
               .alignItems(HorizontalAlign.Center)
               .justifyContent(FlexAlign.Center)
@@ -318,14 +325,14 @@ export struct LoginByAccount {
           Text(this.anonymousPhone || '******')
             .textAlign(TextAlign.Center)
             .fontWeight(FontWeight.Bold)
-            .fontSize(unit.vp(36))
+            .fontSize(unit.fp(36))
             .fontColor(0x303133)
 
           Text($r('app.string.Bind_HuaweiId_Number'))
             .fontWeight(FontWeight.Regular)
             .textAlign(TextAlign.Center)
             .margin({ top: unit.vp(12) })
-            .fontSize(unit.vp(12.4))
+            .fontSize(unit.fp(12.4))
             .fontColor(0x909399)
         }
         .justifyContent(FlexAlign.Start)
@@ -399,7 +406,7 @@ export struct LoginByAccount {
             .fontWeight(FontWeight.Medium)
             .letterSpacing(unit.vp(0.5))
             .borderRadius(unit.vp(20))
-            .fontSize(unit.vp(14))
+            .fontSize(unit.fp(14))
             .fontColor(0x909399)
             .stateStyles({
               pressed: {
@@ -440,17 +447,17 @@ export struct LoginByAccount {
           Text() {
             Span($r('app.string.I_have_read_and_agree'))
               .fontWeight(FontWeight.Normal)
-              .fontSize(unit.vp(12))
+              .fontSize(unit.fp(12))
               .fontColor(0x909399)
 
             Span(this.isInChinese() ? "《" : " 《")
               .fontWeight(FontWeight.Medium)
-              .fontSize(unit.vp(12))
+              .fontSize(unit.fp(12))
               .fontColor(0x303133)
 
             Span($r('app.string.Huawei_Account_Authentication_Agreement'))
               .fontWeight(FontWeight.Medium)
-              .fontSize(unit.vp(12))
+              .fontSize(unit.fp(12))
               .fontColor(0x303133)
               .onClick(() => {
                 AppRouterMgr.push({
@@ -465,23 +472,23 @@ export struct LoginByAccount {
 
             Span(this.isInChinese() ? "》" : "》 ")
               .fontWeight(FontWeight.Medium)
-              .fontSize(unit.vp(12))
+              .fontSize(unit.fp(12))
               .fontColor(0x303133)
 
             Span(this.isInChinese() ? "《" : " 《")
               .fontWeight(FontWeight.Medium)
-              .fontSize(unit.vp(12))
+              .fontSize(unit.fp(12))
               .fontColor(0x303133)
 
             Span($r('app.string.Dompet_Wallet_Privacy_Policy'))
               .fontWeight(FontWeight.Medium)
-              .fontSize(unit.vp(12))
+              .fontSize(unit.fp(12))
               .fontColor(0x303133)
               .onClick(Empty.fn)
 
             Span(this.isInChinese() ? "》" : "》 ")
               .fontWeight(FontWeight.Medium)
-              .fontSize(unit.vp(12))
+              .fontSize(unit.fp(12))
               .fontColor(0x303133)
           }
         }

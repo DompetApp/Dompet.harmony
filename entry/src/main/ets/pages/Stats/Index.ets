@@ -46,8 +46,8 @@ export struct PageStats {
         Text($r('app.string.Balance'))
           .letterSpacing(unit.vp(1.2))
           .fontWeight(FontWeight.Bold)
-          .lineHeight(unit.vp(28))
-          .fontSize(unit.vp(20))
+          .lineHeight(unit.fp(28))
+          .fontSize(unit.fp(20))
           .fontColor(0x130138)
 
         Text(money.usd2(this.bankCard.balance))
@@ -57,7 +57,7 @@ export struct PageStats {
           .minFontSize(unit.vp(15))
           .maxFontSize(unit.vp(26))
           .textAlign(TextAlign.End)
-          .fontSize(unit.vp(22))
+          .fontSize(unit.fp(22))
           .fontColor(0x9038ff)
           .layoutWeight(1)
           .maxLines(1)
@@ -149,7 +149,7 @@ export struct PageStats {
         Column() {
           Text($r('app.string.Balance'))
             .fontWeight(FontWeight.Normal)
-            .fontSize(unit.vp(16))
+            .fontSize(unit.fp(16))
             .fontColor(0x8b98b1)
         }
         .alignItems(HorizontalAlign.Center)
@@ -164,7 +164,7 @@ export struct PageStats {
             .fontWeight(FontWeight.Bold)
             .minFontSize(unit.vp(24))
             .maxFontSize(unit.vp(35))
-            .fontSize(unit.vp(35))
+            .fontSize(unit.fp(35))
             .fontColor(0x9038ff)
             .maxLines(1)
         }
@@ -178,12 +178,12 @@ export struct PageStats {
           Text($r('app.string.Transactions'))
             .letterSpacing(-unit.vp(0.35))
             .fontWeight(FontWeight.Bold)
-            .fontSize(unit.vp(18))
+            .fontSize(unit.fp(18))
             .fontColor(0x130138)
 
           Text($r('app.string.Money'))
             .fontWeight(FontWeight.Bold)
-            .fontSize(unit.vp(14))
+            .fontSize(unit.fp(14))
             .fontColor(0x130138)
         }
         .margin({
@@ -223,13 +223,13 @@ export struct PageStats {
                   Row() {
                     Text($r(`app.string.${item.name}`))
                       .fontWeight(FontWeight.Bold)
-                      .fontSize(unit.vp(16))
+                      .fontSize(unit.fp(16))
                       .fontColor(0x000000)
 
                     Text(money.usd(item.money))
                       .letterSpacing(unit.vp(-0.6))
                       .fontWeight(FontWeight.Bold)
-                      .fontSize(unit.vp(16))
+                      .fontSize(unit.fp(16))
                       .fontColor(0x363853)
                   }
                   .justifyContent(FlexAlign.SpaceBetween)
@@ -241,12 +241,12 @@ export struct PageStats {
                   Row() {
                     Text($r(`app.string.${item.type}`))
                       .fontWeight(FontWeight.Normal)
-                      .fontSize(unit.vp(14))
+                      .fontSize(unit.fp(14))
                       .fontColor(0x909399)
 
                     Text(dater.format(item.date, { dateStyle: 'medium' }))
                       .fontWeight(FontWeight.Bold)
-                      .fontSize(unit.vp(12))
+                      .fontSize(unit.fp(12))
                       .fontColor(0xababab)
                   }
                   .justifyContent(FlexAlign.SpaceBetween)

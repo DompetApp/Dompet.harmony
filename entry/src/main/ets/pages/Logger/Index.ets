@@ -58,8 +58,8 @@ export struct PageLogger {
           Text($r('app.string.Run_Logger'))
             .fontWeight(FontWeight.Bold)
             .letterSpacing(unit.vp(3))
-            .lineHeight(unit.vp(28))
-            .fontSize(unit.vp(20))
+            .lineHeight(unit.fp(28))
+            .fontSize(unit.fp(20))
             .fontColor(0x130138)
         }
         .padding({ left: unit.vp(32), right: unit.vp(32) })
@@ -99,8 +99,8 @@ export struct PageLogger {
                 .copyOption(CopyOptions.LocalDevice)
                 .fontWeight(FontWeight.Normal)
                 .enableHapticFeedback(true)
-                .lineHeight(unit.vp(18))
-                .fontSize(unit.vp(12))
+                .lineHeight(unit.fp(18))
+                .fontSize(unit.fp(12))
                 .fontColor(0x303133)
             }
             .justifyContent(FlexAlign.Start)

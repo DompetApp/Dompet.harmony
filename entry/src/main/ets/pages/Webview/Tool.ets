@@ -79,7 +79,7 @@ export struct WebviewTool {
           Text(this.getItemTitle(type))
             .textOverflow({ overflow: TextOverflow.Ellipsis })
             .fontWeight(FontWeight.Bold)
-            .fontSize(unit.vp(10))
+            .fontSize(unit.fp(10))
             .fontColor(0x606266)
             .maxLines(2)
         }
@@ -283,7 +283,7 @@ export struct WebviewTool {
             Text($r('app.string.Webview_Settings'))
               .letterSpacing(Math.max(unit.vp(1.2), 1.2))
               .fontWeight(FontWeight.Bold)
-              .fontSize(unit.vp(16))
+              .fontSize(unit.fp(16))
               .fontColor(0x303133)
           }
           .padding({ left: unit.vp(8), right: unit.vp(8) })
@@ -321,7 +321,7 @@ export struct WebviewTool {
             Text($r('app.string.System_Cancel'))
               .letterSpacing(Math.max(unit.vp(1.2), 1.2))
               .fontWeight(FontWeight.Bold)
-              .fontSize(unit.vp(16))
+              .fontSize(unit.fp(16))
               .fontColor(0x646e93)
           }
           .padding({

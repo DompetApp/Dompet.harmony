@@ -61,80 +61,25 @@ export struct CacheImager {
   @Param @Once loading: boolean = true
   @Param @Once success: boolean = false
   @Require @Param imagerOptions: CacheImageOptions
+  @Param errorBorder: BorderOptions = { radius: 3 }
+  @Param errorBgColor: ResourceColor = '#dddddd'
+  @Param loadingBorder: BorderOptions = { radius: 3 }
+  @Param loadingBgColor: ResourceColor = 'transparent'
   @BuilderParam errorHolder: () => void = this.defaultErrorHolder
   @BuilderParam loadingHolder: () => void = this.defaultLoadingHolder
-  @Local localImagerOptions: CacheImageOptions = new CacheImageOptions()
-  @Local onLoadListener: CacheImageLoader = this.createOnLoadListener()
-  @Param loadingBgColor: ResourceColor = 'transparent'
-  @Param loadingBorder: BorderOptions = { radius: 3 }
-  @Param errorBgColor: ResourceColor = '#dddddd'
-  @Param errorBorder: BorderOptions = { radius: 3 }
+  @Local renderKnifeOptions: CacheImageOptions = this.imgKnifeOptions
+  @Param renderKnifeSyncLoad: boolean = false
   @Param adaptiveHeight: Length = '100%'
   @Param adaptiveWidth: Length = '100%'
   @Param loadingHeight: Length = '100%'
   @Param loadingWidth: Length = '100%'
-  @Param useSyncLoad: boolean = false
   @Param useRawSize: boolean = false
   @Local rawHeight: number = 0
   @Local rawWidth: number = 0
 
   @Computed
-  get visible() {
-    if (this.loading && !this.imagerOptions.placeholderSrc) {
-      return 0
-    }
-
-    if (this.error && !this.imagerOptions.errorholderSrc) {
-      return 0
-    }
-
-    return 1
-  }
-
-  @Computed
-  get showWidth() {
-    return this.useRawSize && this.rawWidth > 0 ? this.rawWidth : this.adaptiveWidth
-  }
-
-  @Computed
-  get showHeight() {
-    return this.useRawSize && this.rawHeight > 0 ? this.rawHeight : this.adaptiveHeight
-  }
-
-  @Builder
-  defaultErrorHolder() {
-    if (this.error && !this.imagerOptions.errorholderSrc) {
-      Column()
-        .backgroundColor(this.errorBgColor)
-        .border(this.errorBorder)
-        .height(this.showHeight)
-        .width(this.showWidth)
-        .clip(true)
-    }
-  }
-
-  @Builder
-  defaultLoadingHolder() {
-    if (this.loading && !this.imagerOptions.placeholderSrc) {
-      Column() {
-        Image($rawfile('network/loading.gif'))
-          .height(this.loadingHeight)
-          .width(this.loadingWidth)
-          .objectFit(ImageFit.Fill)
-          .draggable(false)
-      }
-      .backgroundColor(this.loadingBgColor)
-      .alignItems(HorizontalAlign.Center)
-      .justifyContent(FlexAlign.Center)
-      .border(this.loadingBorder)
-      .height(this.showHeight)
-      .width(this.showWidth)
-      .clip(true)
-    }
-  }
-
-  createOnLoadListener() {
-    const instance = CacheImageLoader.fromJson({
+  get onLoadListener() {
+    return CacheImageLoader.fromJson({
       onLoadFailed: () => {
         this.success = false
         this.loading = false
@@ -153,11 +98,11 @@ export struct CacheImager {
         this.error = false
       }
     })
-    return instance
   }
 
-  aboutToAppear() {
-    this.localImagerOptions = CacheImageOptions.fromJson({
+  @Computed
+  get imgKnifeOptions() {
+    return CacheImageOptions.fromJson({
       onLoadListener: this.imagerOptions.onLoadListener ?? this.onLoadListener,
       placeholderObjectFit: this.imagerOptions.placeholderObjectFit,
       errorholderObjectFit: this.imagerOptions.errorholderObjectFit,
@@ -170,22 +115,82 @@ export struct CacheImager {
     })
   }
 
+  @Computed
+  get renderKnifeWidth() {
+    return this.useRawSize && this.rawWidth > 0 ? this.rawWidth : this.adaptiveWidth
+  }
+
+  @Computed
+  get renderKnifeHeight() {
+    return this.useRawSize && this.rawHeight > 0 ? this.rawHeight : this.adaptiveHeight
+  }
+
+  @Computed
+  get renderKnifeVisibility() {
+    if (this.loading && !this.imagerOptions.placeholderSrc) {
+      return Visibility.Hidden
+    }
+
+    if (this.error && !this.imagerOptions.errorholderSrc) {
+      return Visibility.Hidden
+    }
+
+    return Visibility.Visible
+  }
+
+  @Monitor('imgKnifeOptions')
+  onRenderKnifeOptionsWatcher() {
+    this.renderKnifeOptions = this.imgKnifeOptions
+  }
+
+  @Builder
+  defaultLoadingHolder() {
+    if (this.loading && !this.imagerOptions.placeholderSrc) {
+      Column() {
+        Image($rawfile('network/loading.gif'))
+          .height(this.loadingHeight)
+          .width(this.loadingWidth)
+          .objectFit(ImageFit.Fill)
+          .draggable(false)
+      }
+      .backgroundColor(this.loadingBgColor)
+      .alignItems(HorizontalAlign.Center)
+      .justifyContent(FlexAlign.Center)
+      .height(this.renderKnifeHeight)
+      .width(this.renderKnifeWidth)
+      .border(this.loadingBorder)
+      .clip(true)
+    }
+  }
+
+  @Builder
+  defaultErrorHolder() {
+    if (!this.loading && this.error && !this.imagerOptions.errorholderSrc) {
+      Column()
+        .backgroundColor(this.errorBgColor)
+        .height(this.renderKnifeHeight)
+        .width(this.renderKnifeWidth)
+        .border(this.errorBorder)
+        .clip(true)
+    }
+  }
+
   build() {
-    Stack({ alignContent: Alignment.TopStart }) {
+    Stack({ alignContent: Alignment.Center }) {
       ImageKnifeComponent({
-        imageKnifeOption: this.localImagerOptions,
-        adaptiveHeight: this.adaptiveHeight,
-        adaptiveWidth: this.adaptiveWidth,
-        syncLoad: this.useSyncLoad,
+        syncLoad: this.renderKnifeSyncLoad,
+        imageKnifeOption: this.renderKnifeOptions,
+        adaptiveHeight: '100%',
+        adaptiveWidth: '100%',
       })
-        .opacity(this.visible)
-        .height('100%')
-        .width('100%')
+        .visibility(this.renderKnifeVisibility)
+        .height(this.renderKnifeHeight)
+        .width(this.renderKnifeWidth)
 
       this.defaultErrorHolder()
       this.defaultLoadingHolder()
     }
-    .height(this.showHeight)
-    .width(this.showWidth)
+    .height(this.renderKnifeHeight)
+    .width(this.renderKnifeWidth)
   }
 }

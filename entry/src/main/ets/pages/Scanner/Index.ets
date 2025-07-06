@@ -224,7 +224,7 @@ export struct PageScanner {
           .fontWeight(FontWeight.Normal)
           .textAlign(TextAlign.Center)
           .fontFamily('HarmonyHeiTi')
-          .fontSize(unit.vp(18))
+          .fontSize(unit.fp(18))
           .width('100%')
       }
       .visibility(this.scanResults.size > 0 ? Visibility.Hidden : Visibility.Visible)
@@ -239,7 +239,7 @@ export struct PageScanner {
           Text($r('app.string.Scanner_Unrecognized_Code'))
             .fontColor($r('sys.color.ohos_id_color_text_secondary'))
             .fontFamily('HarmonyHeiTi')
-            .fontSize(unit.vp(14))
+            .fontSize(unit.fp(14))
             .padding(unit.vp(8))
         }
         .margin({ top: unit.vp(16) })
@@ -258,7 +258,7 @@ export struct PageScanner {
             .margin({ top: unit.vp(3), bottom: unit.vp(10) })
             .fontColor([$r('sys.color.font_on_primary')])
             .fontWeight(FontWeight.Normal)
-            .fontSize(unit.vp(24))
+            .fontSize(unit.fp(24))
             .stateStyles({
               pressed: {
                 .opacity(0.4)
@@ -272,7 +272,7 @@ export struct PageScanner {
             .fontColor($r('sys.color.icon_on_primary'))
             .textAlign(TextAlign.Center)
             .fontFamily('HarmonyHeiTi')
-            .fontSize(unit.vp(12))
+            .fontSize(unit.fp(12))
         }
         .height(unit.vp(80))
         .justifyContent(FlexAlign.Center)
@@ -286,7 +286,7 @@ export struct PageScanner {
               SymbolGlyph($r('sys.symbol.picture'))
                 .fontColor([$r('sys.color.font_on_primary')])
                 .fontWeight(FontWeight.Regular)
-                .fontSize(unit.vp(24))
+                .fontSize(unit.fp(24))
             }
             .margin({ top: unit.vp(3), bottom: unit.vp(10) })
             .backgroundColor('rgba(250, 250, 250, 0.55)')
@@ -302,7 +302,7 @@ export struct PageScanner {
               .fontColor($r('sys.color.font_on_primary'))
               .textAlign(TextAlign.Center)
               .fontFamily('HarmonyHeiTi')
-              .fontSize(unit.vp(12))
+              .fontSize(unit.fp(12))
           }
           .margin({ bottom: device.isPortrait ? '12%' : 10 })
           .alignItems(HorizontalAlign.Center)
@@ -337,7 +337,7 @@ export struct PageScanner {
       SymbolGlyph($r('sys.symbol.xmark'))
         .fontColor([$r('sys.color.font_on_primary')])
         .fontWeight(FontWeight.Normal)
-        .fontSize(unit.vp(24))
+        .fontSize(unit.fp(24))
     }
     .width(unit.vp(40))
     .height(unit.vp(40))

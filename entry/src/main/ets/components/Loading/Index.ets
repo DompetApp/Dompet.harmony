@@ -67,7 +67,7 @@ export struct Loading {
       Text(this.desc)
         .fontWeight(FontWeight.Medium)
         .fontColor(this.fontColor)
-        .fontSize(unit.vp(14))
+        .fontSize(unit.fp(14))
         .margin(unit.vp(5))
     }
     .attributeModifier(this.loadingModifier)

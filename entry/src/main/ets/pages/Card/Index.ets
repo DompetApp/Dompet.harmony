@@ -53,8 +53,8 @@ export struct PageCard {
           Text($r('app.string.Bank_Card'))
             .fontWeight(FontWeight.Bold)
             .letterSpacing(unit.vp(3))
-            .lineHeight(unit.vp(28))
-            .fontSize(unit.vp(20))
+            .lineHeight(unit.fp(28))
+            .fontSize(unit.fp(20))
             .fontColor(0x130138)
         }
         .padding({ top: this.headOffset, left: unit.vp(32), right: unit.vp(32) })
@@ -140,9 +140,9 @@ export struct PageCard {
             .width(unit.vp(29))
         }
         .rotate({ angle: this.isExpand ? 90 : 0, centerX: '50%', centerY: '50%' })
+        .margin({ bottom: this.isExpand ? unit.vp(13) : unit.vp(40) })
         .height(this.isExpand ? unit.vp(305) : unit.vp(340))
         .width(this.isExpand ? unit.vp(215) : unit.vp(240))
-        .margin({ bottom: this.isExpand ? unit.vp(13) : unit.vp(40) })
         .animation({
           duration: 480,
           curve: Curve.Linear,
@@ -166,14 +166,14 @@ export struct PageCard {
         Row() {
           Text($r('app.string.CardNo'))
             .fontWeight(FontWeight.Normal)
-            .fontSize(unit.vp(14.8))
+            .fontSize(unit.fp(14.8))
             .fontColor(0xbdbdbd)
             .width(unit.vp(80))
 
           Text(this.card.cardNo)
             .fontWeight(FontWeight.Normal)
             .letterSpacing(unit.vp(1.2))
-            .fontSize(unit.vp(14))
+            .fontSize(unit.fp(14))
             .fontColor(0x303133)
         }
         .margin({ bottom: unit.vp(18) })
@@ -185,13 +185,13 @@ export struct PageCard {
         Row() {
           Text($r('app.string.Type'))
             .fontWeight(FontWeight.Normal)
-            .fontSize(unit.vp(14.8))
+            .fontSize(unit.fp(14.8))
             .fontColor(0xbdbdbd)
             .width(unit.vp(80))
 
           Text($r(`app.string.${this.card.cardType}`))
             .fontWeight(FontWeight.Normal)
-            .fontSize(unit.vp(14))
+            .fontSize(unit.fp(14))
             .fontColor(0x303133)
         }
         .margin({ bottom: unit.vp(18) })
@@ -203,13 +203,13 @@ export struct PageCard {
         Row() {
           Text($r('app.string.Bank'))
             .fontWeight(FontWeight.Normal)
-            .fontSize(unit.vp(14.8))
+            .fontSize(unit.fp(14.8))
             .fontColor(0xbdbdbd)
             .width(unit.vp(80))
 
           Text($r(`app.string.${this.card.bankName}`))
             .fontWeight(FontWeight.Normal)
-            .fontSize(unit.vp(14))
+            .fontSize(unit.fp(14))
             .fontColor(0x303133)
         }
         .margin({ bottom: unit.vp(18) })
@@ -221,13 +221,13 @@ export struct PageCard {
         Row() {
           Text($r('app.string.Status'))
             .fontWeight(FontWeight.Normal)
-            .fontSize(unit.vp(14.8))
+            .fontSize(unit.fp(14.8))
             .fontColor(0xbdbdbd)
             .width(unit.vp(80))
 
           Text(this.card.status === 'Y' ? $r('app.string.Available') : $r('app.string.Unavailable'))
             .fontWeight(FontWeight.Normal)
-            .fontSize(unit.vp(14))
+            .fontSize(unit.fp(14))
             .fontColor(0x303133)
         }
         .margin({ bottom: unit.vp(18) })
@@ -239,13 +239,13 @@ export struct PageCard {
         Row() {
           Text($r('app.string.Valid'))
             .fontWeight(FontWeight.Normal)
-            .fontSize(unit.vp(14.8))
+            .fontSize(unit.fp(14.8))
             .fontColor(0xbdbdbd)
             .width(unit.vp(80))
 
           Text(dater.format(this.card.expiryDate, { dateStyle: 'medium' }))
             .fontWeight(FontWeight.Normal)
-            .fontSize(unit.vp(14))
+            .fontSize(unit.fp(14))
             .fontColor(0x303133)
         }
         .alignItems(VerticalAlign.Center)
@@ -294,7 +294,7 @@ export struct PageCard {
         .fontWeight(FontWeight.Medium)
         .letterSpacing(unit.vp(1.2))
         .borderRadius(unit.vp(20))
-        .fontSize(unit.vp(16))
+        .fontSize(unit.fp(16))
         .fontColor(0x5b259f)
         .stateStyles({
           pressed: {

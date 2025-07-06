@@ -206,7 +206,7 @@ export struct PageWebview {
               .textOverflow({ overflow: TextOverflow.Ellipsis })
               .fontWeight(FontWeight.Bold)
               .textAlign(TextAlign.Center)
-              .fontSize(unit.vp(18))
+              .fontSize(unit.fp(18))
               .fontColor(0x303133)
               .maxLines(1)
           }

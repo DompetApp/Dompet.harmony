@@ -25,7 +25,7 @@ export struct PageSettings {
         Text($r('app.string.Do_you_want_to_logout'))
           .letterSpacing(unit.vp(1.2))
           .fontWeight(FontWeight.Bold)
-          .fontSize(unit.vp(16))
+          .fontSize(unit.fp(16))
           .fontColor(0xf34d4d)
       }
       .justifyContent(FlexAlign.Start)
@@ -38,7 +38,7 @@ export struct PageSettings {
         Button({ type: ButtonType.Normal, stateEffect: false }) {
           Text($r('app.string.System_Cancel'))
             .letterSpacing(unit.vp(1.2))
-            .fontSize(unit.vp(15))
+            .fontSize(unit.fp(15))
             .fontColor(0x9f9f9f)
         }
         .onClick(() => Dialog.hide())
@@ -54,7 +54,7 @@ export struct PageSettings {
           Text($r('app.string.Logout'))
             .fontWeight(FontWeight.Medium)
             .letterSpacing(unit.vp(1.2))
-            .fontSize(unit.vp(15))
+            .fontSize(unit.fp(15))
             .fontColor(0x606266)
         }
         .onClick(() => {
@@ -118,8 +118,8 @@ export struct PageSettings {
           Text($r('app.string.My_Settings'))
             .fontWeight(FontWeight.Bold)
             .letterSpacing(unit.vp(3))
-            .lineHeight(unit.vp(28))
-            .fontSize(unit.vp(20))
+            .lineHeight(unit.fp(28))
+            .fontSize(unit.fp(20))
             .fontColor(0x130138)
         }
         .padding({ left: unit.vp(32), right: unit.vp(32) })
@@ -184,7 +184,7 @@ export struct PageSettings {
                 Column() {
                   Text($r('app.string.Person_Profile'))
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(unit.vp(16))
+                    .fontSize(unit.fp(16))
                     .fontColor(0x130138)
                 }
                 .justifyContent(FlexAlign.Center)
@@ -237,7 +237,7 @@ export struct PageSettings {
                 Column() {
                   Text($r('app.string.Message_Notification'))
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(unit.vp(16))
+                    .fontSize(unit.fp(16))
                     .fontColor(0x130138)
                 }
                 .justifyContent(FlexAlign.Center)
@@ -290,7 +290,7 @@ export struct PageSettings {
                 Column() {
                   Text($r('app.string.My_Bank_Card'))
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(unit.vp(16))
+                    .fontSize(unit.fp(16))
                     .fontColor(0x130138)
                 }
                 .justifyContent(FlexAlign.Center)
@@ -343,7 +343,7 @@ export struct PageSettings {
                 Column() {
                   Text($r('app.string.Switch_Language'))
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(unit.vp(16))
+                    .fontSize(unit.fp(16))
                     .fontColor(0x130138)
                 }
                 .justifyContent(FlexAlign.Center)
@@ -396,7 +396,7 @@ export struct PageSettings {
                 Column() {
                   Text($r('app.string.Run_Logger'))
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(unit.vp(16))
+                    .fontSize(unit.fp(16))
                     .fontColor(0x130138)
                 }
                 .justifyContent(FlexAlign.Center)
@@ -449,7 +449,7 @@ export struct PageSettings {
                 Column() {
                   Text($r('app.string.About_App'))
                     .fontWeight(FontWeight.Medium)
-                    .fontSize(unit.vp(16))
+                    .fontSize(unit.fp(16))
                     .fontColor(0x130138)
                 }
                 .justifyContent(FlexAlign.Center)
@@ -509,7 +509,7 @@ export struct PageSettings {
                   .margin({ top: unit.vp(12) })
                   .fontWeight(FontWeight.Medium)
                   .letterSpacing(unit.vp(3))
-                  .fontSize(unit.vp(16))
+                  .fontSize(unit.fp(16))
                   .fontColor(0x5b259f)
               }
               .width('100%')

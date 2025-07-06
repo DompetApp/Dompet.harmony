@@ -74,7 +74,7 @@ export struct PageOperater {
             Column() {
               Text(money.USD(this.money))
                 .fontWeight(FontWeight.Bold)
-                .fontSize(unit.vp(32))
+                .fontSize(unit.fp(32))
                 .fontColor(0x2f1155)
             }
             .margin({
@@ -183,7 +183,7 @@ export struct PageOperater {
                       if (index <= 9) {
                         Text(index !== 9 ? `${index + 1}` : '0')
                           .fontWeight(FontWeight.Medium)
-                          .fontSize(unit.vp(24))
+                          .fontSize(unit.fp(24))
                           .fontColor(0x363853)
                       }
 
@@ -236,7 +236,7 @@ export struct PageOperater {
               .backgroundColor(0x5b259f)
               .enabled(!this.showShadow)
               .fontColor(Color.White)
-              .fontSize(unit.vp(20))
+              .fontSize(unit.fp(20))
               .height(unit.vp(60))
               .width(unit.vp(180))
           }
@@ -304,7 +304,7 @@ export struct PageOperater {
       Column() {
         Text(this.type == 'Top_up' ? $r(`app.string.${operate.from}`) : $r(`app.string.${operate.to}`))
           .fontWeight(FontWeight.Bold)
-          .fontSize(unit.vp(16))
+          .fontSize(unit.fp(16))
           .fontColor(0x363853)
       }
       .alignItems(HorizontalAlign.Start)
@@ -335,7 +335,7 @@ export struct PageOperater {
           Column() {
             Text($r(`app.string.${operate.from}`))
               .fontWeight(FontWeight.Bold)
-              .fontSize(unit.vp(16))
+              .fontSize(unit.fp(16))
               .fontColor(0x363853)
           }
           .alignItems(HorizontalAlign.Start)

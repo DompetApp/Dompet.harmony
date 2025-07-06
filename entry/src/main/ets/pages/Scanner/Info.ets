@@ -48,7 +48,7 @@ export struct ScannerInfo {
           Text($r('app.string.Scanner_Scan_Code_Result'))
             .fontWeight(FontWeight.Bold)
             .textAlign(TextAlign.Center)
-            .fontSize(unit.vp(18))
+            .fontSize(unit.fp(18))
             .fontColor(0x303133)
         }
         .justifyContent(FlexAlign.Center)
@@ -74,7 +74,7 @@ export struct ScannerInfo {
             .wordBreak(WordBreak.BREAK_ALL)
             .fontWeight(FontWeight.Medium)
             .textAlign(TextAlign.Start)
-            .fontSize(unit.vp(14))
+            .fontSize(unit.fp(14))
             .fontColor(0x606266)
         }
         .padding({

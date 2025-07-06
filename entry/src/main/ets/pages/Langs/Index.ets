@@ -47,8 +47,8 @@ export struct PageLangs {
           Text($r('app.string.Language'))
             .fontWeight(FontWeight.Bold)
             .letterSpacing(unit.vp(3))
-            .lineHeight(unit.vp(28))
-            .fontSize(unit.vp(20))
+            .lineHeight(unit.fp(28))
+            .fontSize(unit.fp(20))
             .fontColor(0x130138)
         }
         .padding({ left: unit.vp(32), right: unit.vp(32) })
@@ -91,7 +91,7 @@ export struct PageLangs {
                 Text($r('app.string.Follow_System_Language'))
                   .fontWeight(this.isDefault() ? FontWeight.Bold : FontWeight.Normal)
                   .fontColor(this.isDefault() ? 0x8438FF : 0x808288)
-                  .fontSize(unit.vp(16))
+                  .fontSize(unit.fp(16))
               }
               .alignItems(HorizontalAlign.Center)
               .justifyContent(FlexAlign.Center)
@@ -111,7 +111,7 @@ export struct PageLangs {
                 Text($r('app.string.Chinese_zh_CN'))
                   .fontWeight(this.isZhCN() ? FontWeight.Bold : FontWeight.Normal)
                   .fontColor(this.isZhCN() ? 0x8438FF : 0x808288)
-                  .fontSize(unit.vp(16))
+                  .fontSize(unit.fp(16))
               }
               .alignItems(HorizontalAlign.Center)
               .justifyContent(FlexAlign.Center)
@@ -131,7 +131,7 @@ export struct PageLangs {
                 Text($r('app.string.English_en_US'))
                   .fontWeight(this.isEnUS() ? FontWeight.Bold : FontWeight.Normal)
                   .fontColor(this.isEnUS() ? 0x8438FF : 0x808288)
-                  .fontSize(unit.vp(16))
+                  .fontSize(unit.fp(16))
               }
               .alignItems(HorizontalAlign.Center)
               .justifyContent(FlexAlign.Center)

@@ -74,7 +74,7 @@ export struct PageHome {
 
           Text($r('app.string.Transfer'))
             .fontWeight(FontWeight.Bold)
-            .fontSize(unit.vp(13))
+            .fontSize(unit.fp(13))
             .fontColor(0x2f1155)
         }
         .alignItems(HorizontalAlign.Center)
@@ -102,7 +102,7 @@ export struct PageHome {
 
           Text($r('app.string.Payment'))
             .fontWeight(FontWeight.Bold)
-            .fontSize(unit.vp(13))
+            .fontSize(unit.fp(13))
             .fontColor(0x2f1155)
         }
         .alignItems(HorizontalAlign.Center)
@@ -130,7 +130,7 @@ export struct PageHome {
 
           Text($r('app.string.Top_up'))
             .fontWeight(FontWeight.Bold)
-            .fontSize(unit.vp(13))
+            .fontSize(unit.fp(13))
             .fontColor(0x2f1155)
         }
         .alignItems(HorizontalAlign.Center)
@@ -167,7 +167,7 @@ export struct PageHome {
         Column() {
           Text($r('app.string.Digital_Wallet'))
             .fontWeight(FontWeight.Bold)
-            .fontSize(unit.vp(24))
+            .fontSize(unit.fp(24))
             .fontColor(0x130138)
             .margin({
               top: unit.vp(5)
@@ -175,7 +175,7 @@ export struct PageHome {
 
           Text($r('app.string.available'))
             .fontWeight(FontWeight.Normal)
-            .fontSize(unit.vp(16))
+            .fontSize(unit.fp(16))
             .fontColor(0xbdbdbd)
         }
         .alignItems(HorizontalAlign.Start)
@@ -278,21 +278,21 @@ export struct PageHome {
       Column() {
         Text($r('app.string.Balance'))
           .fontWeight(FontWeight.Bold)
-          .lineHeight(unit.vp(20))
-          .fontSize(unit.vp(16))
+          .lineHeight(unit.fp(20))
+          .fontSize(unit.fp(16))
           .fontColor(0xffffff)
 
         Text(money.USD(this.bankCard.balance))
           .fontWeight(FontWeight.Bold)
-          .lineHeight(unit.vp(28))
-          .fontSize(unit.vp(20))
+          .lineHeight(unit.fp(28))
+          .fontSize(unit.fp(20))
           .fontColor(0xdfdfdf)
 
         Column() {
           Text($r('app.string.Citibank'))
             .fontWeight(FontWeight.Bold)
-            .lineHeight(unit.vp(35))
-            .fontSize(unit.vp(22))
+            .lineHeight(unit.fp(35))
+            .fontSize(unit.fp(22))
             .fontColor(0xf0f0f0)
         }
         .justifyContent(FlexAlign.Center)
@@ -340,7 +340,7 @@ export struct PageHome {
 
             Text($r('app.string.Transfer'))
               .fontWeight(FontWeight.Normal)
-              .fontSize(unit.vp(13))
+              .fontSize(unit.fp(13))
               .fontColor(0x8438FF)
           }
           .width(unit.vp(80))
@@ -377,7 +377,7 @@ export struct PageHome {
 
             Text($r('app.string.Payment'))
               .fontWeight(FontWeight.Normal)
-              .fontSize(unit.vp(13))
+              .fontSize(unit.fp(13))
               .fontColor(0x8438FF)
           }
           .width(unit.vp(80))
@@ -414,7 +414,7 @@ export struct PageHome {
 
             Text($r('app.string.Top_up'))
               .fontWeight(FontWeight.Normal)
-              .fontSize(unit.vp(13))
+              .fontSize(unit.fp(13))
               .fontColor(0x8438FF)
           }
           .width(unit.vp(80))
@@ -450,12 +450,12 @@ export struct PageHome {
         Text($r('app.string.Transactions'))
           .letterSpacing(-unit.vp(0.35))
           .fontWeight(FontWeight.Bold)
-          .fontSize(unit.vp(18))
+          .fontSize(unit.fp(18))
           .fontColor(0x130138)
 
         Text($r('app.string.Money'))
           .fontWeight(FontWeight.Bold)
-          .fontSize(unit.vp(14))
+          .fontSize(unit.fp(14))
           .fontColor(0x130138)
       }
       .margin({
@@ -495,13 +495,13 @@ export struct PageHome {
                 Row() {
                   Text($r(`app.string.${item.name}`))
                     .fontWeight(FontWeight.Bold)
-                    .fontSize(unit.vp(16))
+                    .fontSize(unit.fp(16))
                     .fontColor(0x000000)
 
                   Text(money.usd(item.money))
                     .letterSpacing(unit.vp(-0.6))
                     .fontWeight(FontWeight.Bold)
-                    .fontSize(unit.vp(16))
+                    .fontSize(unit.fp(16))
                     .fontColor(0x363853)
                 }
                 .justifyContent(FlexAlign.SpaceBetween)
@@ -513,12 +513,12 @@ export struct PageHome {
                 Row() {
                   Text($r(`app.string.${item.type}`))
                     .fontWeight(FontWeight.Normal)
-                    .fontSize(unit.vp(14))
+                    .fontSize(unit.fp(14))
                     .fontColor(0x909399)
 
                   Text(dater.format(item.date, { dateStyle: 'medium' }))
                     .fontWeight(FontWeight.Bold)
-                    .fontSize(unit.vp(12))
+                    .fontSize(unit.fp(12))
                     .fontColor(0xababab)
                 }
                 .justifyContent(FlexAlign.SpaceBetween)

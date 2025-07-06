@@ -2,7 +2,8 @@ import { CtxManager } from "../configure/context"
 import { device } from "../configure/device"
 
 export class unit {
-  static limit = 1.5
+  static font = 1.12
+  static scale = 1.56
   static preset = 375.0
 
   // Unit Adapter
@@ -143,6 +144,25 @@ export class unit {
   }
 
   // Media Adapter
+  static vp(value: number, scale = unit.scale): number {
+    const full = unit.px2vp(Math.min(device.width, device.height))
+    const ratio = Math.min(full / unit.preset, scale)
+    return value * ratio
+  }
+
+  static fp(value: number, scale = unit.font): number {
+    const full = unit.px2vp(Math.min(device.width, device.height))
+    const ratio = Math.min(full / unit.preset, scale)
+    const pixel = unit.vp2px(value * ratio)
+    return unit.px2fp(pixel)
+  }
+
+  static lpx(value: number, scale = 1.0): number {
+    const full = unit.px2vp(device.width)
+    const ratio = full / unit.preset * scale
+    return value * ratio
+  }
+
   static wmax(value: number): number {
     const width = unit.px2vp(device.width)
     return Math.min(width, value)
@@ -173,22 +193,6 @@ export class unit {
     const width = unit.px2vp(device.width)
     const height = unit.px2vp(device.height)
     return Math.max(width, height, value)
-  }
-
-  static lpx(value: number): number {
-    const full = unit.px2vp(device.width)
-    const scale = full / unit.preset
-    return value * scale
-  }
-
-  static vp(value: number): number {
-    const full = unit.px2vp(Math.min(device.width, device.height))
-    const scale = Math.min(full / unit.preset, unit.limit)
-    return value * scale
-  }
-
-  static fp(value: number): number {
-    return unit.px2fp(unit.vp2px(unit.vp(value)))
   }
 
   static wp(value: number): string {
