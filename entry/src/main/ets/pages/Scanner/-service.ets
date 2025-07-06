@@ -10,15 +10,15 @@ export interface ViewControl extends customScan.ViewControl {}
 
 export interface ScanResult extends scanBarcode.ScanResult {}
 
-export { MediaPlayer } from './-player'
+export { MediaPlayer } from "./-player"
 
-export { ScannerCodes } from './Multi'
+export { ScannerCodes } from "./Multi"
 
-export { ScannerView } from './View'
+export { ScannerView } from "./View"
 
-export { ScannerLine } from './Line'
+export { ScannerLine } from "./Line"
 
-export { ScannerInfo } from './Info'
+export { ScannerInfo } from "./Info"
 
 @ObservedV2
 export class ScanResults {

@@ -10,6 +10,7 @@ import { Loading } from "../../components/Loading/Index"
 import { IWebviewMeta } from "../../models/web"
 import { device } from "../../configure/device"
 import { unit } from "../../utils/unity"
+import { call } from "@kit.TelephonyKit"
 import { util } from "@kit.ArkTS"
 
 
@@ -276,7 +277,9 @@ export struct PageWebview {
                   this.loadUrl()
                 })
                 .onInterceptRequest((e) => {
-                  if (e.request.getRequestUrl() === 'https://linpengteng.github.io/resource/dompet-app/home.png') {
+                  const url = e.request.getRequestUrl()
+
+                  if (url === 'https://linpengteng.github.io/resource/dompet-app/home.png') {
                     const response = new WebResourceResponse()
                     response.setResponseData($rawfile('webview/images/app.png'))
                     response.setResponseMimeType('image/png')
@@ -293,6 +296,16 @@ export struct PageWebview {
                   if (e.newProgress === 100) {
                     this.loading(false)
                   }
+                })
+                .onLoadIntercept((e) => {
+                  const url = e.data.getRequestUrl()
+
+                  if (url.startsWith('tel://')) {
+                    call.makeCall(url.replace(/\D+/, ''))
+                    return true
+                  }
+
+                  return false
                 })
                 .onTitleReceive((e) => {
                   this.titling(e.title)

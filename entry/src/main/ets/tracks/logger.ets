@@ -4,7 +4,7 @@ import { SafeConsoleOutput } from "logger"
 import { SafeMultiOutput } from "logger"
 import { logger } from "logger"
 
-export * from 'logger'
+export * from "logger"
 
 logger.reset({
   printer: new SafePrettyPrinter({ lineLength: 50 }),
