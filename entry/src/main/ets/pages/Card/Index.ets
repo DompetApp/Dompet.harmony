@@ -309,7 +309,7 @@ export struct PageCard {
         })
         .onClick(() => {
           if (!this.isAnimating) {
-            this.isExpand = !this.isExpand;
+            this.isExpand = !this.isExpand
             this.isAnimating = true
           }
         })

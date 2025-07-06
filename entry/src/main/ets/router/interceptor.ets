@@ -11,7 +11,7 @@ import { store } from "../globals/store"
 export class RouteGlobalInterceptor implements IHMInterceptor {
   async intercept(chain: IHMInterceptorChain) {
     const route = chain.getRouterInfo()
-    const ready = await store.ready.promise;
+    const ready = await store.ready.promise
 
     if (!ready && AppRouter.authorize.includes(route.targetName!)) {
       AppRouterMgr.reset({ pageUrl: AppRouter.login })

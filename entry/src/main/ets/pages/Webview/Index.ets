@@ -1,8 +1,9 @@
 import { webview } from "@kit.ArkWeb"
-import { common } from "@kit.AbilityKit"
 import { HMRouter } from "@hadss/hmrouter"
 import { AppRouter } from "../../router/constants"
 import { AppRouterMgr } from "../../router/manager"
+import { HMLifecycleState } from "@hadss/hmrouter"
+import { IHMLifecycleOwner } from "@hadss/hmrouter"
 import { WebviewTool } from "../../pages/Webview/Tool"
 import { HMWBridger } from "../../pages/Webview/bridger"
 import { Loading } from "../../components/Loading/Index"
@@ -23,9 +24,11 @@ export struct PageWebview {
   @Local documentEndScripts: Array<ScriptItem> = []
   @Local documentStartScripts: Array<ScriptItem> = []
   @Local webviewController: webview.WebviewController = new webview.WebviewController()
+  @Local lifecycleOwner: IHMLifecycleOwner | null = AppRouterMgr.getCurrentLifecycleOwner()
   @Local webviewBridger: HMWBridger = new HMWBridger(this.webviewController) as Unknown
   @Local webviewMeta: IWebviewMeta = AppRouterMgr.getCurrentParam() as Unknown
-  @Local context: common.UIAbilityContext = this.getUIContext().getHostContext() as Unknown
+  @Local webviewCtx: Context = this.getUIContext().getHostContext() as Unknown
+  @Local backward: Unknown = this.createBackward(true)
 
   async loadUrl() {
     const url = this.webviewMeta.url.trim()
@@ -78,7 +81,7 @@ export struct PageWebview {
 
     for (const file of scripts) {
       const decoder = new util.TextDecoder()
-      const promise = this.context.resourceManager.getRawFileContent(file)
+      const promise = this.webviewCtx.resourceManager.getRawFileContent(file)
       states.push(promise.then(code => decoder.decodeToString(code)).catch(() => ''))
     }
 
@@ -137,6 +140,7 @@ export struct PageWebview {
 
   async aboutToAppear() {
     webview.WebviewController.setWebDebuggingAccess(true)
+    this.lifecycleOwner?.addObserver(HMLifecycleState.onBackPressed, this.backward)
     this.parseRequest()
     this.loadScripts()
   }
@@ -146,10 +150,7 @@ export struct PageWebview {
   }
 
   async aboutToDisappear() {
-    this.unregisterScripts()
-  }
-
-  async unregisterScripts() {
+    this.lifecycleOwner?.removeObserver(HMLifecycleState.onBackPressed, this.backward)
     this.webviewController.deleteJavaScriptRegister('harmony_webview')
     this.webviewBridger.destroy()
   }
@@ -180,6 +181,13 @@ export struct PageWebview {
     this.webviewMeta.popup = popuping && !device.isLandscape
   }
 
+  public createBackward(prevent?: boolean) {
+    return () => {
+      this.webviewController.accessBackward() ? this.webviewController.backward() : AppRouterMgr.pop()
+      return prevent
+    }
+  }
+
   build() {
     Stack({ alignContent: Alignment.TopStart }) {
       Flex({ direction: FlexDirection.Column }) {
@@ -193,13 +201,9 @@ export struct PageWebview {
           }
           .justifyContent(FlexAlign.Center)
           .alignItems(VerticalAlign.Center)
+          .onClick(this.createBackward())
           .height(unit.vp(56))
           .width(unit.vp(56))
-          .onClick(() => {
-            this.webviewController.accessBackward()
-              ? this.webviewController.backward()
-              : AppRouterMgr.pop()
-          })
 
           Row() {
             Text(this.webviewMeta.title)
