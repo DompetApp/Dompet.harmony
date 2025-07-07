@@ -2,8 +2,8 @@ import { CtxManager } from "../configure/context"
 import { device } from "../configure/device"
 
 export class unit {
-  static font = 1.12
-  static scale = 1.56
+  static font = 1.08
+  static scale = 1.58
   static preset = 375.0
 
   // Unit Adapter

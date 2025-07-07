@@ -8,6 +8,7 @@ export class AppDevice {
   @Trace bottom: number = 0
   @Trace height: number = 0
   @Trace startup: number = 0
+  @Trace isFoldable: boolean = false;
   @Trace densityPixels: number = 0
   @Trace orientation: display.Orientation = display.Orientation.PORTRAIT
   @Trace foldStatus: display.FoldStatus = display.FoldStatus.FOLD_STATUS_UNKNOWN
@@ -58,7 +59,7 @@ export class AppDevice {
     this.densityPixels = displayClass.densityPixels
     this.orientation = displayClass.orientation
     this.foldStatus = display.getFoldStatus()
-
+    this.isFoldable = display.isFoldable();
     this.height = displayClass.height
     this.width = displayClass.width
     this.state = displayClass.state
