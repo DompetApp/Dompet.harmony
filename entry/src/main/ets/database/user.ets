@@ -510,7 +510,7 @@ export class UserDatabaser {
         card.expiryDate = dateFormat(new Date(), 'yyyy-MM-dd HH:mm:ss')
 
         await transaction.execute(
-          'update UserCard set card_no = ?, balance = ?, card_type = ?, bank_name = ?, expiry_date = ?, status = ? where id == ?',
+          'update UserCard set card_no = ?, balance = ?, card_type = ?, bank_name = ?, expiry_date = ?, status = ? where id = ?',
           [
             card.cardNo,
             card.balance,
@@ -615,7 +615,7 @@ export class UserDatabaser {
         }))
 
         await transaction.execute(
-          'update UserCard set card_no = ?, balance = ?, card_type = ?, bank_name = ?, expiry_date = ?, status = ? where id == ?',
+          'update UserCard set card_no = ?, balance = ?, card_type = ?, bank_name = ?, expiry_date = ?, status = ? where id = ?',
           [
             card.cardNo,
             card.balance,
@@ -810,7 +810,7 @@ export class UserDatabaser {
     try {
       const result: IMessage[] = []
 
-      await transaction.execute('update UserMessage set is_read = ? where id == ?', [
+      await transaction.execute('update UserMessage set is_read = ? where id = ?', [
         'Y',
         message.id,
       ])

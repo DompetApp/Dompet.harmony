@@ -83,7 +83,7 @@ export class AppDatabaser {
     }
 
     AppDatabaser.db.createTransaction().then(async transaction => {
-      await transaction.execute('update AppUser set activate = ? where uid == ?', ['N', uid]).catch(Empty.fn)
+      await transaction.execute('update AppUser set activate = ? where uid = ?', ['N', uid]).catch(Empty.fn)
       await transaction.commit()
     })
   }
@@ -124,7 +124,7 @@ export class AppDatabaser {
     const transaction = await AppDatabaser.db.createTransaction()
 
     try {
-      await transaction.execute('update AppUser set activate = "N" where activate == "Y"')
+      await transaction.execute('update AppUser set activate = "N" where activate = "Y"')
       const predicates = new relationalStore.RdbPredicates("AppUser").equalTo("phone", user.phone)
       const resultSet = await transaction.query(predicates, ['uid', 'name', 'avatar'])
       const rowValue = resultSet.goToFirstRow() && resultSet.getRow()
@@ -139,7 +139,7 @@ export class AppDatabaser {
         const isChangeName = !name && !!user.name as boolean
 
         await transaction.execute(
-          'update AppUser set name = ?, email = ?, avatar = ?, create_date = ?, activate = ? where uid == ?',
+          'update AppUser set name = ?, email = ?, avatar = ?, create_date = ?, activate = ? where uid = ?',
           [
             isChangeName ? user.name : name,
             isChangeEmail ? user.email : email,
@@ -196,7 +196,7 @@ export class AppDatabaser {
 
       if (found) {
         await transaction.execute(
-          'update AppUser set name = ?, phone = ?, email = ?, avatar = ?, create_date = ?, activate = ? where uid == ?',
+          'update AppUser set name = ?, phone = ?, email = ?, avatar = ?, create_date = ?, activate = ? where uid = ?',
           [
             user.name,
             user.phone,

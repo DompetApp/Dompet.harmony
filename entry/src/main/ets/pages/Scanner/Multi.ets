@@ -6,6 +6,7 @@ import { curves } from "@kit.ArkUI"
 
 @ComponentV2
 export struct ScannerCodes {
+  @Local context: UIContext = this.getUIContext()
   @Event parseResult: (result: ScanResult) => void
   @Local scanService: ScanService = ScanService.getInstance()
   @Local scanResults: ScanResults = this.scanService.storeScanResults
@@ -53,7 +54,7 @@ export struct ScannerCodes {
       onFinish: () => this.multiCodeBreathe()
     }
 
-    animateTo(options, () => {
+    this.context.animateTo(options, () => {
       this.multiCodeScale = 1
       this.multiCodeOpacity = 1
     })
@@ -74,7 +75,7 @@ export struct ScannerCodes {
       }
     }
 
-    animateTo(options, () => {
+    this.context.animateTo(options, () => {
       this.multiCodeScale = 0.8
     })
   }
@@ -114,7 +115,7 @@ export struct ScannerCodes {
     }
 
     const start = () => {
-      animateTo(options, () => {
+      this.context.animateTo(options, () => {
         this.singleCodeOpacity = 1
         this.singleCodeScale = 0.9
       })
