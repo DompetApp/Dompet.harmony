@@ -5,13 +5,13 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "storePassword": "00000023349C6BE9A84CCF08F7BDC6EE629FA9B56767A1FA1366CF25912F22182C201A7A02E51B5CB4902D3FEECE7928D9AEAC",
-          "certpath": "./.keystore/default/debug.cer",
-          "keyAlias": "debug",
-          "keyPassword": "000000231018D9DB59CA0C38357CC02F3B087B9163DDE30B610408811388381B24157346B26ED85217BFE4ED8826CE86FE2970",
-          "profile": "./.keystore/default/debug.p7b",
+          "storeFile": "./.keystore/default/debug.p12",
+          "storePassword": "00000023281C0C6536A6F5327D7894458EC9F0772B4906A3AC53C42D4873FA7856B9401B3933708C37528D24A7D811539A0761",
+          "keyAlias": "dompet",
+          "keyPassword": "000000237F034F4648D9524409C1B3CCD5441EC397EE852BC7AB4428A2DE1893E2037370C522AA2E02603F454961CE9B9D121D",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "./.keystore/default/debug.p12"
+          "profile": "./.keystore/default/debug.p7b",
+          "certpath": "./.keystore/default/debug.cer"
         }
       }
     ],

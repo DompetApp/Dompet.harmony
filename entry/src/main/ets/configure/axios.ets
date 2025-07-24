@@ -76,6 +76,10 @@ const createAxiosInterceptor = (axios: AxiosInstance) => {
         return response
       }
 
+      if (responseType === 'array_buffer') {
+        return response
+      }
+      
       return response.data
     },
   )
@@ -93,7 +97,8 @@ const createAxiosInterceptor = (axios: AxiosInstance) => {
         status = error.response?.status || error.status || status
         status = error.response?.data?.code || error.data?.code || status
         message = error.response?.data?.message || error.data?.message || null
-      } catch {
+      } catch (e) {
+        /* e */
       }
 
       if (error.config?.logger === true) {
@@ -120,7 +125,7 @@ const createAxiosInterceptor = (axios: AxiosInstance) => {
           responseError: error instanceof Error && error.message || message,
         })
 
-        logger.error(detail, null, stack)
+        logger.error(detail, undefined, stack)
       }
 
       if (error.toString().toLowerCase().indexOf('timeout') > -1) {

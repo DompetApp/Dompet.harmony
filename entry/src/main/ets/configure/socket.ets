@@ -45,12 +45,6 @@ export class Socketor {
       return
     }
 
-    if (!Socketor.created) {
-      await Socketor.connectWebSocket().catch(Empty.fn)
-      Socketor.times = 5000
-      Socketor.pings = 0
-    }
-
     if (Socketor.created) {
       if (Socketor.pinged) {
         Socketor.times = 5000
@@ -71,6 +65,12 @@ export class Socketor {
         type: 'ping',
         data: null
       }))
+    }
+
+    if (!Socketor.web) {
+      await Socketor.connectWebSocket().catch(Empty.fn)
+      Socketor.times = 5000
+      Socketor.pings = 0
     }
   }
 
