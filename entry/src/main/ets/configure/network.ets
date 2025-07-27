@@ -5,18 +5,18 @@ import { Empty } from "../utils/empty"
 @ObservedV2
 export class AppNetwork {
   @Trace connect: connection.NetConnection | null = null
-  @Trace success: boolean = false
+  @Trace available: boolean = false
 
   async onUnavailable() {
     this.connect?.on('netUnavailable', () => {
-      this.success = false
+      this.available = false
     })
   }
 
   async onAvailable() {
     this.connect?.on('netAvailable', (data: connection.NetHandle) => {
       if (data.netId >= 100) {
-        this.success = true
+        this.available = true
       }
     })
   }
@@ -24,7 +24,7 @@ export class AppNetwork {
   async onLost() {
     this.connect?.on('netLost', (data: connection.NetHandle) => {
       if (data.netId >= 100) {
-        this.success = false
+        this.available = false
       }
     })
   }
