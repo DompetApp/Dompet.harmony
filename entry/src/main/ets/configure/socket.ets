@@ -16,24 +16,26 @@ export class Socketor {
   static queues: ISocketSubscribe[] = []
   static network: boolean = false
   static created: boolean = false
-  static showed: boolean = false
   static pinged: boolean = false
   static enable: boolean = false
+  static showed: boolean = true
   static times: number = 5000
   static timer: number = -1
   static pings: number = 0
 
   static async init() {
-    Socketor.NetWatcher()
-    Socketor.StageWatcher()
+    Socketor.netWatcher()
+    Socketor.stageWatcher()
   }
 
   static async start() {
-    clearTimeout(Socketor.timer)
-
-    Socketor.timer = setTimeout(Socketor.start, Socketor.times)
+    if (Socketor.enable) {
+      clearTimeout(Socketor.timer)
+      Socketor.timer = setTimeout(Socketor.start, Socketor.times)
+    }
 
     if (!Socketor.enable) {
+      Socketor.closeWebSocket().catch(Empty.fn)
       return
     }
 
@@ -46,20 +48,8 @@ export class Socketor {
     }
 
     if (Socketor.created) {
-      if (Socketor.pinged) {
-        Socketor.times = 5000
-        Socketor.pings = 0
-      }
-
-      if (!Socketor.pinged) {
-        Socketor.pings++
-        Socketor.times = 1000
-
-        if (Socketor.pings > 3) {
-          Socketor.times = 5000
-          Socketor.pings = 0
-        }
-      }
+      Socketor.times = Socketor.pinged || Socketor.pings > 3 ? 5000 : 1000
+      Socketor.pings = Socketor.pinged || Socketor.pings > 3 ? 0 : Socketor.pings + 1
 
       Socketor.web?.send(JSON.stringify({
         type: 'ping',
@@ -78,7 +68,7 @@ export class Socketor {
     return Socketor.closeWebSocket().catch(Empty.fn)
   }
 
-  static async NetWatcher() {
+  static async netWatcher() {
     Socketor.net.register(Empty.fn)
 
     Socketor.net.on('netLost', (data: connection.NetHandle) => {
@@ -99,7 +89,7 @@ export class Socketor {
     })
   }
 
-  static async StageWatcher() {
+  static async stageWatcher() {
     if (CtxManager.uiAbilityContext) {
       CtxManager.uiAbilityContext.getApplicationContext().on('abilityLifecycle', {
         onAbilityBackground: () => Socketor.showed = false,
@@ -151,7 +141,6 @@ export class Socketor {
 
     Socketor.created = false
     Socketor.pinged = false
-    Socketor.enable = false
     Socketor.times = 5000
     Socketor.pings = 0
     Socketor.web = null
@@ -165,7 +154,6 @@ export class Socketor {
     Socketor.web = webSocket.createWebSocket()
     Socketor.pings = 0
     Socketor.times = 5000
-    Socketor.enable = true
     Socketor.pinged = false
 
     Socketor.web.on('error', (_: Unknown) => {
@@ -184,7 +172,7 @@ export class Socketor {
       Socketor.times = 5000
       Socketor.pinged = true
       Socketor.created = true
-      await Socketor.notifySocketSubscribe('connected').catch(Empty.fn)
+      await Socketor.notifySocketSubscribe('connected')
       await Socketor.start().catch(Empty.fn)
     })
 
@@ -244,6 +232,15 @@ export class Socketor {
     }
   }
 
+  static async destroySocketSubscribe(type: string, callback: SocketCallback) {
+    const query = (ref: ISocketSubscribe) => ref.type == type && ref.callback == callback
+    const index = Socketor.queues.findIndex(query)
+
+    if (index > -1) {
+      Socketor.queues.splice(index, 1)
+    }
+  }
+
   static async registerSocketSubscribe(type: string, callback: SocketCallback) {
     for (const ref of Socketor.queues) {
       if (ref.type == type && ref.callback == callback) {
@@ -252,14 +249,5 @@ export class Socketor {
     }
 
     Socketor.queues.push(new SocketSubscribe(type, callback))
-  }
-
-  static async unregisterSocketSubscribe(type: string, callback: SocketCallback) {
-    const query = (ref: ISocketSubscribe) => ref.type == type && ref.callback == callback
-    const index = Socketor.queues.findIndex(query)
-
-    if (index > -1) {
-      Socketor.queues.splice(index, 1)
-    }
   }
 }
