@@ -140,7 +140,7 @@ export struct PageWebview {
   }
 
   async aboutToAppear() {
-    webview.WebviewController.setWebDebuggingAccess(true)
+    webview.WebviewController.setWebDebuggingAccess(device.bundleInfo.appInfo.debug)
     this.lifecycleOwner?.addObserver(HMLifecycleState.onBackPressed, this.backward)
     this.parseRequest()
     this.loadScripts()

@@ -1,4 +1,6 @@
-import { window, display } from "@kit.ArkUI"
+import { bundleManager } from "@kit.AbilityKit"
+import { display } from "@kit.ArkUI"
+import { window } from "@kit.ArkUI"
 
 @ObservedV2
 export class AppDevice {
@@ -10,7 +12,11 @@ export class AppDevice {
   @Trace startup: number = 0
   @Trace isFoldable: boolean = false;
   @Trace densityPixels: number = 0
+  @Trace foldDisplayMode: display.FoldDisplayMode = display.getFoldDisplayMode()
+  @Trace displayResolutions: display.DisplayPhysicalResolution[] = []
   @Trace orientation: display.Orientation = display.Orientation.PORTRAIT
+  @Trace bundleFlags: bundleManager.BundleFlag = bundleManager.BundleFlag.GET_BUNDLE_INFO_WITH_APPLICATION
+  @Trace bundleInfo: bundleManager.BundleInfo = bundleManager.getBundleInfoForSelfSync(this.bundleFlags)
   @Trace foldStatus: display.FoldStatus = display.FoldStatus.FOLD_STATUS_UNKNOWN
   @Trace state: display.DisplayState = display.DisplayState.STATE_ON
 
@@ -56,6 +62,7 @@ export class AppDevice {
 
   updateWindowSize(_: window.Size) {
     const displayClass = display.getDefaultDisplaySync()
+    this.foldDisplayMode = display.getFoldDisplayMode()
     this.densityPixels = displayClass.densityPixels
     this.orientation = displayClass.orientation
     this.foldStatus = display.getFoldStatus()
@@ -68,6 +75,10 @@ export class AppDevice {
 
   start() {
     this.startup = Date.now()
+
+    display.getAllDisplayPhysicalResolution().then((resolutions) => {
+      this.displayResolutions = resolutions
+    })
   }
 }
 
