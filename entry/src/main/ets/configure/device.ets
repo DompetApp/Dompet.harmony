@@ -1,4 +1,5 @@
 import { bundleManager } from "@kit.AbilityKit"
+import { deviceInfo } from '@kit.BasicServicesKit';
 import { display } from "@kit.ArkUI"
 import { window } from "@kit.ArkUI"
 
@@ -9,9 +10,8 @@ export class AppDevice {
   @Trace width: number = 0
   @Trace bottom: number = 0
   @Trace height: number = 0
-  @Trace startup: number = 0
-  @Trace isFoldable: boolean = false;
-  @Trace densityPixels: number = 0
+  @Trace startup: number = Date.now()
+  @Trace isFoldable: boolean = false
   @Trace foldDisplayMode: display.FoldDisplayMode = display.getFoldDisplayMode()
   @Trace displayResolutions: display.DisplayPhysicalResolution[] = []
   @Trace orientation: display.Orientation = display.Orientation.PORTRAIT
@@ -19,6 +19,37 @@ export class AppDevice {
   @Trace bundleInfo: bundleManager.BundleInfo = bundleManager.getBundleInfoForSelfSync(this.bundleFlags)
   @Trace foldStatus: display.FoldStatus = display.FoldStatus.FOLD_STATUS_UNKNOWN
   @Trace state: display.DisplayState = display.DisplayState.STATE_ON
+  @Trace type: string = deviceInfo.deviceType
+
+  @Computed
+  get isTv() {
+    return this.type === 'tv'
+  }
+
+  @Computed
+  get isCar() {
+    return this.type === 'car'
+  }
+
+  @Computed
+  get isPhone() {
+    return this.type === 'phone'
+  }
+
+  @Computed
+  get isTablet() {
+    return this.type === 'tablet'
+  }
+
+  @Computed
+  get isDesktop() {
+    return this.type === 'desktop'
+  }
+
+  @Computed
+  get isWearable() {
+    return this.type === 'wearable'
+  }
 
   @Computed
   get isPortrait() {
@@ -63,7 +94,6 @@ export class AppDevice {
   updateWindowSize(_: window.Size) {
     const displayClass = display.getDefaultDisplaySync()
     this.foldDisplayMode = display.getFoldDisplayMode()
-    this.densityPixels = displayClass.densityPixels
     this.orientation = displayClass.orientation
     this.foldStatus = display.getFoldStatus()
     this.isFoldable = display.isFoldable();
@@ -74,8 +104,6 @@ export class AppDevice {
   }
 
   start() {
-    this.startup = Date.now()
-
     display.getAllDisplayPhysicalResolution().then((resolutions) => {
       this.displayResolutions = resolutions
     })

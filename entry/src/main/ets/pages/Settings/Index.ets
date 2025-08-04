@@ -1,7 +1,7 @@
 import { HMRouter } from "@hadss/hmrouter"
 import { AppRouter } from "../../router/constants"
-import { Dialog } from "../../components/Dialog/Index"
 import { AppRouterMgr } from "../../router/manager"
+import { Dialog } from "../../components/Dialog/Index"
 import { WebviewMeta } from "../../models/web"
 import { event } from "../../globals/event"
 import { unit } from "../../utils/unity"
