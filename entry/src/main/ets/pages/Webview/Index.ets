@@ -297,6 +297,9 @@ export struct PageWebview {
                     this.loading(false)
                   }
                 })
+                .onSslErrorEvent((e) => {
+                  e.handler.handleConfirm()
+                })
                 .onLoadIntercept((e) => {
                   const url = e.data.getRequestUrl()
 
