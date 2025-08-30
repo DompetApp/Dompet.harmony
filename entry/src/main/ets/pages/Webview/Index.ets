@@ -30,6 +30,7 @@ export struct PageWebview {
   @Local webviewMeta: IWebviewMeta = AppRouterMgr.getCurrentParam() as Unknown
   @Local webviewCtx: Context = this.getUIContext().getHostContext() as Unknown
   @Local backward: Unknown = this.createBackward(true)
+  @Local cacheMode: CacheMode = CacheMode.Default
 
   async loadUrl() {
     const url = this.webviewMeta.url.trim()
@@ -267,6 +268,7 @@ export struct PageWebview {
           Stack({ alignContent: Alignment.TopStart }) {
             if (this.rawScriptAccess) {
               Web({ src: '', controller: this.webviewController })
+                .cacheMode(this.cacheMode)
                 .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM])
                 .runJavaScriptOnDocumentStart(this.documentStartScripts)
                 .runJavaScriptOnDocumentEnd(this.documentEndScripts)

@@ -6,7 +6,7 @@ import { lang } from "@kit.ArkTS"
 
 @Sendable
 class AppPersistent {
-  private instance: sendablePreferences.Preferences | null = null
+  public instance: sendablePreferences.Preferences | null = null
 
   public write<T extends lang.ISendable = lang.ISendable>(key: string, value: T) {
     if (!this.instance) {
@@ -47,6 +47,17 @@ class AppPersistent {
 
     if (this.instance) {
       this.instance.deleteSync(key)
+      this.instance.flushSync()
+    }
+  }
+
+  public clear() {
+    if (!this.instance) {
+      this.init()
+    }
+
+    if (this.instance) {
+      this.instance.clearSync()
       this.instance.flushSync()
     }
   }
