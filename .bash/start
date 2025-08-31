@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#
+## Step.
+### Start And Debug
+INITIAL_PORT=9222
+
+CURRENT_PORT=${PORT:-$INITIAL_PORT}
+
+PID_LIST=$(hdc shell cat /proc/net/unix | grep webview_devtools_remote_ | awk -F '_' '{print $NF}')
+
+if [ -z "$PID_LIST" ]; then
+    echo "Failed to retrieve PID from the device"
+    exit 1
+fi
+
+PORT=$CURRENT_PORT
+
+for PID in $PID_LIST; do
+    PORT=$((PORT + 1))
+
+    hdc fport tcp:$PORT localabstract:webview_devtools_remote_$PID
+
+    if [ $? -ne 0 ]; then
+        echo "Failed to execute hdc fport command"
+        exit 1
+    fi
+done
+
+hdc fport ls

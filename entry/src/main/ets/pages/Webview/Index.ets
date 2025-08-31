@@ -78,7 +78,6 @@ export struct PageWebview {
       'webview/scripts/harmony.min.js',
       'webview/scripts/webview.min.js',
       'webview/scripts/vdebug.min.js',
-      'webview/scripts/meta.min.js',
     ]
 
     for (const file of scripts) {

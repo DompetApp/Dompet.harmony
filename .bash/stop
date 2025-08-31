@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#
+## Step.
+### Close And Clear
+CURRENT_FPORT_LIST=$(hdc fport ls)
+
+while IFS= read -r line; do
+    IFS=' ' read -ra parts <<< "$line"
+
+    taskline="${parts[1]} ${parts[2]}"
+
+    if [ -n "$(echo "$taskline" | tr -d '[:space:]')" ]; then
+        hdc fport rm $taskline
+    fi
+
+done <<< "$CURRENT_FPORT_LIST"
+
+hdc fport ls
