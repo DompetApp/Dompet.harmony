@@ -35,8 +35,10 @@ export class AppDatabaser {
     })
   }
 
-  static async create(): Promise<void> {
+  static async create(dir?: string | null): Promise<void> {
     await AppDatabaser.close()
+
+    AppDatabaser.cfg.customDir = dir ?? AppDatabaser.cfg.customDir
 
     const promise = relationalStore.getRdbStore(CtxManager.uiAbilityContext, AppDatabaser.cfg)
 
@@ -63,13 +65,13 @@ export class AppDatabaser {
     })
   }
 
-  static async connect(): Promise<void> {
+  static async connect(dir?: string | null): Promise<void> {
+    if (dir && dir !== AppDatabaser.cfg.customDir) {
+      await AppDatabaser.close()
+    }
+
     if (!AppDatabaser.db) {
-      try {
-        AppDatabaser.db ??= await relationalStore.getRdbStore(CtxManager.uiAbilityContext, AppDatabaser.cfg).then()
-      } catch (e) {
-        /* e */
-      }
+      return AppDatabaser.create(dir)
     }
   }
 
