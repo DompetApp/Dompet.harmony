@@ -12,16 +12,19 @@ import Axios from "@ohos/axios"
  */
 interface AxiosDefaultConfig extends CreateAxiosDefaults {
   logger?: boolean | null
+  retry?: number | null
 }
 
 interface AxiosProxyRequestConfig extends AxiosRequestConfig {
   logger?: boolean | null
+  retry?: number | null
 }
 
 interface AxiosReturnRequestConfig extends InternalAxiosRequestConfig {
   responseTime?: string | null
   requestTime?: string | null
   logger?: boolean | null
+  retry?: number | null
 }
 
 interface AxiosReturnResponseConfig extends Omit<AxiosResponse, 'config'> {
@@ -53,90 +56,104 @@ const createAxiosInstance = (config: AxiosDefaultConfig) => {
  * 创建 Axios 拦截器
  */
 const createAxiosInterceptor = (axios: AxiosInstance) => {
-  axios.interceptors.request.use(
-    (config: AxiosReturnRequestConfig) => {
-      config.requestTime = SafeDateTimeFormat.dateAndTime()
-      config.headers['token'] ??= persistent.read('token', '')
-      return config
-    },
-  )
-  axios.interceptors.response.use(
-    (response: AxiosReturnResponseConfig) => {
-      response.config.requestTime ??= SafeDateTimeFormat.dateAndTime()
-      response.config.responseTime ??= SafeDateTimeFormat.dateAndTime()
+  axios.interceptors.request.use((config: AxiosReturnRequestConfig) => {
+    config.requestTime = SafeDateTimeFormat.dateAndTime()
+    config.headers['token'] ??= persistent.read('token', '')
+    return config
+  })
 
-      const responseType = response.config.responseType
-      const status = response.status as number
+  axios.interceptors.response.use((response: AxiosReturnResponseConfig) => {
+    response.config.requestTime ??= SafeDateTimeFormat.dateAndTime()
+    response.config.responseTime ??= SafeDateTimeFormat.dateAndTime()
 
-      if (status < 200 || status > 300) {
-        return Promise.reject(response)
-      }
+    const responseType = response.config.responseType
+    const status = response.status as number
 
-      if (responseType === 'ARRAY_BUFFER') {
-        return response
-      }
+    if (status < 200 || status > 300) {
+      return Promise.reject(response)
+    }
 
-      if (responseType === 'array_buffer') {
-        return response
-      }
-      
-      return response.data
-    },
-  )
-  axios.interceptors.response.use(
-    (response: AxiosReturnResponseConfig) => response,
-    (error: AxiosReturnResponseError) => {
-      let status = 500 as string | number
-      let message = null as string | undefined | null
+    if (responseType === 'ARRAY_BUFFER') {
+      return response
+    }
 
-      const response = error.response ?? error
-      const promise = Promise.reject(error)
-      const stack = new Error().stack
+    if (responseType === 'array_buffer') {
+      return response
+    }
 
-      try {
-        status = error.response?.status || error.status || status
-        status = error.response?.data?.code || error.data?.code || status
-        message = error.response?.data?.message || error.data?.message || null
-      } catch (e) {
-        /* e */
-      }
+    return response.data
+  })
 
-      if (error.config?.logger === true) {
-        const cfg = error.config
-        const url: string = (cfg.url ?? '').replace(/^\/+/, '/')
-        const base: string = (cfg.baseURL ?? '').replace(/\/+$/, '')
-        const headers: ESObject = cfg.headers ?? null
-        const queryParams: ESObject = cfg.params ?? null
-        const responseTime: string = cfg.responseTime ?? SafeDateTimeFormat.dateAndTime()
-        const requestTime: string = cfg.requestTime ?? SafeDateTimeFormat.dateAndTime()
-        const bodyData: ESObject = cfg.data ?? null
-        const method: string = cfg.method ?? 'get'
+  axios.interceptors.response.use(null, (error: AxiosReturnResponseError) => {
+    let status = 500 as string | number
+    let message = null as string | undefined | null
 
-        const detail: ESObject = Object({
-          axios: `network request failed`,
-          path: `${url.startsWith('http') ? url : base + url}`,
-          method: method,
-          headers: headers,
-          bodyData: bodyData,
-          queryParams: queryParams,
-          requestTime: requestTime,
-          responseTime: responseTime,
-          responseData: response.data,
-          responseError: error instanceof Error && error.message || message,
-        })
+    const response = error.response ?? error
+    const promise = Promise.reject(error)
+    const stack = new Error().stack
 
-        logger.error(detail, undefined, stack)
-      }
+    try {
+      status = error.response?.status || error.status || status
+      status = error.response?.data?.code || error.data?.code || status
+      message = error.response?.data?.message || error.data?.message || null
+    } catch (e) {
+      /* e */
+    }
 
-      if (error.toString().toLowerCase().indexOf('timeout') > -1) {
+    if (error.config?.logger === true) {
+      const cfg = error.config
+      const url: string = (cfg.url ?? '').replace(/^\/+/, '/')
+      const base: string = (cfg.baseURL ?? '').replace(/\/+$/, '')
+      const headers: ESObject = cfg.headers ?? null
+      const queryParams: ESObject = cfg.params ?? null
+      const responseTime: string = cfg.responseTime ?? SafeDateTimeFormat.dateAndTime()
+      const requestTime: string = cfg.requestTime ?? SafeDateTimeFormat.dateAndTime()
+      const bodyData: ESObject = cfg.data ?? null
+      const method: string = cfg.method ?? 'get'
+
+      const detail: ESObject = Object({
+        axios: `network request failed`,
+        path: `${url.startsWith('http') ? url : base + url}`,
+        method: method,
+        headers: headers,
+        bodyData: bodyData,
+        queryParams: queryParams,
+        requestTime: requestTime,
+        responseTime: responseTime,
+        responseData: response.data,
+        responseError: error instanceof Error && error.message || message,
+      })
+
+      logger.error(detail, undefined, stack)
+    }
+
+    if (error.toString().toLowerCase().indexOf('timeout') > -1) {
+      if (!error.config?.retry || error.config.retry < 1) {
         Toast.show({ message: $r('app.string.System_Network_Timeout') })
-        return promise
       }
-
-      Toast.show({ message: message ? message : $r('app.string.System_Abnormality') })
       return promise
     }
-  )
+
+    Toast.show({ message: message ? message : $r('app.string.System_Abnormality') })
+    return promise
+  })
+
+  axios.interceptors.response.use(null, async (error: AxiosReturnResponseError) => {
+    if (error.toString().toLowerCase().indexOf('timeout') === -1) {
+      return Promise.reject(error)
+    }
+
+    if (error.config?.retry && error.config.retry >= 1) {
+      await new Promise<void>(resolve => setTimeout(resolve, 100))
+      error.config.retry = error.config.retry - 1
+      error.config.responseTime = null
+      error.config.requestTime = null
+      return axios(error.config)
+    }
+
+    return Promise.reject(error)
+  })
+
   return axios
 }
 
@@ -146,7 +163,8 @@ const createAxiosInterceptor = (axios: AxiosInstance) => {
  */
 export const request = createAxiosInstance({
   baseURL: AppConnect.ApiBaseUrl || '/',
-  timeout: 30000,
+  timeout: 9000,
   logger: true,
+  retry: 0,
 })
 

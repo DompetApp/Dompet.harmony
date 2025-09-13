@@ -9,6 +9,7 @@ export class AuthApi {
       url: '/auth/login',
       method: 'post',
       data: data,
+      retry: 2,
     })
   }
 
