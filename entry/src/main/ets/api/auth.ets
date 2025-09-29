@@ -1,4 +1,4 @@
-import { request } from "../configure/axios"
+import { request } from "../configure/apis"
 
 export class AuthApi {
   /**
@@ -9,6 +9,7 @@ export class AuthApi {
       url: '/auth/login',
       method: 'post',
       data: data,
+      cache: true,
       retry: 2,
     })
   }

@@ -21,6 +21,9 @@ export class grant {
       })
   }
 
+  /**
+   * @throws
+   */
   public static async requestPermissionsFromUser(permissions: Permissions[]) {
     if (permissions.length === 0) {
       return false
@@ -72,6 +75,9 @@ export class grant {
     return true
   }
 
+  /**
+   * @throws
+   */
   public static async openSettings(permissions?: Permissions[]) {
     if (permissions && permissions.length > 0) {
       const atManager = abilityAccessCtrl.createAtManager()

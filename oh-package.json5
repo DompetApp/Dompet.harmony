@@ -1,11 +1,10 @@
 {
-  "modelVersion": "5.0.5",
+  "modelVersion": "6.0.0",
   "description": "A Dompet App by HarmonyOS (Template)",
   "dependencies": {
     "@hadss/hmrouter-transitions": "^1.2.0-rc.0",
     "@hadss/hmrouter": "^1.2.0-rc.0",
     "@ohos/imageknife": "^3.2.7",
-    "@ohos/crypto-js": "^2.0.4",
     "@ohos/axios": "^2.2.6",
     "@hitro/ark": "^1.1.1",
     "logger": "^1.2.7"

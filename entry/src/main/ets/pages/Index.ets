@@ -3,6 +3,9 @@ import { RouterDefaultModifier } from "../router/modifier"
 import { AppRouter } from "../router/constants"
 import { AppNav } from "../router/constants"
 
+import "../globals/definer"
+
+
 @Entry
 @ComponentV2
 struct Index {

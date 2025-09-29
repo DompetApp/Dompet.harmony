@@ -1,141 +1,128 @@
-import { CreateAxiosDefaults, AxiosInstance, AxiosRequestConfig } from "@ohos/axios"
-import { InternalAxiosRequestConfig, AxiosResponse } from "@ohos/axios"
+import { CreateAxiosDefaults, AxiosRequestConfig, InternalAxiosRequestConfig } from "@ohos/axios"
+import { AxiosInstance, AxiosResponse, AxiosError } from "@ohos/axios"
 import { SafeDateTimeFormat, logger } from "logger"
-import { Toast } from "../components/Toast/Index"
-import { AppConnect } from "../globals/define"
+import { AppConnect } from "../globals/connect"
 import { persistent } from "./persistent"
+import { Toast } from "../globals/emiter"
+import { crypto } from "../utils/crypto"
+import { Cacher } from "../utils/cacher"
+import { Empty } from "../utils/empty"
 import Axios from "@ohos/axios"
 
 
 /**
  * 定义 Axios 类型
  */
-interface AxiosDefaultConfig extends CreateAxiosDefaults {
-  logger?: boolean | null
-  retry?: number | null
+export interface AxiosDefaultCacher extends Recorder {
+  logger: (err: AxiosReturnResponseError, res?: AxiosReturnResponseConfig) => void
+  query: (err: AxiosReturnResponseError) => Promise<AxiosReturnResponseConfig | undefined>
+  cache: (res: AxiosReturnResponseConfig) => Promise<AxiosReturnResponseConfig>
 }
 
-interface AxiosProxyRequestConfig extends AxiosRequestConfig {
+export interface AxiosDefaultConfig extends CreateAxiosDefaults {
   logger?: boolean | null
+  cache?: boolean | null
   retry?: number | null
+  code?: string | null
 }
 
-interface AxiosReturnRequestConfig extends InternalAxiosRequestConfig {
-  responseTime?: string | null
-  requestTime?: string | null
+export interface AxiosProxyRequestConfig extends AxiosRequestConfig {
   logger?: boolean | null
+  cache?: boolean | null
   retry?: number | null
+  code?: string | null
 }
 
-interface AxiosReturnResponseConfig extends Omit<AxiosResponse, 'config'> {
+export interface AxiosReturnRequestConfig extends InternalAxiosRequestConfig {
+  responsed?: string | null
+  requested?: string | null
+  logger?: boolean | null
+  cache?: boolean | null
+  retry?: number | null
+  code?: string | null
+}
+
+export interface AxiosReturnResponseConfig extends Omit<AxiosResponse, 'config'> {
   config: AxiosReturnRequestConfig
 }
 
-interface AxiosReturnResponseError extends Partial<AxiosReturnResponseConfig> {
+export interface AxiosReturnResponseError extends Omit<AxiosError, 'config' | 'response'> {
   response?: AxiosReturnResponseConfig
-}
-
-
-/**
- * 创建 Axios 实例
- */
-const createAxiosInstance = (config: AxiosDefaultConfig) => {
-  const proxy = <T>(config: AxiosProxyRequestConfig) => axios(config) as Promise<AxiosResponseResult<T>>
-  const axios = createAxiosInterceptor(Axios.create(config))
-  proxy.options = axios.options
-  proxy.request = axios.request
-  proxy.delete = axios.delete
-  proxy.post = axios.post
-  proxy.put = axios.put
-  proxy.get = axios.get
-  return proxy
+  config: AxiosReturnRequestConfig
 }
 
 
 /**
  * 创建 Axios 拦截器
  */
-const createAxiosInterceptor = (axios: AxiosInstance) => {
+const createAxiosInterceptor = (axios: AxiosInstance, cacher: AxiosDefaultCacher) => {
   axios.interceptors.request.use((config: AxiosReturnRequestConfig) => {
-    config.requestTime = SafeDateTimeFormat.dateAndTime()
     config.headers['token'] ??= persistent.read('token', '')
+    config.requested ??= SafeDateTimeFormat.dateAndTime()
+    config.responsed = null
+    config.cache ??= false
+    config.retry ??= -1
     return config
   })
 
-  axios.interceptors.response.use((response: AxiosReturnResponseConfig) => {
-    response.config.requestTime ??= SafeDateTimeFormat.dateAndTime()
-    response.config.responseTime ??= SafeDateTimeFormat.dateAndTime()
+  axios.interceptors.response.use(async (response: AxiosReturnResponseConfig) => {
+    response.config.requested ??= SafeDateTimeFormat.dateAndTime()
+    response.config.responsed ??= SafeDateTimeFormat.dateAndTime()
 
-    const responseType = response.config.responseType
-    const status = response.status as number
-
-    if (status < 200 || status > 300) {
-      return Promise.reject(response)
-    }
-
-    if (responseType === 'ARRAY_BUFFER') {
+    if (response.config.responseType === 'ARRAY_BUFFER') {
       return response
     }
 
-    if (responseType === 'array_buffer') {
+    if (response.config.responseType === 'array_buffer') {
       return response
+    }
+
+    if (response.config.cache == true) {
+      await cacher.cache(response).catch(Empty.fn)
     }
 
     return response.data
   })
 
-  axios.interceptors.response.use(null, (error: AxiosReturnResponseError) => {
-    let status = 500 as string | number
-    let message = null as string | undefined | null
+  axios.interceptors.response.use(null, async (error: AxiosReturnResponseError) => {
+    let message: Resource | string | undefined | null
+    let response: AxiosReturnResponseConfig | undefined
 
-    const response = error.response ?? error
-    const promise = Promise.reject(error)
-    const stack = new Error().stack
-
-    try {
-      status = error.response?.status || error.status || status
-      status = error.response?.data?.code || error.data?.code || status
-      message = error.response?.data?.message || error.data?.message || null
-    } catch (e) {
-      /* e */
-    }
-
-    if (error.config?.logger === true) {
-      const cfg = error.config
-      const url: string = (cfg.url ?? '').replace(/^\/+/, '/')
-      const base: string = (cfg.baseURL ?? '').replace(/\/+$/, '')
-      const headers: ESObject = cfg.headers ?? null
-      const queryParams: ESObject = cfg.params ?? null
-      const responseTime: string = cfg.responseTime ?? SafeDateTimeFormat.dateAndTime()
-      const requestTime: string = cfg.requestTime ?? SafeDateTimeFormat.dateAndTime()
-      const bodyData: ESObject = cfg.data ?? null
-      const method: string = cfg.method ?? 'get'
-
-      const detail: ESObject = Object({
-        axios: `network request failed`,
-        path: `${url.startsWith('http') ? url : base + url}`,
-        method: method,
-        headers: headers,
-        bodyData: bodyData,
-        queryParams: queryParams,
-        requestTime: requestTime,
-        responseTime: responseTime,
-        responseData: response.data,
-        responseError: error instanceof Error && error.message || message,
-      })
-
-      logger.error(detail, undefined, stack)
+    if (error.toString().toLowerCase().indexOf('timeout') == -1) {
+      message = $r('app.string.System_Abnormality')
     }
 
     if (error.toString().toLowerCase().indexOf('timeout') > -1) {
-      if (!error.config?.retry || error.config.retry < 1) {
-        Toast.show({ message: $r('app.string.System_Network_Timeout') })
+      if (error.config?.retry && error.config.retry >= 1) {
+        return Promise.reject(error)
       }
-      return promise
+
+      message = $r('app.string.System_Network_Timeout')
     }
 
-    Toast.show({ message: message ? message : $r('app.string.System_Abnormality') })
-    return promise
+    if (error.config && !error.config.requested) {
+      error.config.requested = SafeDateTimeFormat.dateAndTime()
+    }
+
+    if (error.config && !error.config.responsed) {
+      error.config.responsed = SafeDateTimeFormat.dateAndTime()
+    }
+
+    if (error.config && error.config.cache) {
+      response = await cacher.query(error)
+    }
+
+    if (error.config?.logger === true) {
+      cacher.logger(error, response)
+    }
+
+    if (!response && message) {
+      Toast.show({ message: message })
+    }
+
+    return response
+      ? Promise.resolve(response)
+      : Promise.reject(error)
   })
 
   axios.interceptors.response.use(null, async (error: AxiosReturnResponseError) => {
@@ -146,8 +133,6 @@ const createAxiosInterceptor = (axios: AxiosInstance) => {
     if (error.config?.retry && error.config.retry >= 1) {
       await new Promise<void>(resolve => setTimeout(resolve, 100))
       error.config.retry = error.config.retry - 1
-      error.config.responseTime = null
-      error.config.requestTime = null
       return axios(error.config)
     }
 
@@ -155,6 +140,144 @@ const createAxiosInterceptor = (axios: AxiosInstance) => {
   })
 
   return axios
+}
+
+
+/**
+ * 创建 Axios 实例
+ */
+const createAxiosInstance = (config: AxiosDefaultConfig) => {
+  const proxy = <T>(config: AxiosProxyRequestConfig) => axios(config) as Promise<AxiosResponseResult<T>>
+  const axios = createAxiosInterceptor(Axios.create(config), createAxiosCacher(config))
+  proxy.options = axios.options
+  proxy.delete = axios.delete
+  proxy.post = axios.post
+  proxy.put = axios.put
+  proxy.get = axios.get
+  return proxy
+}
+
+
+/**
+ * 创建 Axios 缓存器
+ */
+const createAxiosCacher = (_: AxiosDefaultConfig) => {
+  const $logger = async (err: AxiosReturnResponseError, res?: AxiosReturnResponseConfig) => {
+    if (!err.config) {
+      return
+    }
+
+    err.config.logger = null
+    err.config.retry = null
+    err.config.cache = null
+    err.config.code = null
+
+    const path: string = Axios.getUri(err.config)
+    const request: Unknown = err.request ?? null
+    const response: Unknown = err.response ?? null
+    const queryExtra: Unknown = { requested: err.config.requested, responsed: err.config.responsed }
+    const queryParams: ESObject = err.config.params ?? null
+    const bodyData: ESObject = err.config.data ?? null
+    const method: string = err.config.method ?? 'get'
+
+    const detail: ESObject = Object({
+      axios: `network request failed`,
+      path: path,
+      method: method,
+      request: request,
+      response: response,
+      bodyData: bodyData,
+      queryExtra: queryExtra,
+      queryParams: queryParams,
+      responseUsage: res != null ? 'Cached' : 'Unknown',
+      errorMessage: err.message ?? null,
+      errorCause: err.cause ?? null,
+      errorCode: err.code ?? null,
+      status: err.status ?? null,
+    })
+
+    logger.error(detail, undefined, err.stack ?? new Error().stack)
+  }
+
+  const $query = async (err: AxiosReturnResponseError) => {
+    if (!err.config || !err.config.url) {
+      return
+    }
+
+    try {
+      const url = Axios.getUri(err.config)
+      const code = err.config.code?.toString()
+      const cache = err.config.cache ?? false
+      const unique = crypto.md5(code ?? url.toString())
+      const cacher = cache ? new Cacher(`axios_cache_${unique}`) : null
+      const string: string | null = cache ? await cacher!.read() : null
+      const source: string | null = string ? crypto.decode(string, 'XDompetTH90JK373') : null
+      const storage: Recorder | null = source ? JSON.parse(source) : null
+
+      if (cache == true && cacher != null && storage != null) {
+        const response: AxiosReturnResponseConfig = {
+          data: cacher.decode(storage.data, storage.decode),
+          config: storage.config,
+          status: storage.status,
+          headers: storage.headers,
+          request: storage.request,
+          statusText: storage.statusText,
+        }
+
+        return response
+      }
+    } catch (e) {
+      /* e */
+    }
+
+    return
+  }
+
+  const $cache = async (res: AxiosReturnResponseConfig) => {
+    if (!res.config.url) {
+      return res
+    }
+
+    try {
+      const url = Axios.getUri(res.config)
+      const code = res.config.code?.toString()
+      const cache = res.config.cache ?? false
+      const unique = crypto.md5(code ?? url.toString())
+
+      res.config.logger = null
+      res.config.retry = null
+      res.config.cache = null
+      res.config.code = null
+
+      if (cache == true && unique.trim()) {
+        const cacher = new Cacher(`axios_cache_${unique}`)
+
+        const encode = JSON.stringify({
+          data: cacher.encode(res.data),
+          decode: res.data instanceof ArrayBuffer ? 'ArrayBuffer' : null,
+          config: res.config,
+          status: res.status,
+          headers: res.headers,
+          request: res.request,
+          statusText: res.statusText,
+        })
+
+        await cacher.write(crypto.encode(encode, 'XDompetTH90JK373'))
+      }
+    } catch (e) {
+      /* e */
+    }
+
+    return res
+  }
+
+  const $cacher: AxiosDefaultCacher = {
+    logger: $logger,
+    query: $query,
+    cache: $cache,
+  }
+
+  return $cacher
 }
 
 
@@ -167,4 +290,3 @@ export const request = createAxiosInstance({
   logger: true,
   retry: 0,
 })
-

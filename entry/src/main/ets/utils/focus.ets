@@ -7,7 +7,11 @@ export class FocusMgr {
 
   public focusSync(id: string) {
     if (this.context && id) {
-      this.context.getFocusController().requestFocus(id)
+      try {
+        this.context.getFocusController().requestFocus(id)
+      } catch (e) {
+        /* e */
+      }
     }
   }
 

@@ -36,6 +36,10 @@ export class CtxManager {
   }
 
   static get uiContext() {
-    return StageManager.mainWindow?.getUIContext()
+    try {
+      return StageManager.mainWindow?.getUIContext()
+    } catch (error) {
+      return null
+    }
   }
 }

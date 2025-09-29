@@ -1,5 +1,5 @@
 import { bundleManager } from "@kit.AbilityKit"
-import { deviceInfo } from '@kit.BasicServicesKit';
+import { deviceInfo } from "@kit.BasicServicesKit"
 import { display } from "@kit.ArkUI"
 import { window } from "@kit.ArkUI"
 
@@ -12,7 +12,7 @@ export class AppDevice {
   @Trace height: number = 0
   @Trace startup: number = Date.now()
   @Trace isFoldable: boolean = false
-  @Trace foldDisplayMode: display.FoldDisplayMode = display.getFoldDisplayMode()
+  @Trace foldDisplayMode: display.FoldDisplayMode = display.FoldDisplayMode.FOLD_DISPLAY_MODE_UNKNOWN
   @Trace displayResolutions: display.DisplayPhysicalResolution[] = []
   @Trace orientation: display.Orientation = display.Orientation.PORTRAIT
   @Trace bundleFlags: bundleManager.BundleFlag = bundleManager.BundleFlag.GET_BUNDLE_INFO_WITH_APPLICATION
@@ -77,6 +77,9 @@ export class AppDevice {
     return false
   }
 
+  /**
+   * @throws
+   */
   updateAvoidArea(refer: window.AvoidAreaOptions) {
     if (this.orientation !== display.Orientation.PORTRAIT) {
       return
@@ -91,18 +94,24 @@ export class AppDevice {
     }
   }
 
+  /**
+   * @throws
+   */
   updateWindowSize(_: window.Size) {
     const displayClass = display.getDefaultDisplaySync()
     this.foldDisplayMode = display.getFoldDisplayMode()
     this.orientation = displayClass.orientation
     this.foldStatus = display.getFoldStatus()
-    this.isFoldable = display.isFoldable();
+    this.isFoldable = display.isFoldable()
     this.height = displayClass.height
     this.width = displayClass.width
     this.state = displayClass.state
     this.id = displayClass.id
   }
 
+  /**
+   * @throws
+   */
   start() {
     display.getAllDisplayPhysicalResolution().then((resolutions) => {
       this.displayResolutions = resolutions

@@ -14,8 +14,12 @@ class AppPersistent {
     }
 
     if (this.instance) {
-      this.instance.putSync(key, value)
-      this.instance.flushSync()
+      try {
+        this.instance.putSync(key, value)
+        this.instance.flushSync()
+      } catch (e) {
+        /* e */
+      }
     }
   }
 
@@ -25,8 +29,12 @@ class AppPersistent {
     }
 
     if (this.instance) {
-      this.instance.flushSync()
-      return this.instance.getSync(key, value) as T
+      try {
+        this.instance.flushSync()
+        return this.instance.getSync(key, value) as T
+      } catch (e) {
+        /* e */
+      }
     }
 
     return value
@@ -34,9 +42,13 @@ class AppPersistent {
 
   public init(opt?: sendablePreferences.Options) {
     if (CtxManager.uiAbilityContext) {
-      const context = CtxManager.uiAbilityContext
-      const options = opt ?? { name: 'harmony.app.zgb' }
-      this.instance = sendablePreferences.getPreferencesSync(context, options)
+      try {
+        const context = CtxManager.uiAbilityContext
+        const options = opt ?? { name: 'harmony.app.zgb' }
+        this.instance = sendablePreferences.getPreferencesSync(context, options)
+      } catch (e) {
+        /* e */
+      }
     }
   }
 
@@ -46,8 +58,12 @@ class AppPersistent {
     }
 
     if (this.instance) {
-      this.instance.deleteSync(key)
-      this.instance.flushSync()
+      try {
+        this.instance.deleteSync(key)
+        this.instance.flushSync()
+      } catch (e) {
+        /* e */
+      }
     }
   }
 
@@ -57,8 +73,12 @@ class AppPersistent {
     }
 
     if (this.instance) {
-      this.instance.clearSync()
-      this.instance.flushSync()
+      try {
+        this.instance.clearSync()
+        this.instance.flushSync()
+      } catch (e) {
+        /* e */
+      }
     }
   }
 }

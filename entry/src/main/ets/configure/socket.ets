@@ -1,17 +1,16 @@
 import { Empty } from "../utils/empty"
 import { logger } from "../tracks/logger"
 import { webSocket } from "@kit.NetworkKit"
-import { connection } from "@kit.NetworkKit"
-import { AppConnect } from "../globals/define"
-import { CtxManager } from "../configure/context"
+import { AppConnect } from "../globals/connect"
 import { persistent } from "../configure/persistent"
 import { ISocketSubscribe } from "../models/socket"
 import { SocketSubscribe } from "../models/socket"
 import { SocketCallback } from "../models/socket"
+import { CtxManager } from "../configure/context"
+import { Network } from "../configure/network"
 
 
 export class Socketor {
-  static net: connection.NetConnection = connection.createNetConnection()
   static web: webSocket.WebSocket | null = null
   static queues: ISocketSubscribe[] = []
   static network: boolean = false
@@ -24,7 +23,6 @@ export class Socketor {
   static pings: number = 0
 
   static async init() {
-    Socketor.netWatcher()
     Socketor.stageWatcher()
   }
 
@@ -39,7 +37,7 @@ export class Socketor {
       return
     }
 
-    if (!Socketor.network) {
+    if (!Network.available) {
       return
     }
 
@@ -54,7 +52,7 @@ export class Socketor {
       Socketor.web?.send(JSON.stringify({
         type: 'ping',
         data: null
-      }))
+      }), Empty.fn)
     }
 
     if (!Socketor.web) {
@@ -66,27 +64,6 @@ export class Socketor {
 
   static async close() {
     return Socketor.closeWebSocket().catch(Empty.fn)
-  }
-
-  static async netWatcher() {
-    Socketor.net.register(Empty.fn)
-
-    Socketor.net.on('netLost', (data: connection.NetHandle) => {
-      if (data.netId >= 100) {
-        Socketor.network = false
-      }
-    })
-
-    Socketor.net.on('netAvailable', (data: connection.NetHandle) => {
-      if (data.netId >= 100) {
-        Socketor.network = true
-        Socketor.start()
-      }
-    })
-
-    Socketor.net.on('netUnavailable', () => {
-      Socketor.network = false
-    })
   }
 
   static async stageWatcher() {
@@ -162,7 +139,7 @@ export class Socketor {
       }
     })
 
-    Socketor.web.on('open', async (error: Unknown, event: Recorder) => {
+    Socketor.web.on('open', async (error: Unknown, _: Recorder) => {
       if (error != undefined) {
         Socketor.resetWebSocket().catch(Empty.fn)
         return
@@ -176,7 +153,7 @@ export class Socketor {
       await Socketor.start().catch(Empty.fn)
     })
 
-    Socketor.web.on('close', async (error: Unknown, event: webSocket.CloseResult) => {
+    Socketor.web.on('close', async (error: Unknown, _: webSocket.CloseResult) => {
       if (error != undefined) {
         return
       }
@@ -215,9 +192,7 @@ export class Socketor {
 
     const header: Object = Object({ token: persistent.read<string>(AppConnect.ApiToken, '') })
 
-    const promise = Socketor.web.connect(`${AppConnect.WssBaseUrl}`, { header: header })
-
-    return promise.catch(Empty.fn)
+    return Socketor.web.connect(`${AppConnect.WssBaseUrl}`, { header: header }).catch(Empty.fn)
   }
 
   static async notifySocketSubscribe(type: string, data?: Unknown) {
