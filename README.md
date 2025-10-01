@@ -39,7 +39,6 @@
 - @hadss/hmrouter-transitions
 - @hadss/hmrouter
 - @ohos/imageknife
-- @ohos/crypto-js
 - @ohos/axios
 - @hitro/ark
 - logger
