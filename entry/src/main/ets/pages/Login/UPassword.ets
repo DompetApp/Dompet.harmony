@@ -328,7 +328,7 @@ export struct LoginByPassword {
             Column() {
               CacheImager({
                 imagerOptions: {
-                  loadSrc: $r('app.media.startIcon'),
+                  loadSrc: $r('app.media.dompet'),
                   objectFit: ImageFit.Fill,
                 },
                 adaptiveHeight: unit.vp(66),

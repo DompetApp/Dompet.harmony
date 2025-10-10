@@ -10,14 +10,15 @@ async function AxiosRunner(type: string, config: Unknown) {
       return await $request<Unknown>(config)
     }
 
-    default:
-      return
+    default: {
+      return Promise.reject()
+    }
   }
 }
 
 export const createProxyer = (type: string) => {
   const proxy = <T>(config: AxiosProxyRequestConfig): Promise<AxiosResponseResult<T>> => {
-    return taskpool.execute(AxiosRunner, type, config).catch((err: Unknown) => Promise.reject(err)) as Unknown
+    return taskpool.execute(AxiosRunner, type, config).catch(Promise.reject) as Unknown
   }
 
   const wrap = (method?: string) => {

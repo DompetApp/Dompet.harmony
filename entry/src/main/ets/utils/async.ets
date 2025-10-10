@@ -24,6 +24,7 @@ export class RWMutex {
 
     options.isAvailable = opt?.isAvailable ?? this.check
     options.timeout = opt?.timeout ?? this.timeout
+    options.signal = opt?.signal ?? null
 
     return this.lock.lockAsync<T, U>(
       fn,
@@ -38,6 +39,7 @@ export class RWMutex {
 
     options.isAvailable = opt?.isAvailable ?? this.check
     options.timeout = opt?.timeout ?? this.timeout
+    options.signal = opt?.signal ?? null
 
     return this.lock.lockAsync<T, U>(
       fn,

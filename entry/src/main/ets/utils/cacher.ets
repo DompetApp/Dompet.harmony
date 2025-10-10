@@ -34,7 +34,7 @@ export class Cacher {
     this.fileMode = options?.fileMode || this.fileMode
     this.fileMark = options?.encoding || this.fileMark
     this.fileKey = options?.fileKey || this.fileKey
-    
+
     this.mutex = RWMutex.create({
       key: this.fileKey,
       timeout: 3000,
