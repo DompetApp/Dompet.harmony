@@ -5,13 +5,13 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "storeFile": "./.keystore/default/debug.p12",
-          "storePassword": "00000023281C0C6536A6F5327D7894458EC9F0772B4906A3AC53C42D4873FA7856B9401B3933708C37528D24A7D811539A0761",
+          "certpath": "./.keystore/default/debug.cer",
           "keyAlias": "dompet",
-          "keyPassword": "000000237F034F4648D9524409C1B3CCD5441EC397EE852BC7AB4428A2DE1893E2037370C522AA2E02603F454961CE9B9D121D",
-          "signAlg": "SHA256withECDSA",
+          "keyPassword": "000000236097398F3365DA744BD4655EEEC2B21A1B4E0CECB264A4887F41BFA0367B0C2221888324CEF320896F70E476908ABE",
           "profile": "./.keystore/default/debug.p7b",
-          "certpath": "./.keystore/default/debug.cer"
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "./.keystore/default/debug.p12",
+          "storePassword": "00000023D132F0E3FDC303143BA0F7550AA11C83505C6E2B2AD773BABDDD5A07D6B45726D894893CAC015E3FD4A78CC192A73F"
         }
       }
     ],
@@ -20,7 +20,7 @@
         "name": "default",
         "signingConfig": "default",
         "targetSdkVersion": "6.0.0(20)",
-        "compatibleSdkVersion": "5.0.4(16)",
+        "compatibleSdkVersion": "6.0.0(20)",
         "runtimeOS": "HarmonyOS",
         "buildOption": {
           "strictMode": {
